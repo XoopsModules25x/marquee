@@ -11,6 +11,6 @@ function xoops_module_update_marquee() {
     $db =& XoopsDatabaseFactory::getDatabaseConnection();
     $sql = "ALTER TABLE `" . $db->prefix('marquee') . "` MODIFY `marquee_bgcolor` varchar(7) NOT NULL default '';";
     $db->query($sql);
+
     return true;
 }
-

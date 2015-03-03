@@ -20,7 +20,7 @@
  */
 
 if (!defined('XOOPS_ROOT_PATH')) {
-	die('XOOPS root path not defined');	
+    die('XOOPS root path not defined');
 }
 
 $moduleDirName = basename( dirname( __FILE__ ) ) ;
@@ -152,7 +152,6 @@ $modversion['config'][4]['formtype'] = 'textbox';
 $modversion['config'][4]['valuetype'] = 'int';
 $modversion['config'][4]['default'] = 5;
 
-
 /**
  * Titles length (only use with plugins)
  */
@@ -162,4 +161,3 @@ $modversion['config'][5]['description'] = '_MI_MARQUE_TITLELENGTH_DESC';
 $modversion['config'][5]['formtype'] = 'textbox';
 $modversion['config'][5]['valuetype'] = 'int';
 $modversion['config'][5]['default'] = 0;
-?>

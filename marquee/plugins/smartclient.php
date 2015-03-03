@@ -23,30 +23,30 @@
 // Script to list recent clients from the smartclient module (tested with smartclient 1.02)
 function b_marquee_smartclient($limit, $dateformat, $itemssize)
 {
-	$block = array();
-	if( !defined("SMARTCLIENT_DIRNAME") ){
- 	   define("SMARTCLIENT_DIRNAME", 'smartclient');
-	}
-	include_once(XOOPS_ROOT_PATH."/modules/" . SMARTCLIENT_DIRNAME . "/include/common.php");
+    $block = array();
+    if( !defined("SMARTCLIENT_DIRNAME") ){
+       define("SMARTCLIENT_DIRNAME", 'smartclient');
+    }
+    include_once(XOOPS_ROOT_PATH."/modules/" . SMARTCLIENT_DIRNAME . "/include/common.php");
 
-	// Creating the client handler object
-	$client_handler =& smartclient_gethandler('client');
+    // Creating the client handler object
+    $client_handler =& smartclient_gethandler('client');
 
-	$clientsObj =& $client_handler->getClients($limit, 0, _SCLIENT_STATUS_ACTIVE, 'title', 'ASC');
-	If ($clientsObj) {
-		for ( $i = 0; $i < count($clientsObj); $i++ ) {
-			if($itemssize > 0) {
-				$title = xoops_substr($clientsObj[$i]->title(),0,$itemssize);
-			} else {
-			    $title = $clientsObj[$i]->title();
-			}
-			$block[]=array(	'date'	=> '',
-							'category' => '',
-							'author'=> '',
-							'title'=> $title,
-							'link' =>"<a href='".XOOPS_URL.'/modules/smartclient/client.php?id='.$clientsObj[$i]->id()."'>".$title.'</a>' );
-		}
-	}
-	return $block;
+    $clientsObj =& $client_handler->getClients($limit, 0, _SCLIENT_STATUS_ACTIVE, 'title', 'ASC');
+    If ($clientsObj) {
+        for ( $i = 0; $i < count($clientsObj); $i++ ) {
+            if($itemssize > 0) {
+                $title = xoops_substr($clientsObj[$i]->title(),0,$itemssize);
+            } else {
+                $title = $clientsObj[$i]->title();
+            }
+            $block[]=array(    'date'    => '',
+                            'category' => '',
+                            'author'=> '',
+                            'title'=> $title,
+                            'link' =>"<a href='".XOOPS_URL.'/modules/smartclient/client.php?id='.$clientsObj[$i]->id()."'>".$title.'</a>' );
+        }
+    }
+
+    return $block;
 }
-?>

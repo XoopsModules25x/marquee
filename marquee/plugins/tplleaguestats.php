@@ -28,28 +28,28 @@
 
 function b_marquee_tplleaguestats($limit, $dateformat, $itemssize)
 {
-	include_once XOOPS_ROOT_PATH.'/modules/marquee/include/functions.php';
+    include_once XOOPS_ROOT_PATH.'/modules/marquee/include/functions.php';
 
-	//######################## SETTINGS ######################
-	$display_season_name= false;         // display season name?
-	$hour=1;                             // GMT+1  -> var = 1
-	$use_itemsize = false;               // use marquee $itemsize value?
-	$overwrite_limit_settings = true;    // overwrite marquee's limit settings?
-	$new_limit = 6;                      // new limit (valid only if
-										 //     overwrite_limit_settings = true)
-	$overwrite_dateformat_settings=true; // overwrite marquee's dateformat?
-	$new_dateformat="d/m/Y";          // new dateformat (valid only if
-										 //     overwrite_dateformat_settings=true)
-	//######################## SETTINGS ######################
+    //######################## SETTINGS ######################
+    $display_season_name= false;         // display season name?
+    $hour=1;                             // GMT+1  -> var = 1
+    $use_itemsize = false;               // use marquee $itemsize value?
+    $overwrite_limit_settings = true;    // overwrite marquee's limit settings?
+    $new_limit = 6;                      // new limit (valid only if
+                                         //     overwrite_limit_settings = true)
+    $overwrite_dateformat_settings=true; // overwrite marquee's dateformat?
+    $new_dateformat="d/m/Y";          // new dateformat (valid only if
+                                         //     overwrite_dateformat_settings=true)
+    //######################## SETTINGS ######################
 
-	global $xoopsDB;
+    global $xoopsDB;
 
-	if ($overwrite_limit_settings){	$limit = $new_limit; }
-	if ($overwrite_dateformat_settings){ $dateformat=$new_dateformat; }
+    if ($overwrite_limit_settings){    $limit = $new_limit; }
+    if ($overwrite_dateformat_settings){ $dateformat=$new_dateformat; }
 
-	$block=array();
-	$myts =& MyTextSanitizer::getInstance();
-	$sql= "SELECT H.OpponentName as home, A.OpponentName as away, M.LeagueMatchHomeGoals as home_p, M.LeagueMatchAwayGoals as away_p,
+    $block=array();
+    $myts =& MyTextSanitizer::getInstance();
+    $sql= "SELECT H.OpponentName as home, A.OpponentName as away, M.LeagueMatchHomeGoals as home_p, M.LeagueMatchAwayGoals as away_p,
 				  M.LeagueMatchDate as date, S.SeasonName as season
 		   FROM ".$xoopsDB->prefix("tplls_leaguematches")." M
 		   LEFT JOIN ".$xoopsDB->prefix("tplls_opponents")." AS H ON M.LeagueMatchHomeID = H.OpponentID
@@ -57,28 +57,28 @@ function b_marquee_tplleaguestats($limit, $dateformat, $itemssize)
 		   LEFT JOIN ".$xoopsDB->prefix("tplls_seasonnames")." AS S ON M.LeagueMatchSeasonID = S.SeasonID
 		   ORDER BY M.LeagueMatchDate DESC
 		   LIMIT 0,$limit";
-	$result = $xoopsDB->query($sql);
-	while($myrow = $xoopsDB->fetchArray($result)) {
-		$title = $myts->htmlSpecialChars($myrow["home"])." - ".$myts->htmlSpecialChars($myrow["away"])." ".$myts->htmlSpecialChars($myrow["home_p"])."-".$myts->htmlSpecialChars($myrow["away_p"]);
+    $result = $xoopsDB->query($sql);
+    while($myrow = $xoopsDB->fetchArray($result)) {
+        $title = $myts->htmlSpecialChars($myrow["home"])." - ".$myts->htmlSpecialChars($myrow["away"])." ".$myts->htmlSpecialChars($myrow["home_p"])."-".$myts->htmlSpecialChars($myrow["away_p"]);
 
-		if($use_itemsize){
-			if($itemssize>0) {
-				$title=xoops_substr($title,0,$itemssize+3);
-			}
-		}
+        if($use_itemsize){
+            if($itemssize>0) {
+                $title=xoops_substr($title,0,$itemssize+3);
+            }
+        }
 
-		$arr_date = explode("-", $myrow['date']);
+        $arr_date = explode("-", $myrow['date']);
 
-		$season='';
+        $season='';
 
-		if($display_season_name){ $season = $myrow['season']; }
+        if($display_season_name){ $season = $myrow['season']; }
 
-		$block[]=array(	'date'	=> formatTimestamp(mktime($hour,0,0,$arr_date[1],$arr_date[2], $arr_date[0]), $dateformat),
-		'category' => $season,
-		'author'=> "" ,
-		'title'=> $title,
-		'link' =>"<a href=\"".XOOPS_URL."/modules/tplleaguestats\">".$title."</a>");
-	}
-	return $block;
+        $block[]=array(    'date'    => formatTimestamp(mktime($hour,0,0,$arr_date[1],$arr_date[2], $arr_date[0]), $dateformat),
+        'category' => $season,
+        'author'=> "" ,
+        'title'=> $title,
+        'link' =>"<a href=\"".XOOPS_URL."/modules/tplleaguestats\">".$title."</a>");
+    }
+
+    return $block;
 }
-?>

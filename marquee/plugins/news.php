@@ -23,27 +23,27 @@
 // Script to list recent articles from the News module (version >=1.21)
 function b_marquee_news($limit, $dateformat, $itemssize)
 {
-	include_once XOOPS_ROOT_PATH.'/modules/marquee/include/functions.php';
-	include_once XOOPS_ROOT_PATH.'/modules/news/class/class.newsstory.php';
-	$block=$stories=array();
-	$story = new NewsStory();
-	$restricted=marquee_getmoduleoption('restrictindex','news');
-	$stories=$story->getAllPublished($limit,0,$restricted,0,1,true,'published');
-	if(count($stories)>0) {
-		foreach($stories as $onestory) {
-			if($itemssize>0) {
-				$title=xoops_substr($onestory->title(),0,$itemssize+3);
-			} else {
-			    $title=$onestory->title();
-			}
+    include_once XOOPS_ROOT_PATH.'/modules/marquee/include/functions.php';
+    include_once XOOPS_ROOT_PATH.'/modules/news/class/class.newsstory.php';
+    $block=$stories=array();
+    $story = new NewsStory();
+    $restricted=marquee_getmoduleoption('restrictindex','news');
+    $stories=$story->getAllPublished($limit,0,$restricted,0,1,true,'published');
+    if(count($stories)>0) {
+        foreach($stories as $onestory) {
+            if($itemssize>0) {
+                $title=xoops_substr($onestory->title(),0,$itemssize+3);
+            } else {
+                $title=$onestory->title();
+            }
 
-			$block[]=array(	'date'	=> formatTimestamp($onestory->published(),$dateformat),
-							'category' => $onestory->topic_title(),
-							'author'=> $onestory->uid(),
-							'title'=> $title,
-							'link' =>"<a href='".XOOPS_URL.'/modules/news/article.php?storyid='.$onestory->storyid()."'>".$title.'</a>');
-		}
-	}
-	return $block;
+            $block[]=array(    'date'    => formatTimestamp($onestory->published(),$dateformat),
+                            'category' => $onestory->topic_title(),
+                            'author'=> $onestory->uid(),
+                            'title'=> $title,
+                            'link' =>"<a href='".XOOPS_URL.'/modules/news/article.php?storyid='.$onestory->storyid()."'>".$title.'</a>');
+        }
+    }
+
+    return $block;
 }
-?>
