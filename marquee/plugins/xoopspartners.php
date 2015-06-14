@@ -23,61 +23,61 @@
 // Script to list recent partners from the xoopspartners module (tested with version 1.1)
 function b_marquee_xoopspartners($limit, $dateformat, $itemssize)
 {
-	$block = array();
-	$myts =& MyTextSanitizer::getInstance();
-	$arrayIds = array();
-	$arrayIds = xoopspartners_random($limit);
-	global $xoopsDB;
+    $block = array();
+    $myts =& MyTextSanitizer::getInstance();
+    $arrayIds = array();
+    $arrayIds = xoopspartners_random($limit);
+    global $xoopsDB;
 
-	foreach ( $arrayIds as $id ) {
-		$result = $xoopsDB->query("SELECT id, url, image, title FROM ".$xoopsDB->prefix("partners")." WHERE id=$id");
-		list($id, $url, $image, $title) = $xoopsDB->fetchrow($result);
-		$origtitle = $title;
-		$title = $myts->htmlSpecialChars($title);
-		if($itemssize > 0) {
-			$title = $myts->htmlSpecialChars(substr($origtitle, 0,	19));
-		} else {
-		    $title = $myts->htmlSpecialChars($origtitle);
-		}
+    foreach ( $arrayIds as $id ) {
+        $result = $xoopsDB->query("SELECT id, url, image, title FROM ".$xoopsDB->prefix("partners")." WHERE id=$id");
+        list($id, $url, $image, $title) = $xoopsDB->fetchrow($result);
+        $origtitle = $title;
+        $title = $myts->htmlSpecialChars($title);
+        if($itemssize > 0) {
+            $title = $myts->htmlSpecialChars(substr($origtitle, 0,    19));
+        } else {
+            $title = $myts->htmlSpecialChars($origtitle);
+        }
 
-		$block[]=array(	'date'	=> '',
-						'category' => '',
-						'author'=> '',
-						'title'=> $title,
-						'link' =>"<a href='".XOOPS_URL.'/modules/xoopspartners/vpartner.php?id='.$id."'>".$title.'</a>');
+        $block[]=array(    'date'    => '',
+                        'category' => '',
+                        'author'=> '',
+                        'title'=> $title,
+                        'link' =>"<a href='".XOOPS_URL.'/modules/xoopspartners/vpartner.php?id='.$id."'>".$title.'</a>');
 
-	}
-	return $block;
+    }
+
+    return $block;
 }
 
 function xoopspartners_random($NumberPartners,$random=true,$orden="",$desc="")
 {
-	global $xoopsDB;
-	$PartnersId = array();
-	$ArrayReturn = array();
-	if ( $random ) {
-		$result = $xoopsDB->query("SELECT id FROM " .$xoopsDB->prefix("partners"). " WHERE status = 1");
-		$numrows = $xoopsDB->getRowsNum($result);
-	} else {
-		$result = $xoopsDB->query("SELECT id FROM " .$xoopsDB->prefix("partners"). " Where status = 1 ORDER BY ".$orden." ".$desc,$NumberPartners);
-	}
-	while ( $ret = $xoopsDB->fetchArray($result) ) {
-		$PartnersId[]= $ret['id'];
-	}
-	if (($numrows <= $NumberPartners) or (!$random) ) {
-		return $PartnersId;
-		exit();
-	}
-	$NumberTotal = 0;
-	$TotalPartner = count($PartnersId) - 1;
-	while ($NumberPartners > $NumberTotal) {
-		$RandomPart = mt_rand (0, $TotalPartner);
-		if  ( !in_array($PartnersId[$RandomPart],$ArrayReturn) ) {
-			$ArrayReturn[] = $PartnersId[$RandomPart];
-			$NumberTotal++;
-		}
-	}
-	return $ArrayReturn;
-}
+    global $xoopsDB;
+    $PartnersId = array();
+    $ArrayReturn = array();
+    if ( $random ) {
+        $result = $xoopsDB->query("SELECT id FROM " .$xoopsDB->prefix("partners"). " WHERE status = 1");
+        $numrows = $xoopsDB->getRowsNum($result);
+    } else {
+        $result = $xoopsDB->query("SELECT id FROM " .$xoopsDB->prefix("partners"). " Where status = 1 ORDER BY ".$orden." ".$desc,$NumberPartners);
+    }
+    while ( $ret = $xoopsDB->fetchArray($result) ) {
+        $PartnersId[]= $ret['id'];
+    }
+    if (($numrows <= $NumberPartners) or (!$random) ) {
+        return $PartnersId;
+        exit();
+    }
+    $NumberTotal = 0;
+    $TotalPartner = count($PartnersId) - 1;
+    while ($NumberPartners > $NumberTotal) {
+        $RandomPart = mt_rand (0, $TotalPartner);
+        if  ( !in_array($PartnersId[$RandomPart],$ArrayReturn) ) {
+            $ArrayReturn[] = $PartnersId[$RandomPart];
+            $NumberTotal++;
+        }
+    }
 
-?>
+    return $ArrayReturn;
+}

@@ -32,13 +32,13 @@ function b_marquee_xfaq($limit, $dateformat, $itemssize)
     if($itemssize>0) {
       $title=xoops_substr($title, 0, $itemssize+3);
     }
-    $block[]=array(	'date'	=> formatTimestamp($myrow['faq_date_created'],$dateformat),
+    $block[]=array(    'date'    => formatTimestamp($myrow['faq_date_created'],$dateformat),
                     'category' =>$myts->htmlSpecialChars($myrow['topic_title']),
                     'author'=> XoopsUser::getUnameFromId(intval($myrow['topic_submitter'])),
                     'title'=> $title,
                     'link' =>"<a href='" . XOOPS_URL . "/modules/xfaq/faq.php?faq_id=" . $myrow['faq_id'] . "'>{$title}</a>"
             );
   }
+
     return $block;
 }
-?>

@@ -23,55 +23,55 @@
 // Script to list recent FAQ from the smartfaq module (tested with smartfaq 1.04)
 function b_marquee_smartfaq($limit, $dateformat, $itemssize)
 {
-	include_once(XOOPS_ROOT_PATH."/modules/smartfaq/include/functions.php");
-	$block = array();
+    include_once(XOOPS_ROOT_PATH."/modules/smartfaq/include/functions.php");
+    $block = array();
 
-	$smartModule =& sf_getModuleInfo();
-	$smartModuleConfig =& sf_getModuleConfig();
+    $smartModule =& sf_getModuleInfo();
+    $smartModuleConfig =& sf_getModuleConfig();
 
-	$categoryid = -1;
-	$sort = 'datesub';
-	if($itemssize > 0) {
-		$maxQuestionLength = $itemssize;
-	} else {
-	    $maxQuestionLength = 99999;
-	}
+    $categoryid = -1;
+    $sort = 'datesub';
+    if($itemssize > 0) {
+        $maxQuestionLength = $itemssize;
+    } else {
+        $maxQuestionLength = 99999;
+    }
 
-	// Creating the faq handler object
-	$faq_handler =& sf_gethandler('faq');
+    // Creating the faq handler object
+    $faq_handler =& sf_gethandler('faq');
 
-	// Creating the category handler object
-	$category_handler =& sf_gethandler('category');
+    // Creating the category handler object
+    $category_handler =& sf_gethandler('category');
 
-	// Creating the last FAQs
-	$faqsObj = $faq_handler->getAllPublished($limit, 0, $categoryid, $sort);
-	$allcategories = $category_handler->getObjects(null, true);
-	If ($faqsObj) {
-		$userids = array();
-		foreach ($faqsObj as $key => $thisfaq) {
-			$faqids[] = $thisfaq->getVar('faqid');
-			$userids[$thisfaq->uid()] = 1;
-		}
-		$answer_handler =& sf_gethandler('answer');
-		$allanswers = $answer_handler->getLastPublishedByFaq($faqids);
+    // Creating the last FAQs
+    $faqsObj = $faq_handler->getAllPublished($limit, 0, $categoryid, $sort);
+    $allcategories = $category_handler->getObjects(null, true);
+    If ($faqsObj) {
+        $userids = array();
+        foreach ($faqsObj as $key => $thisfaq) {
+            $faqids[] = $thisfaq->getVar('faqid');
+            $userids[$thisfaq->uid()] = 1;
+        }
+        $answer_handler =& sf_gethandler('answer');
+        $allanswers = $answer_handler->getLastPublishedByFaq($faqids);
 
-		foreach ($allanswers as $key => $thisanswer) {
-			$userids[$thisanswer->uid()] = 1;
-		}
+        foreach ($allanswers as $key => $thisanswer) {
+            $userids[$thisanswer->uid()] = 1;
+        }
 
-		$member_handler = &xoops_gethandler('member');
-		$users = $member_handler->getUsers(new Criteria('uid', "(".implode(',', array_keys($userids)).")", "IN"), true);
-		for ( $i = 0; $i < count($faqsObj); $i++ ) {
-			$answerObj =& $allanswers[$faqsObj[$i]->faqid()];
-			$title= $faqsObj[$i]->question($maxQuestionLength);
-			$block[]=array(	'date'	=> $faqsObj[$i]->datesub(),
-							'category' => $allcategories[$faqsObj[$i]->categoryid()]->getVar('name'),
-							'author'=> sf_getLinkedUnameFromId($answerObj->uid(), $smartModuleConfig['userealname'], $users),
-							'title'=> $title,
-							'link' =>"<a href='".XOOPS_URL.'/modules/smartfaq/faq.php?faqid='.$faqsObj[$i]->faqid()."'>".$title.'</a>');
+        $member_handler = &xoops_gethandler('member');
+        $users = $member_handler->getUsers(new Criteria('uid', "(".implode(',', array_keys($userids)).")", "IN"), true);
+        for ( $i = 0; $i < count($faqsObj); $i++ ) {
+            $answerObj =& $allanswers[$faqsObj[$i]->faqid()];
+            $title= $faqsObj[$i]->question($maxQuestionLength);
+            $block[]=array(    'date'    => $faqsObj[$i]->datesub(),
+                            'category' => $allcategories[$faqsObj[$i]->categoryid()]->getVar('name'),
+                            'author'=> sf_getLinkedUnameFromId($answerObj->uid(), $smartModuleConfig['userealname'], $users),
+                            'title'=> $title,
+                            'link' =>"<a href='".XOOPS_URL.'/modules/smartfaq/faq.php?faqid='.$faqsObj[$i]->faqid()."'>".$title.'</a>');
 
-		}
-	}
-	return $block;
+        }
+    }
+
+    return $block;
 }
-?>

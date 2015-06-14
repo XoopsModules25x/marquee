@@ -23,33 +23,32 @@
 // Script to list recent clips from the smartmedia module (tested with smartmedia 0.85)
 function b_marquee_smartmedia($limit, $dateformat, $itemssize)
 {
-	$block = array();
-	if( !defined("SMARTMEDIA_DIRNAME") ){
- 	   define("SMARTMEDIA_DIRNAME", 'smartmedia');
-	}
-	include_once(XOOPS_ROOT_PATH."/modules/" . SMARTMEDIA_DIRNAME . "/include/common.php");
+    $block = array();
+    if( !defined("SMARTMEDIA_DIRNAME") ){
+       define("SMARTMEDIA_DIRNAME", 'smartmedia');
+    }
+    include_once(XOOPS_ROOT_PATH."/modules/" . SMARTMEDIA_DIRNAME . "/include/common.php");
 
+    if($itemssize > 0) {
+        $title_length = $itemssize;
+    } else {
+        $title_length = 99999;
+    }
+    $max_clips = $limit;
 
-	if($itemssize > 0) {
-		$title_length = $itemssize;
-	} else {
-	    $title_length = 99999;
-	}
-	$max_clips = $limit;
+    $clipsArray =& $smartmedia_clip_handler->getClipsFromAdmin(0, $max_clips, 'clips.created_date', 'DESC', 'all');
 
-	$clipsArray =& $smartmedia_clip_handler->getClipsFromAdmin(0, $max_clips, 'clips.created_date', 'DESC', 'all');
-
-	If ($clipsArray) {
-		foreach ($clipsArray as $clipArray) {
-			$clip = array();
-			$block[]=array(	'date'	=> '',
-							'category' => '',
-							'author'=> '',
-							'title'=> $clipArray['title'],
-							'link' => '<a href="' . SMARTMEDIA_URL . 'clip.php?categoryid=' . $clipArray['categoryid'] . '&folderid=' . $clipArray['folderid'] . '&clipid=' . $clipArray['clipid'] . '">' . $clipArray['title']. '</a>' );
+    If ($clipsArray) {
+        foreach ($clipsArray as $clipArray) {
+            $clip = array();
+            $block[]=array(    'date'    => '',
+                            'category' => '',
+                            'author'=> '',
+                            'title'=> $clipArray['title'],
+                            'link' => '<a href="' . SMARTMEDIA_URL . 'clip.php?categoryid=' . $clipArray['categoryid'] . '&folderid=' . $clipArray['folderid'] . '&clipid=' . $clipArray['clipid'] . '">' . $clipArray['title']. '</a>' );
             unset ($clip);
-		}
-	}
-	return $block;
+        }
+    }
+
+    return $block;
 }
-?>

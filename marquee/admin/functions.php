@@ -21,7 +21,7 @@
  */
 
 if (!defined('XOOPS_ROOT_PATH')) {
-	die('XOOPS root path not defined');
+    die('XOOPS root path not defined');
 }
 
 function marquee_adminmenu($currentoption = 0, $breadcrumb = '')
@@ -74,7 +74,6 @@ function marquee_adminmenu($currentoption = 0, $breadcrumb = '')
 //	echo "<br /><br /><pre>&nbsp;</pre><pre>&nbsp;</pre><br />";*/
 }
 
-
 /**
  * Returns the files in a folder according to a pattern
  *
@@ -90,22 +89,22 @@ function marquee_adminmenu($currentoption = 0, $breadcrumb = '')
  */
 function myglob($folder = '', $pattern = 'php')
 {
-	$result = array();
-	if ($dir = @opendir($folder)) {
-		while (($file = readdir($dir)) !== false) {
-  			if(!is_dir($file)) {
-				$ext = basename($file);
-				$ext = explode('.', $ext);
-				$extension = strtolower($ext[count($ext)-1]);
-				if($extension == $pattern) {
-					$result[] = $file;
-				}
-   			}
-		}
-		closedir($dir);
-	} else {
-		echo "Error, impossible to open the folder ".$folder;
-	}
-	return $result;
+    $result = array();
+    if ($dir = @opendir($folder)) {
+        while (($file = readdir($dir)) !== false) {
+            if(!is_dir($file)) {
+                $ext = basename($file);
+                $ext = explode('.', $ext);
+                $extension = strtolower($ext[count($ext)-1]);
+                if($extension == $pattern) {
+                    $result[] = $file;
+                }
+            }
+        }
+        closedir($dir);
+    } else {
+        echo "Error, impossible to open the folder ".$folder;
+    }
+
+    return $result;
 }
-?>
