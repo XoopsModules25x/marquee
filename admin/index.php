@@ -2,7 +2,7 @@
 /**
  * ****************************************************************************
  * marquee - MODULE FOR XOOPS
- * Copyright (c) Hervé Thouzard (http://www.herve-thouzard.com)
+ * Copyright (c) HervÃ© Thouzard (http://www.herve-thouzard.com)
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,23 +11,23 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       Hervé Thouzard (http://www.herve-thouzard.com)
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
- * @package         marquee
- * @author 			Hervé Thouzard (http://www.herve-thouzard.com)
+ * @copyright         HervÃ© Thouzard (http://www.herve-thouzard.com)
+ * @license           http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @package           marquee
+ * @author            HervÃ© Thouzard (http://www.herve-thouzard.com)
  *
  * Version : $Id:
  * ****************************************************************************
  */
 
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/include/cp_header.php';
-include_once dirname(__FILE__) . '/admin_header.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+include_once __DIR__ . '/admin_header.php';
 
 xoops_cp_header();
 
-    $indexAdmin = new ModuleAdmin();
+$indexAdmin = new ModuleAdmin();
 
-    echo $indexAdmin->addNavigation('index.php');
-    echo $indexAdmin->renderIndex();
+echo $indexAdmin->addNavigation(basename(__FILE__));
+echo $indexAdmin->renderIndex();
 
-include "admin_footer.php";
+include_once __DIR__ . '/admin_footer.php';

@@ -2,7 +2,7 @@
 /**
  * ****************************************************************************
  * marquee - MODULE FOR XOOPS
- * Copyright (c) Hervé Thouzard (http://www.herve-thouzard.com)
+ * Copyright (c) HervÃ© Thouzard (http://www.herve-thouzard.com)
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,10 +11,10 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       Hervé Thouzard (http://www.herve-thouzard.com)
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
- * @package         marquee
- * @author 			Hervé Thouzard (http://www.herve-thouzard.com)
+ * @copyright         HervÃ© Thouzard (http://www.herve-thouzard.com)
+ * @license           http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @package           marquee
+ * @author            HervÃ© Thouzard (http://www.herve-thouzard.com)
  *
  * Version : $Id:
  * ****************************************************************************
@@ -23,20 +23,17 @@
 /**
  * A set of useful and common functions
  *
- * @package references
- * @author Hervé Thouzard (http://www.herve-thouzard.com)
- * @copyright (c) Hervé Thouzard
+ * @package       references
+ * @author        HervÃ© Thouzard (http://www.herve-thouzard.com)
+ * @copyright (c) HervÃ© Thouzard
  *
  * Note: You should be able to use it without the need to instanciate it.
  *
  */
-if (!defined('XOOPS_ROOT_PATH')) {
-    die("XOOPS root path not defined");
-}
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-class marquee_utils
+class MarqueeUtilities
 {
-
     const MODULE_NAME = 'marquee';
 
     /**
@@ -47,11 +44,11 @@ class marquee_utils
      * @static
      * @staticvar   object
      */
-    function &getInstance()
+    public function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new references_utils();
+        if (null === $instance) {
+            $instance = new MarqueeUtilities();
         }
 
         return $instance;
@@ -60,32 +57,33 @@ class marquee_utils
     /**
      * Returns a module's option (with cache)
      *
-     * @param  string  $option    module option's name
-     * @param  boolean $withCache Do we have to use some cache ?
-     * @return mixed   option's value
+     * @param string  $option    module option's name
+     * @param boolean $withCache Do we have to use some cache ?
+     *
+     * @return mixed option's value
      */
-    function getModuleOption($option, $withCache = true)
+    public function getModuleOption($option, $withCache = true)
     {
         global $xoopsModuleConfig, $xoopsModule;
         $repmodule = self::MODULE_NAME;
         static $options = array();
-        if(is_array($options) && array_key_exists($option,$options) && $withCache) {
+        if (is_array($options) && array_key_exists($option, $options) && $withCache) {
             return $options[$option];
         }
 
         $retval = false;
-        if (isset($xoopsModuleConfig) && (is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $repmodule && $xoopsModule->getVar('isactive'))) {
-            if(isset($xoopsModuleConfig[$option])) {
-                $retval= $xoopsModuleConfig[$option];
+        if (null !== $xoopsModuleConfig && (is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $repmodule && $xoopsModule->getVar('isactive'))) {
+            if (isset($xoopsModuleConfig[$option])) {
+                $retval = $xoopsModuleConfig[$option];
             }
         } else {
-            $module_handler =& xoops_gethandler('module');
-            $module =& $module_handler->getByDirname($repmodule);
-            $config_handler =& xoops_gethandler('config');
+            $module_handler = xoops_getHandler('module');
+            $module         = $module_handler->getByDirname($repmodule);
+            $config_handler = xoops_getHandler('config');
             if ($module) {
                 $moduleConfig = $config_handler->getConfigsByCat(0, $module->getVar('mid'));
-                if(isset($moduleConfig[$option])) {
-                    $retval= $moduleConfig[$option];
+                if (isset($moduleConfig[$option])) {
+                    $retval = $moduleConfig[$option];
                 }
             }
         }
@@ -99,102 +97,61 @@ class marquee_utils
      *
      * @return boolean need to say it ?
      */
-    function isX23()
-    {
-        $x23 = false;
-        $xv = str_replace('XOOPS ','',XOOPS_VERSION);
-        if(intval(substr($xv,2,1)) >= 3) {
-            $x23 = true;
-        }
-
-        return $x23;
-    }
+    //    function isX23()
+    //    {
+    //        $x23 = false;
+    //        $xv  = str_replace('XOOPS ', '', XOOPS_VERSION);
+    //        if ((int)(substr($xv, 2, 1)) >= 3) {
+    //            $x23 = true;
+    //        }
+    //
+    //        return $x23;
+    //    }
 
     /**
      * Retreive an editor according to the module's option "form_options"
      *
-     * @param  string $caption Caption to give to the editor
-     * @param  string $name    Editor's name
-     * @param  string $value   Editor's value
-     * @param  string $width   Editor's width
-     * @param  string $height  Editor's height
+     * @param string $caption Caption to give to the editor
+     * @param string $name    Editor's name
+     * @param string $value   Editor's value
+     * @param string $width   Editor's width
+     * @param string $height  Editor's height
+     * @param string $supplemental
+     *
      * @return object The editor to use
      */
-    function &getWysiwygForm($caption, $name, $value = '', $width = '100%', $height = '400px', $supplemental='')
+    public static function &getWysiwygForm($caption, $name, $value = '', $width = '100%', $height = '400px', $supplemental = '')
     {
-        $editor = false;
-        $editor_configs=array();
-        $editor_configs['name'] =$name;
-        $editor_configs['value'] = $value;
-        $editor_configs['rows'] = 35;
-        $editor_configs['cols'] = 60;
-        $editor_configs['width'] = '100%';
-        $editor_configs['height'] = '400px';
-
-        $editor_option = strtolower(self::getModuleOption('form_options'));
-
-        if(self::isX23()) {
-            $editor = new XoopsFormEditor($caption, $editor_option, $editor_configs);
-
-            return $editor;
+        global $xoopsModuleConfig;
+        if (class_exists('XoopsFormEditor')) {
+            $options['name']   = $name;
+            $options['value']  = $value;
+            $options['rows']   = 35;
+            $options['cols']   = '100%';
+            $options['width']  = '100%';
+            $options['height'] = '400px';
+            $editor            = new XoopsFormEditor($caption, $xoopsModuleConfig['form_options'], $options, $nohtml = false, $onfailure = 'textarea');
+        } else {
+            $editor = new XoopsFormDhtmlTextArea($caption, $name, $value, '100%', '100%');
         }
 
-        // Only for Xoops 2.0.x
-        switch($editor_option) {
-            case 'fckeditor':
-                    if ( is_readable(XOOPS_ROOT_PATH . '/class/fckeditor/formfckeditor.php'))    {
-                        require_once(XOOPS_ROOT_PATH . '/class/fckeditor/formfckeditor.php');
-                        $editor = new XoopsFormFckeditor($caption, $name, $value);
-                    }
-                break;
-
-            case 'htmlarea':
-                    if ( is_readable(XOOPS_ROOT_PATH . '/class/htmlarea/formhtmlarea.php'))    {
-                        require_once(XOOPS_ROOT_PATH . '/class/htmlarea/formhtmlarea.php');
-                        $editor = new XoopsFormHtmlarea($caption, $name, $value);
-                    }
-                break;
-
-            case 'dhtmltextarea':
-                    $editor = new XoopsFormDhtmlTextArea($caption, $name, $value, 10, 50, $supplemental);
-                break;
-
-            case 'textarea':
-                $editor = new XoopsFormTextArea($caption, $name, $value);
-                break;
-
-            case 'tinyeditor':
-            case 'tinymce':
-                if ( is_readable(XOOPS_ROOT_PATH.'/class/xoopseditor/tinyeditor/formtinyeditortextarea.php')) {
-                    require_once XOOPS_ROOT_PATH.'/class/xoopseditor/tinyeditor/formtinyeditortextarea.php';
-                    $editor = new XoopsFormTinyeditorTextArea(array('caption'=> $caption, 'name'=>$name, 'value'=>$value, 'width'=>'100%', 'height'=>'400px'));
-                }
-                break;
-
-            case 'koivi':
-                    if ( is_readable(XOOPS_ROOT_PATH . '/class/wysiwyg/formwysiwygtextarea.php')) {
-                        require_once(XOOPS_ROOT_PATH . '/class/wysiwyg/formwysiwygtextarea.php');
-                    $editor = new XoopsFormWysiwygTextArea($caption, $name, $value, $width, $height, '');
-                }
-                break;
-            }
-
-            return $editor;
+        return $editor;
     }
 
     /**
      * Create (in a link) a javascript confirmation's box
      *
-     * @param  string  $message Message to display
-     * @param  boolean $form    Is this a confirmation for a form ?
-     * @return string  the javascript code to insert in the link (or in the form)
+     * @param string  $message Message to display
+     * @param boolean $form    Is this a confirmation for a form ?
+     *
+     * @return string the javascript code to insert in the link (or in the form)
      */
-    function javascriptLinkConfirm($message, $form = false)
+    public function javascriptLinkConfirm($message, $form = false)
     {
-        if(!$form) {
-            return "onclick=\"javascript:return confirm('".str_replace("'"," ",$message)."')\"";
+        if (!$form) {
+            return "onclick=\"javascript:return confirm('" . str_replace("'", ' ', $message) . "')\"";
         } else {
-            return "onSubmit=\"javascript:return confirm('".str_replace("'"," ",$message)."')\"";
+            return "onSubmit=\"javascript:return confirm('" . str_replace("'", ' ', $message) . "')\"";
         }
     }
 
@@ -203,12 +160,11 @@ class marquee_utils
      *
      * @param string $message message to display
      * @param string $url     The place where to go
-     * @param integer timeout Time to wait before to redirect
+     * @param        integer  timeout Time to wait before to redirect
      */
-    function redirect($message='', $url='index.php', $time=2)
+    public function redirect($message = '', $url = 'index.php', $time = 2)
     {
         redirect_header($url, $time, $message);
-        exit();
     }
 
     /**
@@ -216,15 +172,15 @@ class marquee_utils
      *
      * @return object The module
      */
-    protected function _getModule()
+    protected static function getModule()
     {
         static $mymodule;
-        if (!isset($mymodule)) {
+        if (null === $mymodule) {
             global $xoopsModule;
-            if (isset($xoopsModule) && is_object($xoopsModule) && $xoopsModule->getVar('dirname') == REFERENCES_DIRNAME ) {
+            if (null !== $xoopsModule && is_object($xoopsModule) && $xoopsModule->getVar('dirname') == REFERENCES_DIRNAME) {
                 $mymodule =& $xoopsModule;
             } else {
-                $hModule = &xoops_gethandler('module');
+                $hModule  = xoops_getHandler('module');
                 $mymodule = $hModule->getByDirname(REFERENCES_DIRNAME);
             }
         }
@@ -234,13 +190,14 @@ class marquee_utils
 
     /**
      * Returns the module's name (as defined by the user in the module manager) with cache
+     *
      * @return string Module's name
      */
-    function getModuleName()
+    public function getModuleName()
     {
         static $moduleName;
-        if(!isset($moduleName)) {
-            $mymodule = self::_getModule();
+        if (!isset($moduleName)) {
+            $mymodule   = self::getModule();
             $moduleName = $mymodule->getVar('name');
         }
 
@@ -252,17 +209,17 @@ class marquee_utils
      *
      * @return boolean Yes = we need to add them, false = no
      */
-    function needsAsterisk()
+    public static function needsAsterisk()
     {
-        if(self::isX23()) {
+        if (self::isX23()) {
             return false;
         }
-        if(strpos(strtolower(XOOPS_VERSION), 'impresscms') !== false) {
+        if (strpos(strtolower(XOOPS_VERSION), 'impresscms') !== false) {
             return false;
         }
-        if(strpos(strtolower(XOOPS_VERSION), 'legacy') === false) {
-            $xv = xoops_trim(str_replace('XOOPS ','',XOOPS_VERSION));
-            if(intval(substr($xv,4,2)) >= 17) {
+        if (strpos(strtolower(XOOPS_VERSION), 'legacy') === false) {
+            $xv = xoops_trim(str_replace('XOOPS ', '', XOOPS_VERSION));
+            if ((int)substr($xv, 4, 2) >= 17) {
                 return false;
             }
         }
@@ -273,25 +230,25 @@ class marquee_utils
     /**
      * Mark the mandatory fields of a form with a star
      *
-     * @param  object $sform    The form to modify
-     * @param  string $caracter The character to use to mark fields
+     * @param object $sform The form to modify
+     *
+     * @internal param string $caracter The character to use to mark fields
      * @return object The modified form
      */
-    function &formMarkRequiredFields(&$sform)
+    public function &formMarkRequiredFields(&$sform)
     {
-        if(self::needsAsterisk()) {
+        if (self::needsAsterisk()) {
             $required = array();
-            foreach($sform->getRequired() as $item) {
+            foreach ($sform->getRequired() as $item) {
                 $required[] = $item->_name;
             }
             $elements = array();
-            $elements = & $sform->getElements();
-            $cnt = count($elements);
-            for($i=0; $i<$cnt; $i++) {
-                if( is_object($elements[$i]) && in_array($elements[$i]->_name, $required)
-                ) {
+            $elements = &$sform->getElements();
+            $cnt      = count($elements);
+            for ($i = 0; $i < $cnt; ++$i) {
+                if (is_object($elements[$i]) && in_array($elements[$i]->_name, $required)) {
                     $elements[$i]->_caption .= ' *';
-        }
+                }
             }
         }
 

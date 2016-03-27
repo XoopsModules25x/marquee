@@ -9,33 +9,33 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright	The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright           XOOPS Project (http://xoops.org)
  * @license             http://www.fsf.org/copyleft/gpl.html GNU public license
- * @package	Marquee
- * @since		2.5.0
- * @author 	XOOPS Module Team
- * @version	$Id $
-**/
+ * @package             Marquee
+ * @since               2.5.0
+ * @author              XOOPS Module Team
+ * @version             $Id $
+ **/
 
-$path = dirname(dirname(dirname(dirname(__FILE__))));
-include_once $path . '/mainfile.php';
-include_once $path . '/include/cp_functions.php';
-require_once $path . '/include/cp_header.php';
+$rootPath = dirname(dirname(dirname(__DIR__)));
+include_once $rootPath . '/mainfile.php';
+include_once $rootPath . '/include/cp_functions.php';
+require_once $rootPath . '/include/cp_header.php';
 
 global $xoopsModule;
 
-$thisModuleDir = $GLOBALS['xoopsModule']->getVar('dirname');
+$moduleFolder = dirname(__DIR__);
 
 //if functions.php file exist
-require_once dirname(dirname(__FILE__)) . '/include/functions.php';
+require_once $moduleFolder . '/include/functions.php';
 
 // Load language files
-xoops_loadLanguage('admin', $thisModuleDir);
-xoops_loadLanguage('modinfo', $thisModuleDir);
-xoops_loadLanguage('main', $thisModuleDir);
+xoops_loadLanguage('admin', $moduleFolder);
+xoops_loadLanguage('modinfo', $moduleFolder);
+xoops_loadLanguage('main', $moduleFolder);
 
-$pathIcon16 = '../'.$xoopsModule->getInfo('icons16');
-$pathIcon32 = '../'.$xoopsModule->getInfo('icons32');
-$pathModuleAdmin = $xoopsModule->getInfo('dirmoduleadmin');
+$pathIcon16      = XOOPS_URL . '/' . $xoopsModule->getInfo('icons16');
+$pathIcon32      = XOOPS_URL . '/' . $xoopsModule->getInfo('icons32');
+$pathModuleAdmin = XOOPS_ROOT_PATH . '/' . $xoopsModule->getInfo('dirmoduleadmin');
 
-include_once $GLOBALS['xoops']->path($pathModuleAdmin.'/moduleadmin.php');
+require_once $pathModuleAdmin . '/moduleadmin/moduleadmin.php';

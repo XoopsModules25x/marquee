@@ -11,12 +11,12 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       Hervé Thouzard (http://www.herve-thouzard.com)
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
- * @package         marquee
- * @author 			Hervé Thouzard (http://www.herve-thouzard.com)
+ * @copyright         Hervé Thouzard (http://www.herve-thouzard.com)
+ * @license           http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @package           marquee
+ * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
  * Version : $Id:
  * ****************************************************************************
  */
-define("_MB_MARQUEE_SELECT","Select the marquee to use");
+define('_MB_MARQUEE_SELECT', 'Select the marquee to use');

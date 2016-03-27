@@ -11,15 +11,15 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       Hervé Thouzard (http://www.herve-thouzard.com)
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
- * @package         marquee
- * @author 			Hervé Thouzard (http://www.herve-thouzard.com)
+ * @copyright         Hervé Thouzard (http://www.herve-thouzard.com)
+ * @license           http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @package           marquee
+ * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
  * Version : $Id:
  * ****************************************************************************
  */
 
-define("_EXT_MARQUEE_ALTWMP","Add a marquee from Marquee module");
-define("_EXT_MARQUEE_TEXTID","Marquee's Id you want to display");
-define("_EXT_MARQUEE_TEXTTITLE","Enter marquee title");
+define('_EXT_MARQUEE_ALTWMP', 'Add a marquee from Marquee module');
+define('_EXT_MARQUEE_TEXTID', "Marquee's Id you want to display");
+define('_EXT_MARQUEE_TEXTTITLE', 'Enter marquee title');
