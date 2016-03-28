@@ -227,7 +227,7 @@ class MarqueePersistableObjectHandler extends XoopsPersistableObjectHandler//Xoo
     public function getList(CriteriaElement $criteria = null, $limit = 0, $start = 0)
     {
         $ret = array();
-        if ($criteria == null) {
+        if (null === $criteria) {
             $criteria = new CriteriaCompo();
         }
 

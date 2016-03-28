@@ -27,12 +27,7 @@ include_once __DIR__ . '/admin_header.php';
 
 $indexAdmin = new ModuleAdmin();
 
-$op = 'default';
-if (isset($_POST['op'])) {
-    $op = $_POST['op'];
-} elseif (isset($_GET['op'])) {
-    $op = $_GET['op'];
-}
+$op = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', 'default', 'POST'), 'GET');
 
 // Verify that a field exists inside a mysql table
 
@@ -179,24 +174,24 @@ function AddEditMarqueeForm($marqueeid, $Action, $FormTitle, $contentvalue, $bgc
 switch ($op) {
     // Verify before to edit an element
     case 'verifybeforeedit':
-        if (isset($_POST['submit']) && $_POST['submit'] != '') {
-            $marquee = $marquee_handler->get((int)$_POST['marqueeid']);
+        if ('' !== XoopsRequest::getString('submit', '', 'POST')) {
+            $marquee = $marquee_handler->get(XoopsRequest::getInt('marqueeid', 0, 'POST'));
             if (is_object($marquee)) {
                 $marquee->setVar('marquee_uid', $xoopsUser->getVar('uid'));
-                $marquee->setVar('marquee_direction', $_POST['direction']);
-                $marquee->setVar('marquee_scrollamount', $_POST['scrollamount']);
-                $marquee->setVar('marquee_behaviour', $_POST['behaviour']);
-                $marquee->setVar('marquee_bgcolor', isset($_POST['bgcolor']) ? $_POST['bgcolor'] : '');
-                $marquee->setVar('marquee_align', isset($_POST['align']) ? $_POST['align'] : 0);
-                $marquee->setVar('marquee_height', $_POST['height']);
-                $marquee->setVar('marquee_width', $_POST['width']);
-                $marquee->setVar('marquee_hspace', isset($_POST['hspace']) ? $_POST['hspace'] : 0);
-                $marquee->setVar('marquee_scrolldelay', $_POST['scrolldelay']);
-                $marquee->setVar('marquee_stoponmouseover', isset($_POST['stoponmouseover']) ? $_POST['stoponmouseover'] : 0);
-                $marquee->setVar('marquee_loop', isset($_POST['loop']) ? $_POST['loop'] : 0);
-                $marquee->setVar('marquee_vspace', isset($_POST['vspace']) ? $_POST['vspace'] : 0);
-                $marquee->setVar('marquee_content', $_POST['content']);
-                $marquee->setVar('marquee_source', $_POST['source']);
+                $marquee->setVar('marquee_direction', XoopsRequest::getString('direction', '', 'POST'));
+                $marquee->setVar('marquee_scrollamount', XoopsRequest::getInt('scrollamount', 0, 'POST'));
+                $marquee->setVar('marquee_behaviour', XoopsRequest::getInt('behaviour', 0, 'POST'));
+                $marquee->setVar('marquee_bgcolor', XoopsRequest::getString('bgcolor', '', 'POST'));
+                $marquee->setVar('marquee_align', XoopsRequest::getInt('align', 0, 'POST'));
+                $marquee->setVar('marquee_height', XoopsRequest::getInt('height', 0, 'POST'));
+                $marquee->setVar('marquee_width', XoopsRequest::getString('width', '', 'POST'));
+                $marquee->setVar('marquee_hspace', XoopsRequest::getInt('hspace', 0, 'POST'));
+                $marquee->setVar('marquee_scrolldelay', XoopsRequest::getInt('scrolldelay', 0, 'POST'));
+                $marquee->setVar('marquee_stoponmouseover', XoopsRequest::getInt('stoponmouseover', 0, 'POST'));
+                $marquee->setVar('marquee_loop', XoopsRequest::getInt('loop', 0, 'POST'));
+                $marquee->setVar('marquee_vspace', XoopsRequest::getInt('vspace', 0, 'POST'));
+                $marquee->setVar('marquee_content', XoopsRequest::getString('content', '', 'POST'));
+                $marquee->setVar('marquee_source', XoopsRequest::getString('source', '', 'POST'));
                 if (!$marquee_handler->insert($marquee)) {
                     redirect_header('main.php', 1, _AM_MARQUEE_ERROR_MODIFY_DB);
                 }
@@ -214,7 +209,7 @@ switch ($op) {
 
         echo '<br />';
         if (isset($_GET['marqueeid'])) {
-            $marqueeid = (int)$_GET['marqueeid'];
+            $marqueeid = XoopsRequest::getInt('marqueeid', 0, 'GET');
             $marquee   = $marquee_handler->get($marqueeid);
             AddEditMarqueeForm($marqueeid, 'verifybeforeedit', _AM_MARQUEE_CONFIG, $marquee->getVar('marquee_content', 'e'), $marquee->getVar('marquee_bgcolor', 'e'), $marquee->getVar('marquee_width', 'e'), $marquee->getVar('marquee_height', 'e'), $marquee->getVar('marquee_scrollamount', 'e'), $marquee->getVar('marquee_hspace', 'e'), $marquee->getVar('marquee_vspace', 'e'), $marquee->getVar('marquee_scrolldelay', 'e'), $marquee->getVar('marquee_direction', 'e'), $marquee->getVar('marquee_behaviour', 'e'), $marquee->getVar('marquee_align', 'e'), $marquee->getVar('marquee_loop', 'e'), $marquee->getVar('marquee_stoponmouseover', 'e'), _AM_MARQUEE_UPDATE, $marquee->getVar('marquee_source', 'e'));
         }
@@ -222,16 +217,16 @@ switch ($op) {
 
     // Delete an element
     case 'delete':
-        if (!isset($_POST['ok'])) {
+        if ('' !== XoopsRequest::getString('ok', '', 'POST')) {
             xoops_cp_header();
             echo $indexAdmin->addNavigation(basename(__FILE__));
             // echo '<h4>' . _AM_MARQUEE_CONFIG . '</h4>';
-            xoops_confirm(array('op' => 'delete', 'marqueeid' => $_GET['marqueeid'], 'ok' => 1), 'main.php', _AM_MARQUEE_RUSUREDEL);
+            xoops_confirm(array('op' => 'delete', 'marqueeid' =>  XoopsRequest::getInt('marqueeid', 0, 'GET'), 'ok' => 1), 'main.php', _AM_MARQUEE_RUSUREDEL);
         } else {
             if (empty($_POST['marqueeid'])) {
                 redirect_header('main.php', 2, _AM_MARQUEE_ERROR_ADD_MARQUEE);
             }
-            $marqueeid = (int)$_POST['marqueeid'];
+            $marqueeid =  XoopsRequest::getInt('marqueeid', 0, 'POST');
             $marquee   = $marquee_handler->deleteAll(new Criteria('marquee_marqueeid', $marqueeid, '='));
             redirect_header('main.php', 1, _AM_MARQUEE_DBUPDATED);
         }
@@ -239,23 +234,23 @@ switch ($op) {
 
     // Verify before to add an element
     case 'verifytoadd':
-        if (isset($_POST['submit']) && $_POST['submit'] != '') {
+        if ('' !== XoopsRequest::getString('submit', '', 'POST')) {
             $vres = $marquee_handler->quickInsert(array(
                                                       'marquee_uid'             => $xoopsUser->getVar('uid'),
-                                                      'marquee_direction'       => $_POST['direction'],
-                                                      'marquee_scrollamount'    => $_POST['scrollamount'],
-                                                      'marquee_behaviour'       => $_POST['behaviour'],
-                                                      'marquee_bgcolor'         => isset($_POST['bgcolor']) ? $_POST['bgcolor'] : '',
-                                                      'marquee_align'           => isset($_POST['align']) ? $_POST['align'] : 0,
-                                                      'marquee_height'          => $_POST['height'],
-                                                      'marquee_width'           => $_POST['width'],
-                                                      'marquee_hspace'          => isset($_POST['hspace']) ? $_POST['hspace'] : 0,
-                                                      'marquee_scrolldelay'     => $_POST['scrolldelay'],
-                                                      'marquee_stoponmouseover' => isset($_POST['stoponmouseover']) ? $_POST['stoponmouseover'] : 0,
-                                                      'marquee_loop'            => isset($_POST['loop']) ? $_POST['loop'] : 0,
-                                                      'marquee_vspace'          => isset($_POST['vspace']) ? $_POST['vspace'] : 0,
-                                                      'marquee_content'         => $_POST['content'],
-                                                      'marquee_source'          => $_POST['source']));
+                                                      'marquee_direction'       => XoopsRequest::getString('direction', '', 'POST'),
+                                                      'marquee_scrollamount'    => XoopsRequest::getInt('scrollamount', 0, 'POST'),
+                                                      'marquee_behaviour'       => XoopsRequest::getInt('behaviour', 0, 'POST'),
+                                                      'marquee_bgcolor'         => XoopsRequest::getString('bgcolor', '', 'POST'),
+                                                      'marquee_align'           => XoopsRequest::getInt('align', 0, 'POST'),
+                                                      'marquee_height'          => XoopsRequest::getInt('height', 0, 'POST'),
+                                                      'marquee_width'           => XoopsRequest::getString('width', '', 'POST'),
+                                                      'marquee_hspace'          => XoopsRequest::getInt('hspace', 0, 'POST'),
+                                                      'marquee_scrolldelay'     => XoopsRequest::getInt('scrolldelay', 0, 'POST'),
+                                                      'marquee_stoponmouseover' => XoopsRequest::getInt('stoponmouseover', 0, 'POST'),
+                                                      'marquee_loop'            => XoopsRequest::getInt('loop', 0, 'POST'),
+                                                      'marquee_vspace'          => XoopsRequest::getInt('vspace', 0, 'POST'),
+                                                      'marquee_content'         => XoopsRequest::getString('content', '', 'POST'),
+                                                      'marquee_source'          => XoopsRequest::getString('source', '', 'POST')));
             if (!$vres) {
                 redirect_header('main.php', 1, _AM_MARQUEE_ERROR_ADD_MARQUEE);
             }

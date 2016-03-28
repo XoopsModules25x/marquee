@@ -29,7 +29,7 @@
 // Script to list recent partners from the smartpartner module (tested with smartparnter 1.2)
 function b_marquee_smartpartner($limit, $dateformat, $itemssize)
 {
-    $block = $faqids = array();
+    $block = $newObjs = array();
     if (!defined('SMARTPARTNER_DIRNAME')) {
         define('SMARTPARTNER_DIRNAME', 'smartpartner');
     }

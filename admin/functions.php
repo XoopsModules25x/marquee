@@ -92,21 +92,23 @@ function marquee_adminmenu($currentoption = 0, $breadcrumb = '')
 function myglob($folder = '', $pattern = 'php')
 {
     $result = array();
-    if ($dir = @opendir($folder)) {
+    try {
+        if (!($dir = @opendir($folder))) {
+            throw new \RuntimeException('Error, impossible to open the folder ' . $folder);
+        }
         while (($file = readdir($dir)) !== false) {
             if (!is_dir($file)) {
                 $ext       = basename($file);
                 $ext       = explode('.', $ext);
                 $extension = strtolower($ext[count($ext) - 1]);
-                if ($extension == $pattern) {
+                if ($extension === $pattern) {
                     $result[] = $file;
                 }
             }
         }
         closedir($dir);
-    } else {
-        echo 'Error, impossible to open the folder ' . $folder;
+        return $result;
+    } catch (Exception $e) {
+        echo 'Caught exception: ', $e->getMessage(), "\n", '<br/>';
     }
-
-    return $result;
 }
