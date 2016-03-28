@@ -109,7 +109,7 @@ function AddEditMarqueeForm($marqueeid, $Action, $FormTitle, $contentvalue, $bgc
     }
     $sform->addElement($source);
 
-    $editor =& MarqueeUtilities::getWysiwygForm(_AM_MARQUEE_CONTENT, 'content', $contentvalue, 15, 60, 'content_text_hidden');
+    $editor = MarqueeUtilities::getWysiwygForm(_AM_MARQUEE_CONTENT, 'content', $contentvalue, 15, 60, 'content_text_hidden');
     if ($editor) {
         $sform->addElement($editor, false);
     }

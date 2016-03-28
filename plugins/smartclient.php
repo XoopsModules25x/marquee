@@ -40,7 +40,8 @@ function b_marquee_smartclient($limit, $dateformat, $itemssize)
 
     $clientsObj =& $client_handler->getClients($limit, 0, _SCLIENT_STATUS_ACTIVE, 'title', 'ASC');
     if ($clientsObj) {
-        for ($i = 0; $i < count($clientsObj); ++$i) {
+//        for ($i = 0; $i < count($clientsObj); ++$i) {
+        for ($i = 0, $iMax = count($clientsObj); $i < $iMax; ++$i) {
             if ($itemssize > 0) {
                 $title = xoops_substr($clientsObj[$i]->title(), 0, $itemssize);
             } else {

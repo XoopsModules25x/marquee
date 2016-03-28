@@ -52,7 +52,7 @@ function b_marquee_smartfaq($limit, $dateformat, $itemssize)
     $faqsObj       = $faq_handler->getAllPublished($limit, 0, $categoryid, $sort);
     $allcategories = $category_handler->getObjects(null, true);
     if ($faqsObj) {
-        $userids = array();
+        $userids = $faqids = array();
         foreach ($faqsObj as $key => $thisfaq) {
             $faqids[]                 = $thisfaq->getVar('faqid');
             $userids[$thisfaq->uid()] = 1;
@@ -66,7 +66,7 @@ function b_marquee_smartfaq($limit, $dateformat, $itemssize)
 
         $member_handler = xoops_getHandler('member');
         $users          = $member_handler->getUsers(new Criteria('uid', '(' . implode(',', array_keys($userids)) . ')', 'IN'), true);
-        for ($i = 0; $i < count($faqsObj); ++$i) {
+        for ($i = 0, $iMax = count($faqsObj); $i < $iMax; ++$i) {
             $answerObj =& $allanswers[$faqsObj[$i]->faqid()];
             $title     = $faqsObj[$i]->question($maxQuestionLength);
             $block[]   = array(

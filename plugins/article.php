@@ -52,9 +52,9 @@ function b_marquee_article($limit, $dateformat, $itemsize)
 
     $select .= ', cat_id, art_title, uid, art_time_publish';
 
-    if (null === $access_cats) {
+    if(!isset($access_cats)) {
         $permission_handler = xoops_getModuleHandler('permission', 'article');
-        $access_cats        =& $permission_handler->getCategories('access');
+        $access_cats        = $permission_handler->getCategories('access');
     }
     $allowed_cats = $access_cats;
 

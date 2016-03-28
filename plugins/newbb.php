@@ -41,12 +41,12 @@ function b_marquee_newbb($limit, $dateformat, $itemssize)
         $module_handler = xoops_getHandler('module');
         $newbb          = $module_handler->getByDirname('newbb');
 
-        if (null === $newbbConfig) {
+        if (!isset($newbbConfig)) {
             $config_handler = xoops_getHandler('config');
             $newbbConfig    = &$config_handler->getConfigsByCat(0, $newbb->getVar('mid'));
         }
 
-        if (null === $access_forums) {
+        if (!isset($access_forums)) {
             $access_forums = $forum_handler->getForums(0, 'access'); // get all accessible forums
         }
         $valid_forums   = array_keys($access_forums);
@@ -85,6 +85,7 @@ function b_marquee_newbb($limit, $dateformat, $itemssize)
         $db    = XoopsDatabaseFactory::getDatabaseConnection();
         $myts  = MyTextSanitizer::getInstance();
         $order = 't.topic_time';
+        $time = $tmpuser = '';
         $query = 'SELECT t.topic_id, t.topic_title, t.topic_last_post_id, t.topic_time, t.topic_views, t.topic_replies, t.forum_id, f.forum_name FROM ' . $db->prefix('bb_topics') . ' t, ' . $db->prefix('bb_forums') . ' f WHERE f.forum_id=t.forum_id AND f.forum_type <> 1 ORDER BY ' . $order . ' DESC';
         if (!$result = $db->query($query, $limit, 0)) {
             return '';

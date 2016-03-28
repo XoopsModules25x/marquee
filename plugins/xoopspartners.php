@@ -70,6 +70,7 @@ function xoopspartners_random($NumberPartners, $random = true, $orden = '', $des
     global $xoopsDB;
     $PartnersId  = array();
     $ArrayReturn = array();
+    $numrows = 0;
     if ($random) {
         $result  = $xoopsDB->query('SELECT id FROM ' . $xoopsDB->prefix('partners') . ' WHERE status = 1');
         $numrows = $xoopsDB->getRowsNum($result);

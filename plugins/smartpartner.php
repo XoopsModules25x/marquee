@@ -29,7 +29,7 @@
 // Script to list recent partners from the smartpartner module (tested with smartparnter 1.2)
 function b_marquee_smartpartner($limit, $dateformat, $itemssize)
 {
-    $block = array();
+    $block = $faqids = array();
     if (!defined('SMARTPARTNER_DIRNAME')) {
         define('SMARTPARTNER_DIRNAME', 'smartpartner');
     }
@@ -40,7 +40,7 @@ function b_marquee_smartpartner($limit, $dateformat, $itemssize)
     $smartpartner_category_handler = smartpartner_gethandler('category');
 
     // Randomize
-    $partnersObj =& $smartpartner_partner_handler->getPartners(0, 0, _SPARTNER_STATUS_ACTIVE);
+    $partnersObj = $smartpartner_partner_handler->getPartners(0, 0, _SPARTNER_STATUS_ACTIVE);
     if (count($partnersObj) > 1) {
         $key_arr  = array_keys($partnersObj);
         $key_rand = array_rand($key_arr, count($key_arr));
@@ -57,9 +57,9 @@ function b_marquee_smartpartner($limit, $dateformat, $itemssize)
     }
 
     if ($partnersObj) {
-        for ($j = 0; $j < count($cat_id); ++$j) {
+        for ($j = 0, $jMax = count($cat_id); $j < $jMax; ++$j) {
             $categoryObj = $smartpartner_category_handler->get($cat_id[$j]);
-            for ($i = 0; $i < count($partnersObj); ++$i) {
+            for ($i = 0, $iMax = count($partnersObj); $i < $iMax; ++$i) {
                 if ($partnersObj[$i]->categoryid() == $cat_id[$j]) {
                     $smartConfig =& smartpartner_getModuleConfig();
                     if ($itemssize > 0) {

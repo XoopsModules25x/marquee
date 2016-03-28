@@ -120,7 +120,7 @@ class MarqueeUtilities
      *
      * @return object The editor to use
      */
-    public static function &getWysiwygForm($caption, $name, $value = '', $width = '100%', $height = '400px', $supplemental = '')
+    public static function getWysiwygForm($caption, $name, $value = '', $width = '100%', $height = '400px', $supplemental = '')
     {
         global $xoopsModuleConfig;
         if (class_exists('XoopsFormEditor')) {

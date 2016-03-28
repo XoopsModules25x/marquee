@@ -48,7 +48,7 @@ function b_marquee_catads($limit, $dateformat, $itemssize)
     $criteria->add(new Criteria('expired', time(), '>'));
     $criteria->setSort('published');
     $criteria->setOrder('DESC');
-    $criteria->setLimit($options[0]);
+    $criteria->setLimit($limit);
     $nbads = $ads_hnd->getCount($criteria);
 
     $a_item     = array();

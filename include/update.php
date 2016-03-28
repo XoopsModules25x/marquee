@@ -48,7 +48,10 @@ function xoops_module_update_marquee($module, $oldversion = null)
         foreach ($template_list as $k => $v) {
             $fileinfo = new SplFileInfo($templateDirectory . $v);
             if ($fileinfo->getExtension() === 'html' && $fileinfo->getFilename() !== 'index.html') {
-                @unlink($templateDirectory . $v);
+                // @unlink($templateDirectory . $v);
+                if (false === @unlink($templateDirectory . $v)) {
+                    throw new \RuntimeException('The file ' . $templateDirectory . $v . ' could not be deleted.');
+                }
             }
         }
         // Load class XoopsFile

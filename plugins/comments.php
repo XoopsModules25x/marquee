@@ -52,7 +52,7 @@ function b_marquee_comments($limit, $dateformat, $itemssize)
         $criteria->setOrder($order);
         $criteria->setLimit($limit);
         $criteria->setStart($start);
-        $comments =& $comment_handler->getObjects($criteria, true);
+        $comments = $comment_handler->getObjects($criteria, true);
         foreach (array_keys($comments) as $i) {
             $module         = $module_handler->get($comments[$i]->getVar('com_modid'));
             $comment_config = $module->getInfo('comments');

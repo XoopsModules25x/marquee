@@ -24,15 +24,17 @@ require_once $rootPath . '/include/cp_header.php';
 
 global $xoopsModule;
 
-$moduleFolder = dirname(__DIR__);
+$moduleDirName = dirname(__DIR__);
+
+xoops_load('XoopsRequest');
 
 //if functions.php file exist
-require_once $moduleFolder . '/include/functions.php';
+require_once $moduleDirName . '/include/functions.php';
 
 // Load language files
-xoops_loadLanguage('admin', $moduleFolder);
-xoops_loadLanguage('modinfo', $moduleFolder);
-xoops_loadLanguage('main', $moduleFolder);
+xoops_loadLanguage('admin', $moduleDirName);
+xoops_loadLanguage('modinfo', $moduleDirName);
+xoops_loadLanguage('main', $moduleDirName);
 
 $pathIcon16      = XOOPS_URL . '/' . $xoopsModule->getInfo('icons16');
 $pathIcon32      = XOOPS_URL . '/' . $xoopsModule->getInfo('icons32');
