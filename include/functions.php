@@ -51,11 +51,11 @@ function marquee_getmoduleoption($option, $repmodule = 'marquee')
             $retval = $xoopsModuleConfig[$option];
         }
     } else {
-        $module_handler = xoops_getHandler('module');
-        $module         = $module_handler->getByDirname($repmodule);
-        $config_handler = xoops_getHandler('config');
+        $moduleHandler = xoops_getHandler('module');
+        $module         = $moduleHandler->getByDirname($repmodule);
+        $configHandler = xoops_getHandler('config');
         if ($module) {
-            $moduleConfig =& $config_handler->getConfigsByCat(0, $module->getVar('mid'));
+            $moduleConfig =& $configHandler->getConfigsByCat(0, $module->getVar('mid'));
             if (isset($moduleConfig[$option])) {
                 $retval = $moduleConfig[$option];
             }

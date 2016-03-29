@@ -20,14 +20,14 @@
  * ****************************************************************************
  *
  * @param $limit
- * @param $dateformat
- * @param $itemssize
+ * @param $dateFormat
+ * @param $itemsSize
  *
  * @return array
  */
 
 // Script to list recent clients from the smartclient module (tested with smartclient 1.02)
-function b_marquee_smartclient($limit, $dateformat, $itemssize)
+function b_marquee_smartclient($limit, $dateFormat, $itemsSize)
 {
     $block = array();
     if (!defined('SMARTCLIENT_DIRNAME')) {
@@ -36,13 +36,13 @@ function b_marquee_smartclient($limit, $dateformat, $itemssize)
     include_once(XOOPS_ROOT_PATH . '/modules/' . SMARTCLIENT_DIRNAME . '/include/common.php');
 
     // Creating the client handler object
-    $client_handler =& smartclient_gethandler('client');
+    $clientHandler =& smartclient_gethandler('client');
 
-    $clientsObj =& $client_handler->getClients($limit, 0, _SCLIENT_STATUS_ACTIVE, 'title', 'ASC');
+    $clientsObj =& $clientHandler->getClients($limit, 0, _SCLIENT_STATUS_ACTIVE, 'title', 'ASC');
     if ($clientsObj) {
         for ($i = 0, $iMax = count($clientsObj); $i < $iMax; ++$i) {
-            if ($itemssize > 0) {
-                $title = xoops_substr($clientsObj[$i]->title(), 0, $itemssize);
+            if ($itemsSize > 0) {
+                $title = xoops_substr($clientsObj[$i]->title(), 0, $itemsSize);
             } else {
                 $title = $clientsObj[$i]->title();
             }
@@ -51,7 +51,8 @@ function b_marquee_smartclient($limit, $dateformat, $itemssize)
                 'category' => '',
                 'author'   => '',
                 'title'    => $title,
-                'link'     => "<a href='" . XOOPS_URL . '/modules/smartclient/client.php?id=' . $clientsObj[$i]->id() . "'>" . $title . '</a>');
+                'link'     => "<a href='" . XOOPS_URL . '/modules/smartclient/client.php?id=' . $clientsObj[$i]->id() . "'>" . $title . '</a>'
+            );
         }
     }
 

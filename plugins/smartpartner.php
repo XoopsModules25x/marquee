@@ -20,50 +20,50 @@
  * ****************************************************************************
  *
  * @param $limit
- * @param $dateformat
- * @param $itemssize
+ * @param $dateFormat
+ * @param $itemsSize
  *
  * @return array
  */
 
 // Script to list recent partners from the smartpartner module (tested with smartparnter 1.2)
-function b_marquee_smartpartner($limit, $dateformat, $itemssize)
+function b_marquee_smartpartner($limit, $dateFormat, $itemsSize)
 {
-    $block = $newObjs = array();
+    $block = $newObjects = array();
     if (!defined('SMARTPARTNER_DIRNAME')) {
         define('SMARTPARTNER_DIRNAME', 'smartpartner');
     }
     include_once(XOOPS_ROOT_PATH . '/modules/' . SMARTPARTNER_DIRNAME . '/include/common.php');
 
     // Creating the partner handler object
-    $smartpartner_partner_handler  = smartpartner_gethandler('partner');
-    $smartpartner_category_handler = smartpartner_gethandler('category');
+    $smartpartnerPartnerHandler  = smartpartner_gethandler('partner');
+    $smartpartnerCategoryHandler = smartpartner_gethandler('category');
 
     // Randomize
-    $partnersObj = $smartpartner_partner_handler->getPartners(0, 0, _SPARTNER_STATUS_ACTIVE);
+    $partnersObj = $smartpartnerPartnerHandler->getPartners(0, 0, _SPARTNER_STATUS_ACTIVE);
     if (count($partnersObj) > 1) {
-        $key_arr  = array_keys($partnersObj);
-        $key_rand = array_rand($key_arr, count($key_arr));
+        $keyArray  = array_keys($partnersObj);
+        $keyRand = array_rand($keyArray, count($keyArray));
         for ($i = 0; ($i < count($partnersObj)) && ($i < $limit); ++$i) {
-            $newObjs[$i] = $partnersObj[$key_rand[$i]];
+            $newObjects[$i] = $partnersObj[$keyRand[$i]];
         }
-        $partnersObj = $newObjs;
+        $partnersObj = $newObjects;
     }
-    $cat_id = array();
+    $catId = array();
     foreach ($partnersObj as $partnerObj) {
-        if (!in_array($partnerObj->categoryid(), $cat_id)) {
-            $cat_id[] = $partnerObj->categoryid();
+        if (!in_array($partnerObj->categoryid(), $catId)) {
+            $catId[] = $partnerObj->categoryid();
         }
     }
 
     if ($partnersObj) {
-        for ($j = 0, $jMax = count($cat_id); $j < $jMax; ++$j) {
-            $categoryObj = $smartpartner_category_handler->get($cat_id[$j]);
+        for ($j = 0, $jMax = count($catId); $j < $jMax; ++$j) {
+            $categoryObj = $smartpartnerCategoryHandler->get($catId[$j]);
             for ($i = 0, $iMax = count($partnersObj); $i < $iMax; ++$i) {
-                if ($partnersObj[$i]->categoryid() == $cat_id[$j]) {
+                if ($partnersObj[$i]->categoryid() == $catId[$j]) {
                     $smartConfig =& smartpartner_getModuleConfig();
-                    if ($itemssize > 0) {
-                        $title = xoops_substr($partnersObj[$i]->title(), 0, $itemssize + 3);
+                    if ($itemsSize > 0) {
+                        $title = xoops_substr($partnersObj[$i]->title(), 0, $itemsSize + 3);
                     } else {
                         $title = $partnersObj[$i]->title();
                     }
@@ -73,7 +73,8 @@ function b_marquee_smartpartner($limit, $dateformat, $itemssize)
                         'category' => '',
                         'author'   => '',
                         'title'    => $title,
-                        'link'     => "<a href='" . XOOPS_URL . '/modules/smartpartner/partner.php?id=' . $partnersObj[$i]->id() . "'>" . $title . '</a>');
+                        'link'     => "<a href='" . XOOPS_URL . '/modules/smartpartner/partner.php?id=' . $partnersObj[$i]->id() . "'>" . $title . '</a>'
+                    );
                 }
             }
         }

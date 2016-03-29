@@ -20,14 +20,14 @@
  * ****************************************************************************
  *
  * @param $limit
- * @param $dateformat
- * @param $itemssize
+ * @param $dateFormat
+ * @param $itemsSize
  *
  * @return array
  */
 
 // Script to list recent articles from the xfsection module (tested with xfsection 1.12)
-function b_marquee_xfsection($limit, $dateformat, $itemssize)
+function b_marquee_xfsection($limit, $dateFormat, $itemsSize)
 {
     $block = array();
     global $xoopsDB;
@@ -43,18 +43,19 @@ function b_marquee_xfsection($limit, $dateformat, $itemssize)
             $wfs   = array();
             $title = $myts->htmlSpecialChars($myrow['title']);
             if (!XOOPS_USE_MULTIBYTES) {
-                if ($itemssize > 0) {
-                    $title = $myts->htmlSpecialChars(substr($myrow['title'], 0, $itemssize - 1));
+                if ($itemsSize > 0) {
+                    $title = $myts->htmlSpecialChars(substr($myrow['title'], 0, $itemsSize - 1));
                 } else {
                     $title = $myts->htmlSpecialChars($myrow['title']);
                 }
             }
             $block[] = array(
-                'date'     => formatTimestamp($myrow['published'], $dateformat),
+                'date'     => formatTimestamp($myrow['published'], $dateFormat),
                 'category' => '',
                 'author'   => XoopsUser::getUnameFromId($myrow['uid']),
                 'title'    => $title,
-                'link'     => "<a href='" . XOOPS_URL . '/modules/xfsection/article.php?articleid=' . $myrow['articleid'] . "'>" . $title . '</a>');
+                'link'     => "<a href='" . XOOPS_URL . '/modules/xfsection/article.php?articleid=' . $myrow['articleid'] . "'>" . $title . '</a>'
+            );
         }
     }
 

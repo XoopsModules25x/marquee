@@ -19,14 +19,14 @@
  * ****************************************************************************
  *
  * @param $limit
- * @param $dateformat
- * @param $itemssize
+ * @param $dateFormat
+ * @param $itemsSize
  *
  * @return array
  */
 
 // Script to list the recent polls from the xoopspoll module version 1.0
-function b_marquee_xoopspoll($limit, $dateformat, $itemssize)
+function b_marquee_xoopspoll($limit, $dateFormat, $itemsSize)
 {
     include_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
     $block  = array();
@@ -35,15 +35,16 @@ function b_marquee_xoopspoll($limit, $dateformat, $itemssize)
     $result = $db->query('SELECT * FROM ' . $db->prefix('xoopspoll_desc') . ' WHERE start_time<=' . time() . ' and end_time>' . time() . ' ORDER BY start_time DESC', $limit, 0);
     while ($myrow = $db->fetchArray($result)) {
         $title = $myts->htmlSpecialChars($myrow['question']);
-        if ($itemssize > 0) {
-            $title = xoops_substr($title, 0, $itemssize + 3);
+        if ($itemsSize > 0) {
+            $title = xoops_substr($title, 0, $itemsSize + 3);
         }
         $block[] = array(
-            'date'     => formatTimestamp($myrow['start_time'], $dateformat),
+            'date'     => formatTimestamp($myrow['start_time'], $dateFormat),
             'category' => '',
             'author'   => $myrow['user_id'],
             'title'    => $title,
-            'link'     => "<a href='" . XOOPS_URL . '/modules/xoopspoll/index.php?poll_id=' . $myrow['poll_id'] . "'>" . $title . '</a>');
+            'link'     => "<a href='" . XOOPS_URL . '/modules/xoopspoll/index.php?poll_id=' . $myrow['poll_id'] . "'>" . $title . '</a>'
+        );
     }
 
     return $block;

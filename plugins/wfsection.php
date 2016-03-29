@@ -20,24 +20,24 @@
  * ****************************************************************************
  *
  * @param $limit
- * @param $dateformat
- * @param $itemssize
+ * @param $dateFormat
+ * @param $itemsSize
  *
  * @return array
  */
 
 // Script to list recent articles from wfsection 1 & 2
-function b_marquee_wfsection($limit, $dateformat, $itemssize)
+function b_marquee_wfsection($limit, $dateFormat, $itemsSize)
 {
     include_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
     $block = array();
 
     $myts              = MyTextSanitizer::getInstance();
-    $module_handler    = xoops_getHandler('module');
-    $wfsection         = $module_handler->getByDirname('wfsection');
-    $wfsection_version = (int)$wfsection->getInfo('version');
+    $moduleHandler    = xoops_getHandler('module');
+    $wfsection         = $moduleHandler->getByDirname('wfsection');
+    $wfsectionVersion = (int)$wfsection->getInfo('version');
 
-    if ($wfsection_version >= 2) {
+    if ($wfsectionVersion >= 2) {
     } else { // wfsection 1
         include_once XOOPS_ROOT_PATH . '/modules/wfsection/include/groupaccess.php';
         global $xoopsDB;
@@ -48,18 +48,19 @@ function b_marquee_wfsection($limit, $dateformat, $itemssize)
                 $wfs   = array();
                 $title = $myts->htmlSpecialChars($myrow['title']);
                 if (!XOOPS_USE_MULTIBYTES) {
-                    if ($itemssize > 0) {
-                        $title = $myts->htmlSpecialChars(substr($myrow['title'], 0, $itemssize));
+                    if ($itemsSize > 0) {
+                        $title = $myts->htmlSpecialChars(substr($myrow['title'], 0, $itemsSize));
                     } else {
                         $title = $myts->htmlSpecialChars($myrow['title']);
                     }
                 }
                 $block[] = array(
-                    'date'     => formatTimestamp($myrow['published'], $dateformat),
+                    'date'     => formatTimestamp($myrow['published'], $dateFormat),
                     'category' => '',
                     'author'   => XoopsUser::getUnameFromId($myrow['uid']),
                     'title'    => $title,
-                    'link'     => "<a href='" . XOOPS_URL . '/modules/wfsection/article.php?articleid=' . $myrow['articleid'] . "'>" . $title . '</a>');
+                    'link'     => "<a href='" . XOOPS_URL . '/modules/wfsection/article.php?articleid=' . $myrow['articleid'] . "'>" . $title . '</a>'
+                );
             }
         }
     } // wfsection 1 ou 2 ?

@@ -34,7 +34,7 @@
 //    return true;
 //}
 
-function xoops_module_update_marquee($module, $oldversion = null)
+function xoops_module_update_marquee(XoopsObject $module, $oldversion = null)
 {
     $db  = XoopsDatabaseFactory::getDatabaseConnection();
     $sql = 'ALTER TABLE `' . $db->prefix('marquee') . "` MODIFY `marquee_bgcolor` varchar(7) NOT NULL default '';";
@@ -70,7 +70,7 @@ function xoops_module_update_marquee($module, $oldversion = null)
         $folderHandler->delete($deleteFile);
     }
 
-    $gperm_handler = xoops_getHandler('groupperm');
+    $gpermHandler = xoops_getHandler('groupperm');
 
-    return $gperm_handler->deleteByModule($module->getVar('mid'), 'item_read');
+    return $gpermHandler->deleteByModule($module->getVar('mid'), 'item_read');
 }

@@ -40,16 +40,16 @@ class MarqueePersistableObjectHandler extends XoopsPersistableObjectHandler//Xoo
      *
      * @var string
      */
-//    public  $table;
-//    public $keyName;
-//    public $className;
-//    public $identifierName;
+    //    public  $table;
+    //    public $keyName;
+    //    public $className;
+    //    public $identifierName;
     /**#@-*/
 
     /**
      * Constructor - called from child classes
      *
-     * @param object|XoopsDatabase $db        {@link XoopsDatabase}     
+     * @param object|XoopsDatabase $db        {@link XoopsDatabase}
      * @param string               $tablename Name of database table
      * @param string               $classname Name of Class, this handler is managing
      * @param string               $keyname   Name of the property, holding the key
@@ -90,10 +90,10 @@ class MarqueePersistableObjectHandler extends XoopsPersistableObjectHandler//Xoo
      *
      * @param mixed $id        ID of the object - or array of ids for joint keys. Joint keys MUST be given in the same order as in the constructor
      * @param null  $fields
-     * @param bool  $as_object whether to return an object or an array
+     * @param bool  $asObject whether to return an object or an array
      * @return mixed reference to the object, FALSE if failed
      */
-    public function get($id = null, $fields = null, $as_object = true)//&get($id, $as_object = true)
+    public function get($id = null, $fields = null, $asObject = true)
     {
         if (is_array($this->keyName)) {
             $criteria = new CriteriaCompo();
@@ -105,7 +105,7 @@ class MarqueePersistableObjectHandler extends XoopsPersistableObjectHandler//Xoo
             $criteria = new Criteria($this->keyName, (int)$id);
         }
         $criteria->setLimit(1);
-        $obj_array =& $this->getObjects($criteria, false, $as_object);
+        $obj_array =& $this->getObjects($criteria, false, $asObject);
         if (count($obj_array) != 1) {
             $ret = null;
         } else {
@@ -120,18 +120,18 @@ class MarqueePersistableObjectHandler extends XoopsPersistableObjectHandler//Xoo
      *
      * @param CriteriaElement $criteria  {@link CriteriaElement} conditions to be met
      * @param bool            $id_as_key use the ID as key for the array?
-     * @param bool            $as_object return an array of objects?
+     * @param bool            $asObject return an array of objects?
      *
      * @return array
      */
-    public function &getObjects(CriteriaElement $criteria = null, $id_as_key = false, $as_object = true)
+    public function &getObjects(CriteriaElement $criteria = null, $id_as_key = false, $asObject = true)
     {
         $ret   = array();
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->table;
         if (null !== $criteria && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
-            if ($criteria->getSort() != '') {
+            if ($criteria->getSort() !== '') {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
             }
             $limit = $criteria->getLimit();
@@ -142,7 +142,7 @@ class MarqueePersistableObjectHandler extends XoopsPersistableObjectHandler//Xoo
             return $ret;
         }
 
-        $ret = $this->convertResultSet($result, $id_as_key, $as_object);
+        $ret = $this->convertResultSet($result, $id_as_key, $asObject);
 
         return $ret;
     }
@@ -152,18 +152,18 @@ class MarqueePersistableObjectHandler extends XoopsPersistableObjectHandler//Xoo
      *
      * @param object $result    database resultset
      * @param bool   $id_as_key - should NOT be used with joint keys
-     * @param bool   $as_object
+     * @param bool   $asObject
      *
      * @return array
      */
-    public function convertResultSet($result, $id_as_key = false, $as_object = true)
+    public function convertResultSet($result, $id_as_key = false, $asObject = true)
     {
         $ret = array();
         while ($myrow = $this->db->fetchArray($result)) {
             $obj = $this->create(false);
             $obj->assignVars($myrow);
             if (!$id_as_key) {
-                if ($as_object) {
+                if ($asObject) {
                     $ret[] =& $obj;
                 } else {
                     $row     = array();
@@ -175,7 +175,7 @@ class MarqueePersistableObjectHandler extends XoopsPersistableObjectHandler//Xoo
                     $ret[] = $row;
                 }
             } else {
-                if ($as_object) {
+                if ($asObject) {
                     $ret[$myrow[$this->keyName]] =& $obj;
                 } else {
                     $row     = array();
@@ -231,7 +231,7 @@ class MarqueePersistableObjectHandler extends XoopsPersistableObjectHandler//Xoo
             $criteria = new CriteriaCompo();
         }
 
-        if ($criteria->getSort() == '') {
+        if ($criteria->getSort() === '') {
             $criteria->setSort($this->identifierName);
         }
 
@@ -242,7 +242,7 @@ class MarqueePersistableObjectHandler extends XoopsPersistableObjectHandler//Xoo
         $sql .= ' FROM ' . $this->table;
         if (null !== $criteria && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
-            if ($criteria->getSort() != '') {
+            if ($criteria->getSort() !== '') {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
             }
             $limit = $criteria->getLimit();
@@ -274,8 +274,8 @@ class MarqueePersistableObjectHandler extends XoopsPersistableObjectHandler//Xoo
         $field   = '';
         $groupby = false;
         if (null !== $criteria && '' !== $criteria->groupby && is_subclass_of($criteria, 'criteriaelement')) {
-                $groupby = true;
-                $field   = $criteria->groupby . ', '; //Not entirely secure unless you KNOW that no criteria's groupby clause is going to be mis-used
+            $groupby = true;
+            $field   = $criteria->groupby . ', '; //Not entirely secure unless you KNOW that no criteria's groupby clause is going to be mis-used
         }
         $sql = 'SELECT ' . $field . 'COUNT(*) FROM ' . $this->table;
         if (null !== $criteria && is_subclass_of($criteria, 'criteriaelement')) {
@@ -335,7 +335,7 @@ class MarqueePersistableObjectHandler extends XoopsPersistableObjectHandler//Xoo
     }
 
     /**
-     * Quickly insert a record like this $myobject_handler->quickInsert('field1' => field1value, 'field2' => $field2value)
+     * Quickly insert a record like this $myobjectHandler->quickInsert('field1' => field1value, 'field2' => $field2value)
      *
      * @param array $vars  Array containing the fields name and value
      * @param bool  $force whether to force the query execution despite security settings
@@ -405,12 +405,12 @@ class MarqueePersistableObjectHandler extends XoopsPersistableObjectHandler//Xoo
             unset($cleanvars['dohtml']);
         }
         if ($obj->isNew()) {
-            if (!is_array($this->keyName) && $cleanvars[$this->keyName] < 1) {    
-                    $cleanvars[$this->keyName] = $this->db->genId($this->table . '_' . $this->keyName . '_seq');        
+            if (!is_array($this->keyName) && $cleanvars[$this->keyName] < 1) {
+                $cleanvars[$this->keyName] = $this->db->genId($this->table . '_' . $this->keyName . '_seq');
             }
             $sql = 'INSERT INTO ' . $this->table . ' (' . implode(',', array_keys($cleanvars)) . ') VALUES (' . implode(',', array_values($cleanvars)) . ')';
         } else {
-            $sql = 'UPDATE ' . $this->table . ' SET';
+            $sql      = 'UPDATE ' . $this->table . ' SET';
             $notfirst = null;
             foreach ($cleanvars as $key => $value) {
                 if ((!is_array($this->keyName) && $key == $this->keyName) || (is_array($this->keyName) && in_array($key, $this->keyName))) {
@@ -472,7 +472,7 @@ class MarqueePersistableObjectHandler extends XoopsPersistableObjectHandler//Xoo
             $set_clause .= $this->db->quoteString($fieldvalue);
         }
         $sql = 'UPDATE ' . $this->table . ' SET ' . $set_clause;
-        if (null !== $criteria&& is_subclass_of($criteria, 'criteriaelement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (false !== $force) {
@@ -498,7 +498,7 @@ class MarqueePersistableObjectHandler extends XoopsPersistableObjectHandler//Xoo
      * @return bool
      */
 
-    public function deleteAll(CriteriaElement $criteria = null, $force = true, $asObject = false)//deleteAll($criteria = null)
+    public function deleteAll(CriteriaElement $criteria = null, $force = true, $asObject = false)
     {
         if (null !== $criteria && is_subclass_of($criteria, 'criteriaelement')) {
             $sql = 'DELETE FROM ' . $this->table;

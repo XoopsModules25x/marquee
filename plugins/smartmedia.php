@@ -20,14 +20,14 @@
  * ****************************************************************************
  *
  * @param $limit
- * @param $dateformat
- * @param $itemssize
+ * @param $dateFormat
+ * @param $itemsSize
  *
  * @return array
  */
 
 // Script to list recent clips from the smartmedia module (tested with smartmedia 0.85)
-function b_marquee_smartmedia($limit, $dateformat, $itemssize)
+function b_marquee_smartmedia($limit, $dateFormat, $itemsSize)
 {
     $block = array();
     if (!defined('SMARTMEDIA_DIRNAME')) {
@@ -35,12 +35,14 @@ function b_marquee_smartmedia($limit, $dateformat, $itemssize)
     }
     include_once(XOOPS_ROOT_PATH . '/modules/' . SMARTMEDIA_DIRNAME . '/include/common.php');
     $title_length = 99999;
-    if ($itemssize > 0) {
-        $title_length = $itemssize;
+    if ($itemsSize > 0) {
+        $title_length = $itemsSize;
     }
-    $max_clips = $limit;
+    $maxClips = $limit;
 
-    $clipsArray =& $smartmedia_clip_handler->getClipsFromAdmin(0, $max_clips, 'clips.created_date', 'DESC', 'all');
+    $smartmediaClipHandler =& smartmedia_gethandler('clip');
+    
+    $clipsArray =& $smartmediaClipHandler->getClipsFromAdmin(0, $maxClips, 'clips.created_date', 'DESC', 'all');
 
     if ($clipsArray) {
         foreach ($clipsArray as $clipArray) {
@@ -50,7 +52,8 @@ function b_marquee_smartmedia($limit, $dateformat, $itemssize)
                 'category' => '',
                 'author'   => '',
                 'title'    => $clipArray['title'],
-                'link'     => '<a href="' . SMARTMEDIA_URL . 'clip.php?categoryid=' . $clipArray['categoryid'] . '&folderid=' . $clipArray['folderid'] . '&clipid=' . $clipArray['clipid'] . '">' . $clipArray['title'] . '</a>');
+                'link'     => '<a href="' . SMARTMEDIA_URL . 'clip.php?categoryid=' . $clipArray['categoryid'] . '&folderid=' . $clipArray['folderid'] . '&clipid=' . $clipArray['clipid'] . '">' . $clipArray['title'] . '</a>'
+            );
             unset($clip);
         }
     }

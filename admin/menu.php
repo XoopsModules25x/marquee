@@ -6,8 +6,8 @@
 //include_once $path . '/mainfile.php';
 //
 //$dirname         = basename(dirname(__DIR__));
-//$module_handler  = xoops_getHandler('module');
-//$module          = $module_handler->getByDirname($dirname);
+//$moduleHandler  = xoops_getHandler('module');
+//$module          = $moduleHandler->getByDirname($dirname);
 //$pathIcon32      = $module->getInfo('icons32');
 //$pathModuleAdmin = $module->getInfo('dirmoduleadmin');
 //$pathLanguage    = $path . $pathModuleAdmin;
@@ -18,8 +18,8 @@
 //
 //include_once $fileinc;
 
-$module_handler = xoops_getHandler('module');
-$module         = $module_handler->getByDirname(basename(dirname(__DIR__)));
+$moduleHandler = xoops_getHandler('module');
+$module         = $moduleHandler->getByDirname(basename(dirname(__DIR__)));
 $pathIcon32     = '../../' . $module->getInfo('icons32');
 xoops_loadLanguage('modinfo', $module->dirname());
 
@@ -34,14 +34,17 @@ include_once $fileinc;
 $adminmenu[] = array(
     'title' => _AM_MODULEADMIN_HOME,
     'link'  => 'admin/index.php',
-    'icon'  => $pathIcon32 . '/home.png');
+    'icon'  => $pathIcon32 . '/home.png'
+);
 
 $adminmenu[] = array(
     'title' => _MI_MARQUEE_MENU_01,
     'link'  => 'admin/main.php',
-    'icon'  => $pathIcon32 . '/marquee.png');
+    'icon'  => $pathIcon32 . '/marquee.png'
+);
 
 $adminmenu[] = array(
     'title' => _AM_MODULEADMIN_ABOUT,
     'link'  => 'admin/about.php',
-    'icon'  => $pathIcon32 . '/about.png');
+    'icon'  => $pathIcon32 . '/about.png'
+);

@@ -19,42 +19,42 @@
  * ****************************************************************************
  *
  * @param $limit
- * @param $dateformat
- * @param $itemssize
+ * @param $dateFormat
+ * @param $itemsSize
  *
  * @return array
  */
 
 // Script to list recent posts from Newbb 1 & 2
-function b_marquee_newbb($limit, $dateformat, $itemssize)
+function b_marquee_newbb($limit, $dateFormat, $itemsSize)
 {
     include_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
     $block = array();
 
-    $module_handler = xoops_getHandler('module');
-    $newbb          = $module_handler->getByDirname('newbb');
-    $newbb_version  = (int)$newbb->getInfo('version');
+    $moduleHandler = xoops_getHandler('module');
+    $newbb          = $moduleHandler->getByDirname('newbb');
+    $newbbVersion  = (int)$newbb->getInfo('version');
 
-    if ($newbb_version >= 2) {
+    if ($newbbVersion >= 2) {
         $order          = 't.topic_time';
-        $forum_handler  = xoops_getModuleHandler('forum', 'newbb');
-        $module_handler = xoops_getHandler('module');
-        $newbb          = $module_handler->getByDirname('newbb');
+        $forumHandler  = xoops_getModuleHandler('forum', 'newbb');
+        $moduleHandler = xoops_getHandler('module');
+        $newbb          = $moduleHandler->getByDirname('newbb');
 
         if (!isset($newbbConfig)) {
-            $config_handler = xoops_getHandler('config');
-            $newbbConfig    = &$config_handler->getConfigsByCat(0, $newbb->getVar('mid'));
+            $configHandler = xoops_getHandler('config');
+            $newbbConfig    = &$configHandler->getConfigsByCat(0, $newbb->getVar('mid'));
         }
 
         if (!isset($access_forums)) {
-            $access_forums = $forum_handler->getForums(0, 'access'); // get all accessible forums
+            $access_forums = $forumHandler->getForums(0, 'access'); // get all accessible forums
         }
-        $valid_forums   = array_keys($access_forums);
-        $forum_criteria = ' AND t.forum_id IN (' . implode(',', $valid_forums) . ')';
+        $validForums   = array_keys($access_forums);
+        $forumCriteria = ' AND t.forum_id IN (' . implode(',', $validForums) . ')';
         unset($access_forums);
-        $approve_criteria = ' AND t.approved = 1 AND p.approved = 1';
+        $approveCriteria = ' AND t.approved = 1 AND p.approved = 1';
         $db               = XoopsDatabaseFactory::getDatabaseConnection();
-        $query            = 'SELECT t.*, f.forum_name, f.allow_subject_prefix, p.post_id, p.icon, p.uid, p.poster_name, u.uname, u.name FROM ' . $db->prefix('bb_topics') . ' t, ' . $db->prefix('bb_forums') . ' f, ' . $db->prefix('bb_posts') . ' p LEFT JOIN ' . $db->prefix('users') . ' u ON u.uid = p.uid WHERE f.forum_id=t.forum_id ' . $forum_criteria . $approve_criteria . ' AND t.topic_last_post_id=p.post_id ORDER BY ' . $order . ' DESC';
+        $query            = 'SELECT t.*, f.forum_name, f.allow_subject_prefix, p.post_id, p.icon, p.uid, p.poster_name, u.uname, u.name FROM ' . $db->prefix('bb_topics') . ' t, ' . $db->prefix('bb_forums') . ' f, ' . $db->prefix('bb_posts') . ' p LEFT JOIN ' . $db->prefix('users') . ' u ON u.uid = p.uid WHERE f.forum_id=t.forum_id ' . $forumCriteria . $approveCriteria . ' AND t.topic_last_post_id=p.post_id ORDER BY ' . $order . ' DESC';
         $result           = $db->query($query, $limit, 0);
         if (!$result) {
             return '';
@@ -70,22 +70,23 @@ function b_marquee_newbb($limit, $dateformat, $itemssize)
 
         foreach ($rows as $arr) {
             $title = $myts->htmlSpecialChars($arr['topic_title']);
-            if ($itemssize > 0) {
-                $title = xoops_substr($title, 0, $itemssize + 3);
+            if ($itemsSize > 0) {
+                $title = xoops_substr($title, 0, $itemsSize + 3);
             }
 
             $block[] = array(
-                'date'     => formatTimestamp($arr['topic_time'], $dateformat),
+                'date'     => formatTimestamp($arr['topic_time'], $dateFormat),
                 'category' => $arr['forum_name'],
                 'author'   => $arr['uid'],
                 'title'    => $title,
-                'link'     => "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $arr['topic_id'] . '&amp;post_id=' . $arr['post_id'] . '#forumpost' . $arr['post_id'] . "'>" . $title . '</a>');
+                'link'     => "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $arr['topic_id'] . '&amp;post_id=' . $arr['post_id'] . '#forumpost' . $arr['post_id'] . "'>" . $title . '</a>'
+            );
         }
     } else { // Newbb 1
         $db    = XoopsDatabaseFactory::getDatabaseConnection();
         $myts  = MyTextSanitizer::getInstance();
         $order = 't.topic_time';
-        $time = $tmpuser = '';
+        $time  = $tmpuser = '';
         $query = 'SELECT t.topic_id, t.topic_title, t.topic_last_post_id, t.topic_time, t.topic_views, t.topic_replies, t.forum_id, f.forum_name FROM ' . $db->prefix('bb_topics') . ' t, ' . $db->prefix('bb_forums') . ' f WHERE f.forum_id=t.forum_id AND f.forum_type <> 1 ORDER BY ' . $order . ' DESC';
         if (!$result = $db->query($query, $limit, 0)) {
             return '';
@@ -94,11 +95,11 @@ function b_marquee_newbb($limit, $dateformat, $itemssize)
             $lastpostername = $db->query('SELECT post_id, uid FROM ' . $db->prefix('bb_posts') . ' WHERE post_id = ' . $arr['topic_last_post_id']);
             while ($tmpdb = $db->fetchArray($lastpostername)) {
                 $tmpuser = XoopsUser::getUnameFromId($tmpdb['uid']);
-                $time    = formatTimestamp($arr['topic_time'], $dateformat);
+                $time    = formatTimestamp($arr['topic_time'], $dateFormat);
             }
             $title = $myts->htmlSpecialChars($arr['topic_title']);
-            if ($itemssize > 0) {
-                $title = xoops_substr($title, 0, $itemssize + 3);
+            if ($itemsSize > 0) {
+                $title = xoops_substr($title, 0, $itemsSize + 3);
             }
 
             $block[] = array(
@@ -106,7 +107,8 @@ function b_marquee_newbb($limit, $dateformat, $itemssize)
                 'category' => $arr['forum_name'],
                 'author'   => $tmpuser,
                 'title'    => $title,
-                'link'     => "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $arr['topic_id'] . '&amp;forum=' . $arr['forum_id'] . '&amp;post_id=' . $arr['topic_last_post_id'] . '#forumpost' . $arr['topic_last_post_id'] . "'>" . $title . '</a>');
+                'link'     => "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $arr['topic_id'] . '&amp;forum=' . $arr['forum_id'] . '&amp;post_id=' . $arr['topic_last_post_id'] . '#forumpost' . $arr['topic_last_post_id'] . "'>" . $title . '</a>'
+            );
         }
     }
 

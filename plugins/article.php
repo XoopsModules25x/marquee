@@ -20,8 +20,8 @@
  * ****************************************************************************
  *
  * @param $limit
- * @param $dateformat
- * @param $itemsize
+ * @param $dateFormat
+ * @param $itemsSize
  *
  * @return array
  */
@@ -31,7 +31,7 @@
 //  written by Defkon1 [defkon1 at gmail dot com]                            //
 //  ------------------------------------------------------------------------ //
 
-function b_marquee_article($limit, $dateformat, $itemsize)
+function b_marquee_article($limit, $dateFormat, $itemsSize)
 {
     global $xoopsDB;
     include_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
@@ -39,27 +39,27 @@ function b_marquee_article($limit, $dateformat, $itemsize)
     $block = array();
     $myts  = MyTextSanitizer::getInstance();
 
-    static $access_cats;
+    static $accessCats;
 
     $artConfig = art_load_config();
     art_define_url_delimiter();
 
     $select   = 'art_id';
-    $disp_tag = '';
+    $dispTag = '';
     $from     = '';
     $where    = '';
     $order    = 'art_time_publish DESC';
 
     $select .= ', cat_id, art_title, uid, art_time_publish';
 
-    if(!isset($access_cats)) {
-        $permission_handler = xoops_getModuleHandler('permission', 'article');
-        $access_cats        = $permission_handler->getCategories('access');
+    if (!isset($accessCats)) {
+        $permissionHandler = xoops_getModuleHandler('permission', 'article');
+        $accessCats        = $permissionHandler->getCategories('access');
     }
-    $allowed_cats = $access_cats;
+    $allowedCats = $accessCats;
 
     $query = "SELECT $select FROM " . art_DB_prefix('article') . $from;
-    $query .= ' WHERE cat_id IN (' . implode(',', $allowed_cats) . ') AND art_time_publish >0 ' . $where;
+    $query .= ' WHERE cat_id IN (' . implode(',', $allowedCats) . ') AND art_time_publish >0 ' . $where;
     $query .= ' ORDER BY ' . $order;
     $query .= ' LIMIT 0, ' . $limit;
     if (!$result = $xoopsDB->query($query)) {
@@ -74,24 +74,24 @@ function b_marquee_article($limit, $dateformat, $itemsize)
     if (count($rows) < 1) {
         return false;
     }
-    $author_name = XoopsUser::getUnameFromId(array_keys($author));
+    $authorName = XoopsUser::getUnameFromId(array_keys($author));
 
     $arts            = array();
     $uids            = array();
     $cids            = array();
-    $article_handler = xoops_getModuleHandler('article', 'article');
+    $articleHandler = xoops_getModuleHandler('article', 'article');
     foreach ($rows as $row) {
-        $article = $article_handler->create(false);
+        $article = $articleHandler->create(false);
         $article->assignVars($row);
         $_art = array();
         foreach ($row as $tag => $val) {
             $_art[$tag] = @$article->getVar($tag);
         }
-        $_art['author'] = $author_name[$row['uid']];
+        $_art['author'] = $authorName[$row['uid']];
 
-        $_art['date'] = $article->getTime($dateformat);
+        $_art['date'] = $article->getTime($dateFormat);
 
-        $titlelength   = $itemsize + 3;
+        $titlelength   = $itemsSize + 3;
         $_art['title'] = xoops_substr($_art['art_title'], 0, $titlelength);
 
         $_art['category'] = '';

@@ -75,7 +75,8 @@ $modversion['blocks'][] = array(
     'show_func'   => 'b_marquee_show',
     'options'     => '1',
     'edit_func'   => 'b_marquee_edit',
-    'template'    => 'marquee_block01.tpl');
+    'template'    => 'marquee_block01.tpl'
+);
 
 $modversion['blocks'][] = array(
     'file'        => 'marquee_bloc.php',
@@ -84,7 +85,8 @@ $modversion['blocks'][] = array(
     'show_func'   => 'b_marquee_show',
     'options'     => '2',
     'edit_func'   => 'b_marquee_edit',
-    'template'    => 'marquee_block02.tpl');
+    'template'    => 'marquee_block02.tpl'
+);
 
 $modversion['blocks'][] = array(
     'file'        => 'marquee_bloc.php',
@@ -93,7 +95,8 @@ $modversion['blocks'][] = array(
     'show_func'   => 'b_marquee_show',
     'options'     => '3',
     'edit_func'   => 'b_marquee_edit',
-    'template'    => 'marquee_block03.tpl');
+    'template'    => 'marquee_block03.tpl'
+);
 
 $modversion['blocks'][] = array(
     'file'        => 'marquee_bloc.php',
@@ -102,7 +105,8 @@ $modversion['blocks'][] = array(
     'show_func'   => 'b_marquee_show',
     'options'     => '4',
     'edit_func'   => 'b_marquee_edit',
-    'template'    => 'marquee_block04.tpl');
+    'template'    => 'marquee_block04.tpl'
+);
 
 // Search
 $modversion['hasSearch'] = 0;
@@ -115,7 +119,7 @@ $modversion['use_smarty'] = 1;
  * Editor to use (was usekiovi)
  */
 xoops_load('xoopseditorhandler');
-$editor_handler = XoopsEditorHandler::getInstance();
+$editorHandler = XoopsEditorHandler::getInstance();
 
 $modversion['config'][] = array(
     'name'        => 'form_options',
@@ -124,7 +128,8 @@ $modversion['config'][] = array(
     'formtype'    => 'select',
     'valuetype'   => 'text',
     'default'     => 'dhtmltextarea',
-    'options'     => array_flip($editor_handler->getList()));
+    'options'     => array_flip($editorHandler->getList())
+);
 
 /**
  * Which method to use to create the marquee (The Microsoft marque tag or the Javascript method ?)
@@ -136,7 +141,8 @@ $modversion['config'][] = array(
     'formtype'    => 'select',
     'valuetype'   => 'text',
     'default'     => 'Marquee',
-    'options'     => array('_MI_MARQUEE_MARQUEE' => 'Marquee', '_MI_MARQUEE_DHTML' => 'DHTML'));
+    'options'     => array('_MI_MARQUEE_MARQUEE' => 'Marquee', '_MI_MARQUEE_DHTML' => 'DHTML')
+);
 
 /**
  * Date's format (only use with plugins)
@@ -147,7 +153,8 @@ $modversion['config'][] = array(
     'description' => '_MI_MARQUEE_DATEFORMAT_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
-    'default'     => '');
+    'default'     => ''
+);
 
 /**
  * Count of items taken from other modules (only use with plugins)
@@ -158,7 +165,8 @@ $modversion['config'][] = array(
     'description' => '_MI_MARQUE_ITEMSCOUNT_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => 0);
+    'default'     => 0
+);
 
 /**
  * Titles length (only use with plugins)
@@ -169,4 +177,5 @@ $modversion['config'][] = array(
     'description' => '_MI_MARQUE_TITLELENGTH_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => 0);
+    'default'     => 0
+);

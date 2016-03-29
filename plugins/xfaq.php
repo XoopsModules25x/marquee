@@ -19,14 +19,14 @@
  * ****************************************************************************
  *
  * @param $limit
- * @param $dateformat
- * @param $itemssize
+ * @param $dateFormat
+ * @param $itemsSize
  *
  * @return array
  */
 
 // Script to list the recent faqs from the xfaq module version 1.01
-function b_marquee_xfaq($limit, $dateformat, $itemssize)
+function b_marquee_xfaq($limit, $dateFormat, $itemsSize)
 {
     include_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
     $block  = array();
@@ -35,15 +35,16 @@ function b_marquee_xfaq($limit, $dateformat, $itemssize)
     $result = $db->query('SELECT f.*, t.topic_title, t.topic_submitter FROM ' . $db->prefix('xfaq_faq') . ' f, ' . $db->prefix('xfaq_topic') . ' t WHERE f.faq_online>0 AND (f.faq_topic=t.topic_id) ORDER BY faq_date_created DESC', $limit, 0);
     while ($myrow = $db->fetchArray($result)) {
         $title = $myts->htmlSpecialChars($myrow['faq_question']);
-        if ($itemssize > 0) {
-            $title = xoops_substr($title, 0, $itemssize + 3);
+        if ($itemsSize > 0) {
+            $title = xoops_substr($title, 0, $itemsSize + 3);
         }
         $block[] = array(
-            'date'     => formatTimestamp($myrow['faq_date_created'], $dateformat),
+            'date'     => formatTimestamp($myrow['faq_date_created'], $dateFormat),
             'category' => $myts->htmlSpecialChars($myrow['topic_title']),
             'author'   => XoopsUser::getUnameFromId((int)$myrow['topic_submitter']),
             'title'    => $title,
-            'link'     => "<a href='" . XOOPS_URL . '/modules/xfaq/faq.php?faq_id=' . $myrow['faq_id'] . "'>{$title}</a>");
+            'link'     => "<a href='" . XOOPS_URL . '/modules/xfaq/faq.php?faq_id=' . $myrow['faq_id'] . "'>{$title}</a>"
+        );
     }
 
     return $block;

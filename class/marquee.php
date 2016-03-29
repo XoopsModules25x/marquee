@@ -71,10 +71,10 @@ class Marquee extends XoopsObject
         $tblbehaviour = array('scroll', 'slide', 'alternate');
         $tbldirection = array('right', 'left', 'up', 'down');
         $stop         = $this->getVar('marquee_stoponmouseover') == 1 ? ' onmouseover="this.stop()" onmouseout="this.start()"' : '';
-        $bgcolor      = trim($this->getVar('marquee_bgcolor')) != '' ? " bgcolor='" . $this->getVar('marquee_bgcolor') . "'" : '';
+        $bgcolor      = trim($this->getVar('marquee_bgcolor')) !== '' ? " bgcolor='" . $this->getVar('marquee_bgcolor') . "'" : '';
         $height       = $this->getVar('marquee_height') != 0 ? ' height=' . $this->getVar('marquee_height') : '';
         $hspace       = $this->getVar('marquee_hspace') != 0 ? ' hspace=' . $this->getVar('marquee_hspace') : '';
-        $width        = trim($this->getVar('marquee_width')) != '' ? " width='" . $this->getVar('marquee_width') . "'" : '';
+        $width        = trim($this->getVar('marquee_width')) !== '' ? " width='" . $this->getVar('marquee_width') . "'" : '';
         $scrolldelay  = $this->getVar('marquee_scrolldelay') != 0 ? ' scrolldelay=' . $this->getVar('marquee_scrolldelay') : '';
         $loop         = $this->getVar('marquee_loop') != 0 ? ' loop=' . $this->getVar('marquee_loop') : " loop='infinite'";
         $vspace       = $this->getVar('marquee_vspace') != 0 ? ' vspace=' . $this->getVar('marquee_vspace') : '';
@@ -91,15 +91,15 @@ class Marquee extends XoopsObject
             $function_name = 'b_marquee_' . $this->getVar('marquee_source'); // For example b_marquee_comments
             if (function_exists($function_name)) {
                 $limit      = marquee_getmoduleoption('itemscount');
-                $dateformat = marquee_getmoduleoption('dateformat');
-                $itemssize  = marquee_getmoduleoption('itemssize');
-                $retval     = call_user_func($function_name, $limit, $dateformat, $itemssize);
+                $dateFormat = marquee_getmoduleoption('dateformat');
+                $itemsSize  = marquee_getmoduleoption('itemssize');
+                $retval     = call_user_func($function_name, $limit, $dateFormat, $itemsSize);
                 if (is_array($retval) && count($retval) > 0) {
                     foreach ($retval as $onevalue) {
-                        if (isset($onevalue['category']) && xoops_trim($onevalue['category']) != '') {
+                        if (isset($onevalue['category']) && xoops_trim($onevalue['category']) !== '') {
                             $onevalue['category'] = ' - ' . $onevalue['category'];
                         }
-                        if (isset($onevalue['link']) && xoops_trim($onevalue['link']) != '') {
+                        if (isset($onevalue['link']) && xoops_trim($onevalue['link']) !== '') {
                             $onevalue['link'] = ' - ' . $onevalue['link'];
                         }
                         $content .= $onevalue['date'] . $onevalue['category'] . $onevalue['link'] . $br;
@@ -152,13 +152,13 @@ class MarqueeMarqueeHandler extends MarqueePersistableObjectHandler
     {
         $ret         = '';
         $tbl_marquee =& $this->getObjects();
-        foreach ($tbl_marquee as $one_marquee) {
+        foreach ($tbl_marquee as $oneMarquee) {
             $selected = '';
-            if ($one_marquee->getVar('marquee_marqueeid') == $selectedmarquee) {
+            if ($oneMarquee->getVar('marquee_marqueeid') == $selectedmarquee) {
                 $selected = ' selected';
             }
-            $content = xoops_trim(strip_tags($one_marquee->getVar('marquee_content'))) != '' ? xoops_substr(strip_tags($one_marquee->getVar('marquee_content')), 0, 50) : $one_marquee->getVar('marquee_source');
-            $ret .= '<option ' . $selected . " value='" . $one_marquee->getVar('marquee_marqueeid') . "'>" . $content . '</option>';
+            $content = xoops_trim(strip_tags($oneMarquee->getVar('marquee_content'))) !== '' ? xoops_substr(strip_tags($oneMarquee->getVar('marquee_content')), 0, 50) : $oneMarquee->getVar('marquee_source');
+            $ret .= '<option ' . $selected . " value='" . $oneMarquee->getVar('marquee_marqueeid') . "'>" . $content . '</option>';
         }
 
         return $ret;

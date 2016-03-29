@@ -28,12 +28,12 @@ function b_marquee_show($options)
 {
     global $xoopsTpl;
     include_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
-    $marquee_handler = xoops_getModuleHandler('marquee', 'marquee');
+    $marqueeHandler = xoops_getModuleHandler('marquee', 'marquee');
     $block           = array();
     $marqueeId       = (int)$options[0];
     if ($marqueeId > 0) {
         $marquee = null;
-        $marquee = $marquee_handler->get($marqueeId);
+        $marquee = $marqueeHandler->get($marqueeId);
         if (is_object($marquee)) {
             $uniqid = md5(uniqid(mt_rand(), true));
             if (marquee_getmoduleoption('methodtouse') === 'DHTML') {
@@ -62,9 +62,9 @@ function b_marquee_show($options)
  */
 function b_marquee_edit($options)
 {
-    $marquee_handler = xoops_getModuleHandler('marquee', 'marquee');
+    $marqueeHandler = xoops_getModuleHandler('marquee', 'marquee');
     $form            = "<table border='0'>";
-    $form .= '<tr><td>' . _MB_MARQUEE_SELECT . "</td><td><select name='options[0]'>" . $marquee_handler->getHtmlMarqueesList($options[0]) . '</select></td></tr>';
+    $form .= '<tr><td>' . _MB_MARQUEE_SELECT . "</td><td><select name='options[0]'>" . $marqueeHandler->getHtmlMarqueesList($options[0]) . '</select></td></tr>';
     $form .= '</table>';
 
     return $form;
