@@ -96,19 +96,19 @@ function myglob($folder = '', $pattern = 'php')
         if (!($dir = @opendir($folder))) {
             throw new \RuntimeException('Error, impossible to open the folder ' . $folder);
         }
+        while (($file = readdir($dir)) !== false) {
+            if (!is_dir($file)) {
+                $ext       = basename($file);
+                $ext       = explode('.', $ext);
+                $extension = strtolower($ext[count($ext) - 1]);
+                if ($extension === $pattern) {
+                    $result[] = $file;
+                }
+            }
+        }
+        closedir($dir);
+        return $result;
     } catch (Exception $e) {
         echo 'Caught exception: ', $e->getMessage(), "\n", '<br/>';
     }
-    while (($file = readdir($dir)) !== false) {
-        if (!is_dir($file)) {
-            $ext       = basename($file);
-            $ext       = explode('.', $ext);
-            $extension = strtolower($ext[count($ext) - 1]);
-            if ($extension === $pattern) {
-                $result[] = $file;
-            }
-        }
-    }
-    closedir($dir);
-    return $result;
 }
