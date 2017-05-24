@@ -151,7 +151,7 @@ class MarqueeMarqueeHandler extends MarqueePersistableObjectHandler
     public function getHtmlMarqueesList($selectedmarquee = 0)
     {
         $ret         = '';
-        $tbl_marquee =& $this->getObjects();
+        $tbl_marquee = $this->getObjects();
         foreach ($tbl_marquee as $oneMarquee) {
             $selected = '';
             if ($oneMarquee->getVar('marquee_marqueeid') == $selectedmarquee) {

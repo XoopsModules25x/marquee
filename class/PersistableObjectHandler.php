@@ -105,7 +105,7 @@ class MarqueePersistableObjectHandler extends XoopsPersistableObjectHandler//Xoo
             $criteria = new Criteria($this->keyName, (int)$id);
         }
         $criteria->setLimit(1);
-        $obj_array =& $this->getObjects($criteria, false, $asObject);
+        $obj_array = $this->getObjects($criteria, false, $asObject);
         if (count($obj_array) != 1) {
             $ret = null;
         } else {
