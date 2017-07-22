@@ -16,7 +16,7 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  */
 define('_MI_MARQUEE_NAME', 'Marquee');
@@ -33,7 +33,8 @@ define('_MI_MARQUEE_MENU_01', 'Manage marquees');
 define('_MI_MARQUEE_USE_KIOVI', 'Use kiovi?');
 define('_MI_MARQUEE_USE_KIOVI_DESC', 'If it is detected then Kiovi will be used');
 define('_MI_MARQUEE_METHOD', 'Method to use');
-define('_MI_MARQUEE_METHOD_DESC', "If you select the 'Marquee' method then the module will use the html marquee's tag, this method is not compatible with all navigators but offers many options.<br>If you select the 'dhtml' method, then the marquee should run with more navigators but it will require more code in your page and you will have less options");
+define('_MI_MARQUEE_METHOD_DESC',
+       "If you select the 'Marquee' method then the module will use the html marquee's tag, this method is not compatible with all navigators but offers many options.<br>If you select the 'dhtml' method, then the marquee should run with more navigators but it will require more code in your page and you will have less options");
 define('_MI_MARQUEE_MARQUEE', 'Marquee');
 define('_MI_MARQUEE_DHTML', 'Javascript');
 define('_MI_MARQUEE_DATEFORMAT', "Date's format");

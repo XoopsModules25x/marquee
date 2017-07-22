@@ -16,7 +16,7 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  *
  * @param $limit
@@ -34,8 +34,8 @@
 function b_marquee_article($limit, $dateFormat, $itemsSize)
 {
     global $xoopsDB;
-    include_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
-    require_once(XOOPS_ROOT_PATH . '/modules/article/include/functions.php');
+    require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
+    require_once XOOPS_ROOT_PATH . '/modules/article/include/functions.php';
     $block = array();
     $myts  = MyTextSanitizer::getInstance();
 
@@ -44,11 +44,11 @@ function b_marquee_article($limit, $dateFormat, $itemsSize)
     $artConfig = art_load_config();
     art_define_url_delimiter();
 
-    $select   = 'art_id';
+    $select  = 'art_id';
     $dispTag = '';
-    $from     = '';
-    $where    = '';
-    $order    = 'art_time_publish DESC';
+    $from    = '';
+    $where   = '';
+    $order   = 'art_time_publish DESC';
 
     $select .= ', cat_id, art_title, uid, art_time_publish';
 
@@ -76,9 +76,9 @@ function b_marquee_article($limit, $dateFormat, $itemsSize)
     }
     $authorName = XoopsUser::getUnameFromId(array_keys($author));
 
-    $arts            = array();
-    $uids            = array();
-    $cids            = array();
+    $arts           = array();
+    $uids           = array();
+    $cids           = array();
     $articleHandler = xoops_getModuleHandler('article', 'article');
     foreach ($rows as $row) {
         $article = $articleHandler->create(false);

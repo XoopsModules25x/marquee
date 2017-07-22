@@ -16,7 +16,7 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  *
  * @param $limit
@@ -29,8 +29,8 @@
 // Script to list recent articles from the News module (version >=1.21)
 function b_marquee_news($limit, $dateFormat, $itemsSize)
 {
-    include_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
-    include_once XOOPS_ROOT_PATH . '/modules/news/class/class.newsstory.php';
+    require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
+    require_once XOOPS_ROOT_PATH . '/modules/news/class/class.newsstory.php';
     $block      = $stories = array();
     $story      = new NewsStory();
     $restricted = marquee_getmoduleoption('restrictindex', 'news');

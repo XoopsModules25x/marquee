@@ -16,7 +16,7 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  *
  * @param $limit
@@ -33,12 +33,12 @@
 
 function b_marquee_tplleaguestats($limit, $dateFormat, $itemsSize)
 {
-    include_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
+    require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
 
     //######################## SETTINGS ######################
     $displaySeason  = false; // display season name?
     $hour           = 1; // GMT+1  -> var = 1
-    $useItemSize   = false; // use marquee $itemsize value?
+    $useItemSize    = false; // use marquee $itemsize value?
     $overwriteLimit = true; // overwrite marquee's limit settings?
     $newLimit       = 6; // new limit (valid only if
     //     overwrite_limit_settings = true)

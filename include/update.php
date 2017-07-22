@@ -16,12 +16,11 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  *
- * @param      $module
- * @param null $oldversion
- *
+ * @param XoopsModule|XoopsObject $module
+ * @param null                    $oldversion
  * @return mixed
  */
 
@@ -37,14 +36,14 @@
 function xoops_module_update_marquee(XoopsObject $module, $oldversion = null)
 {
     $db  = XoopsDatabaseFactory::getDatabaseConnection();
-    $sql = 'ALTER TABLE `' . $db->prefix('marquee') . "` MODIFY `marquee_bgcolor` varchar(7) NOT NULL default '';";
+    $sql = 'ALTER TABLE `' . $db->prefix('marquee') . "` MODIFY `marquee_bgcolor` VARCHAR(7) NOT NULL DEFAULT '';";
     $db->query($sql);
 
     if ($oldversion < 250) {
 
         // delete old block html template files
         $templateDirectory = XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'n') . '/templates/blocks/';
-        $template_list     = array_diff(scandir($templateDirectory), array('..', '.'));
+        $template_list     = array_diff(scandir($templateDirectory, SCANDIR_SORT_NONE), array('..', '.'));
         foreach ($template_list as $k => $v) {
             $fileinfo = new SplFileInfo($templateDirectory . $v);
             if ($fileinfo->getExtension() === 'html' && $fileinfo->getFilename() !== 'index.html') {

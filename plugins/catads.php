@@ -16,7 +16,7 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  *
  * @param $limit
@@ -30,18 +30,19 @@
 function b_marquee_catads($limit, $dateFormat, $itemsSize)
 {
     global $xoopsModule, $xoopsModuleConfig, $xoopsDB;
-    include_once XOOPS_ROOT_PATH . '/modules/catads/class/cat.php';
+    require_once XOOPS_ROOT_PATH . '/modules/catads/class/cat.php';
     $block = array();
     if (empty($xoopsModule) || $xoopsModule->getVar('dirname') !== 'catads') {
+        /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
-        $module         = $moduleHandler->getByDirname('catads');
+        $module        = $moduleHandler->getByDirname('catads');
         $configHandler = xoops_getHandler('config');
-        $config         =& $configHandler->getConfigsByCat(0, $module->getVar('mid'));
+        $config        = $configHandler->getConfigsByCat(0, $module->getVar('mid'));
     } else {
         $module =& $xoopsModule;
         $config =& $xoopsModuleConfig;
     }
-    //echo '<br />ok';
+    //echo '<br>ok';
     $ads_hnd  = xoops_getModuleHandler('ads', 'catads');
     $criteria = new CriteriaCompo(new Criteria('waiting', '0'));
     $criteria->add(new Criteria('published', time(), '<'));
@@ -51,7 +52,7 @@ function b_marquee_catads($limit, $dateFormat, $itemsSize)
     $criteria->setLimit($limit);
     $nbads = $ads_hnd->getCount($criteria);
 
-    $itemArray     = array();
+    $itemArray = array();
     $catBuffer = array();
 
     if ($nbads > 0) {
@@ -64,7 +65,7 @@ function b_marquee_catads($limit, $dateFormat, $itemsSize)
                 $title = $oneads->getVar('ads_title');
             }
             if (!isset($catBuffer[$oneads->getVar('cat_id')])) {
-                $tmpcat                                = new AdsCategory($oneads->getVar('cat_id'));
+                $tmpcat                               = new AdsCategory($oneads->getVar('cat_id'));
                 $catBuffer[$oneads->getVar('cat_id')] = $tmpcat->title();
                 $catTitle                             = $tmpcat->title();
             } else {

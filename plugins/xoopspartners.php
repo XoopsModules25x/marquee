@@ -16,7 +16,7 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  *
  * @param $limit
@@ -76,7 +76,7 @@ function xoopspartners_random($numberPartners, $random = true, $orden = '', $des
         $result  = $xoopsDB->query('SELECT id FROM ' . $xoopsDB->prefix('partners') . ' WHERE status = 1');
         $numrows = $xoopsDB->getRowsNum($result);
     } else {
-        $result = $xoopsDB->query('SELECT id FROM ' . $xoopsDB->prefix('partners') . ' Where status = 1 ORDER BY ' . $orden . ' ' . $desc, $numberPartners);
+        $result = $xoopsDB->query('SELECT id FROM ' . $xoopsDB->prefix('partners') . ' WHERE status = 1 ORDER BY ' . $orden . ' ' . $desc, $numberPartners);
     }
     while ($ret = $xoopsDB->fetchArray($result)) {
         $PartnersId[] = $ret['id'];

@@ -15,7 +15,6 @@
  * @license            http://www.fsf.org/copyleft/gpl.html GNU public license
  * @package            marquee
  * @author             Hervé Thouzard (http://www.herve-thouzard.com)
- * @version            $Id $
  * ****************************************************************************
  *
  * @param $limit
@@ -28,22 +27,24 @@
 // Script to list recent posts from Newbb 1 & 2
 function b_marquee_newbb($limit, $dateFormat, $itemsSize)
 {
-    include_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
+    require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
     $block = array();
 
+    /** @var XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
-    $newbb          = $moduleHandler->getByDirname('newbb');
+    $newbb         = $moduleHandler->getByDirname('newbb');
     $newbbVersion  = (int)$newbb->getInfo('version');
 
     if ($newbbVersion >= 2) {
-        $order          = 't.topic_time';
-        $forumHandler  = xoops_getModuleHandler('forum', 'newbb');
+        $order        = 't.topic_time';
+        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
+        /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
-        $newbb          = $moduleHandler->getByDirname('newbb');
+        $newbb         = $moduleHandler->getByDirname('newbb');
 
         if (!isset($newbbConfig)) {
             $configHandler = xoops_getHandler('config');
-            $newbbConfig    = &$configHandler->getConfigsByCat(0, $newbb->getVar('mid'));
+            $newbbConfig   =& $configHandler->getConfigsByCat(0, $newbb->getVar('mid'));
         }
 
         if (!isset($access_forums)) {
@@ -53,9 +54,22 @@ function b_marquee_newbb($limit, $dateFormat, $itemsSize)
         $forumCriteria = ' AND t.forum_id IN (' . implode(',', $validForums) . ')';
         unset($access_forums);
         $approveCriteria = ' AND t.approved = 1 AND p.approved = 1';
-        $db               = XoopsDatabaseFactory::getDatabaseConnection();
-        $query            = 'SELECT t.*, f.forum_name, f.allow_subject_prefix, p.post_id, p.icon, p.uid, p.poster_name, u.uname, u.name FROM ' . $db->prefix('bb_topics') . ' t, ' . $db->prefix('bb_forums') . ' f, ' . $db->prefix('bb_posts') . ' p LEFT JOIN ' . $db->prefix('users') . ' u ON u.uid = p.uid WHERE f.forum_id=t.forum_id ' . $forumCriteria . $approveCriteria . ' AND t.topic_last_post_id=p.post_id ORDER BY ' . $order . ' DESC';
-        $result           = $db->query($query, $limit, 0);
+        $db              = XoopsDatabaseFactory::getDatabaseConnection();
+        $query           = 'SELECT t.*, f.forum_name, f.allow_subject_prefix, p.post_id, p.icon, p.uid, p.poster_name, u.uname, u.name FROM '
+                           . $db->prefix('bb_topics')
+                           . ' t, '
+                           . $db->prefix('bb_forums')
+                           . ' f, '
+                           . $db->prefix('bb_posts')
+                           . ' p LEFT JOIN '
+                           . $db->prefix('users')
+                           . ' u ON u.uid = p.uid WHERE f.forum_id=t.forum_id '
+                           . $forumCriteria
+                           . $approveCriteria
+                           . ' AND t.topic_last_post_id=p.post_id ORDER BY '
+                           . $order
+                           . ' DESC';
+        $result          = $db->query($query, $limit, 0);
         if (!$result) {
             return '';
         }
@@ -87,7 +101,13 @@ function b_marquee_newbb($limit, $dateFormat, $itemsSize)
         $myts  = MyTextSanitizer::getInstance();
         $order = 't.topic_time';
         $time  = $tmpuser = '';
-        $query = 'SELECT t.topic_id, t.topic_title, t.topic_last_post_id, t.topic_time, t.topic_views, t.topic_replies, t.forum_id, f.forum_name FROM ' . $db->prefix('bb_topics') . ' t, ' . $db->prefix('bb_forums') . ' f WHERE f.forum_id=t.forum_id AND f.forum_type <> 1 ORDER BY ' . $order . ' DESC';
+        $query = 'SELECT t.topic_id, t.topic_title, t.topic_last_post_id, t.topic_time, t.topic_views, t.topic_replies, t.forum_id, f.forum_name FROM '
+                 . $db->prefix('bb_topics')
+                 . ' t, '
+                 . $db->prefix('bb_forums')
+                 . ' f WHERE f.forum_id=t.forum_id AND f.forum_type <> 1 ORDER BY '
+                 . $order
+                 . ' DESC';
         if (!$result = $db->query($query, $limit, 0)) {
             return '';
         }

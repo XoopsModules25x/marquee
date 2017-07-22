@@ -16,7 +16,7 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  *
  * @param $limit
@@ -33,7 +33,7 @@ function b_marquee_smartpartner($limit, $dateFormat, $itemsSize)
     if (!defined('SMARTPARTNER_DIRNAME')) {
         define('SMARTPARTNER_DIRNAME', 'smartpartner');
     }
-    include_once(XOOPS_ROOT_PATH . '/modules/' . SMARTPARTNER_DIRNAME . '/include/common.php');
+    require_once XOOPS_ROOT_PATH . '/modules/' . SMARTPARTNER_DIRNAME . '/include/common.php';
 
     // Creating the partner handler object
     $smartpartnerPartnerHandler  = smartpartner_gethandler('partner');
@@ -42,8 +42,8 @@ function b_marquee_smartpartner($limit, $dateFormat, $itemsSize)
     // Randomize
     $partnersObj = $smartpartnerPartnerHandler->getPartners(0, 0, _SPARTNER_STATUS_ACTIVE);
     if (count($partnersObj) > 1) {
-        $keyArray  = array_keys($partnersObj);
-        $keyRand = array_rand($keyArray, count($keyArray));
+        $keyArray = array_keys($partnersObj);
+        $keyRand  = array_rand($keyArray, count($keyArray));
         for ($i = 0; ($i < count($partnersObj)) && ($i < $limit); ++$i) {
             $newObjects[$i] = $partnersObj[$keyRand[$i]];
         }

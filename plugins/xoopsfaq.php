@@ -15,7 +15,6 @@
  * @license            http://www.fsf.org/copyleft/gpl.html GNU public license
  * @package            marquee
  * @author             Hervé Thouzard (http://www.herve-thouzard.com)
- * @version            $Id $
  * ****************************************************************************
  *
  * @param $limit
@@ -28,7 +27,7 @@
 // Script to list the recent links from the mylinks module version 1.10
 function b_marquee_xoopsfaq($limit, $dateFormat, $itemsSize)
 {
-    include_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
+    require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
     $block  = array();
     $myts   = MyTextSanitizer::getInstance();
     $db     = XoopsDatabaseFactory::getDatabaseConnection();

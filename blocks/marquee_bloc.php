@@ -16,7 +16,7 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  *
  * @param $options
@@ -27,10 +27,10 @@
 function b_marquee_show($options)
 {
     global $xoopsTpl;
-    include_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
+    require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
     $marqueeHandler = xoops_getModuleHandler('marquee', 'marquee');
-    $block           = array();
-    $marqueeId       = (int)$options[0];
+    $block          = array();
+    $marqueeId      = (int)$options[0];
     if ($marqueeId > 0) {
         $marquee = null;
         $marquee = $marqueeHandler->get($marqueeId);
@@ -63,9 +63,9 @@ function b_marquee_show($options)
 function b_marquee_edit($options)
 {
     $marqueeHandler = xoops_getModuleHandler('marquee', 'marquee');
-    $form            = "<table border='0'>";
-    $form .= '<tr><td>' . _MB_MARQUEE_SELECT . "</td><td><select name='options[0]'>" . $marqueeHandler->getHtmlMarqueesList($options[0]) . '</select></td></tr>';
-    $form .= '</table>';
+    $form           = "<table border='0'>";
+    $form           .= '<tr><td>' . _MB_MARQUEE_SELECT . "</td><td><select name='options[0]'>" . $marqueeHandler->getHtmlMarqueesList($options[0]) . '</select></td></tr>';
+    $form           .= '</table>';
 
     return $form;
 }

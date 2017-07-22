@@ -16,7 +16,7 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  *
  * @param $limit
@@ -29,14 +29,15 @@
 // Script to list system's comments - Tested with Xoops 2.0.9.3
 function b_marquee_comments($limit, $dateFormat, $itemsSize)
 {
-    include_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
-    include_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
-    $block           = array();
-    $status          = XOOPS_COMMENT_APPROVEUSER;
-    $module          = 0;
+    require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
+    require_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
+    $block  = array();
+    $status = XOOPS_COMMENT_APPROVEUSER;
+    $module = 0;
+    /** @var XoopsModuleHandler $moduleHandler */
     $moduleHandler  = xoops_getHandler('module');
     $commentHandler = xoops_getHandler('comment');
-    $criteria        = new CriteriaCompo();
+    $criteria       = new CriteriaCompo();
     if ($status > 0) {
         $criteria->add(new Criteria('com_status', $status));
     }
@@ -66,7 +67,27 @@ function b_marquee_comments($limit, $dateFormat, $itemsSize)
                 'category' => '',
                 'author'   => $comments[$i]->getVar('com_uid'),
                 'title'    => $title,
-                'link'     => "<a href='" . XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . $comment_config['pageName'] . '?' . $comment_config['itemName'] . '=' . $comments[$i]->getVar('com_itemid') . '&com_id=' . $comments[$i]->getVar('com_id') . '&com_rootid=' . $comments[$i]->getVar('com_rootid') . '&com_mode=thread&' . str_replace('&amp;', '&', $comments[$i]->getVar('com_exparams')) . '#comment' . $comments[$i]->getVar('com_id') . "'>" . $title . '</a>'
+                'link'     => "<a href='"
+                              . XOOPS_URL
+                              . '/modules/'
+                              . $module->getVar('dirname')
+                              . '/'
+                              . $comment_config['pageName']
+                              . '?'
+                              . $comment_config['itemName']
+                              . '='
+                              . $comments[$i]->getVar('com_itemid')
+                              . '&com_id='
+                              . $comments[$i]->getVar('com_id')
+                              . '&com_rootid='
+                              . $comments[$i]->getVar('com_rootid')
+                              . '&com_mode=thread&'
+                              . str_replace('&amp;', '&', $comments[$i]->getVar('com_exparams'))
+                              . '#comment'
+                              . $comments[$i]->getVar('com_id')
+                              . "'>"
+                              . $title
+                              . '</a>'
             );
         }
     }

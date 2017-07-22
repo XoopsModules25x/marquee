@@ -16,7 +16,7 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  *
  * @param $limit
@@ -29,7 +29,7 @@
 // Script to list recent FAQ from the smartfaq module (tested with smartfaq 1.04)
 function b_marquee_smartfaq($limit, $dateFormat, $itemsSize)
 {
-    include_once(XOOPS_ROOT_PATH . '/modules/smartfaq/include/functions.php');
+    require_once XOOPS_ROOT_PATH . '/modules/smartfaq/include/functions.php';
     $block = array();
 
     $smartModule       =& sf_getModuleInfo();
@@ -43,10 +43,10 @@ function b_marquee_smartfaq($limit, $dateFormat, $itemsSize)
     }
 
     // Creating the faq handler object
-    $faqHandler =& sf_gethandler('faq');
+    $faqHandler = sf_gethandler('faq');
 
     // Creating the category handler object
-    $categoryHandler =& sf_gethandler('category');
+    $categoryHandler = sf_gethandler('category');
 
     // Creating the last FAQs
     $faqsObj       = $faqHandler->getAllPublished($limit, 0, $categoryid, $sort);
@@ -57,17 +57,17 @@ function b_marquee_smartfaq($limit, $dateFormat, $itemsSize)
             $faqids[]                 = $thisfaq->getVar('faqid');
             $userids[$thisfaq->uid()] = 1;
         }
-        $answerHandler =& sf_gethandler('answer');
-        $allanswers     = $answerHandler->getLastPublishedByFaq($faqids);
+        $answerHandler = sf_gethandler('answer');
+        $allanswers    = $answerHandler->getLastPublishedByFaq($faqids);
 
         foreach ($allanswers as $key => $thisanswer) {
             $userids[$thisanswer->uid()] = 1;
         }
 
         $memberHandler = xoops_getHandler('member');
-        $users          = $memberHandler->getUsers(new Criteria('uid', '(' . implode(',', array_keys($userids)) . ')', 'IN'), true);
+        $users         = $memberHandler->getUsers(new Criteria('uid', '(' . implode(',', array_keys($userids)) . ')', 'IN'), true);
         for ($i = 0, $iMax = count($faqsObj); $i < $iMax; ++$i) {
-            $answerObj =& $allanswers[$faqsObj[$i]->faqid()];
+            $answerObj = $allanswers[$faqsObj[$i]->faqid()];
             $title     = $faqsObj[$i]->question($maxQuestionLength);
             $block[]   = array(
                 'date'     => $faqsObj[$i]->datesub(),

@@ -16,7 +16,7 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  *
  * @param $limit
@@ -29,7 +29,7 @@
 // Script to list recent articles from the Smartsection module (tested with Smartsection 2.1)
 function b_marquee_smartsection($limit, $dateFormat, $itemsSize)
 {
-    include_once XOOPS_ROOT_PATH . '/modules/smartsection/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/smartsection/include/common.php';
     xoops_load('xoopsuserutility');
     $myts        = MyTextSanitizer::getInstance();
     $smartModule =& smartsection_getModuleInfo();
@@ -38,9 +38,9 @@ function b_marquee_smartsection($limit, $dateFormat, $itemsSize)
     $sort        = 'datesub';
     $order       = smartsection_getOrderBy($sort);
 
-    $smartsectionItemHandler =& smartsection_gethandler('item');
-    $itemsObj                  = $smartsectionItemHandler->getAllPublished($limit, 0, $categoryid, $sort, $order);
-    $totalItems                = count($itemsObj);
+    $smartsectionItemHandler = smartsection_gethandler('item');
+    $itemsObj                = $smartsectionItemHandler->getAllPublished($limit, 0, $categoryid, $sort, $order);
+    $totalItems              = count($itemsObj);
     if ($itemsObj) {
         for ($i = 0; $i < $totalItems; ++$i) {
             if ($itemsSize > 0) {

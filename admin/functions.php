@@ -16,7 +16,7 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  *
  * @param int    $currentoption
@@ -27,7 +27,7 @@
 
 function marquee_adminmenu($currentoption = 0, $breadcrumb = '')
 {
-    ///*    include_once XOOPS_ROOT_PATH.'/modules/marquee/include/functions.php';
+    ///*    require_once XOOPS_ROOT_PATH.'/modules/marquee/include/functions.php';
     //
     //  /* Nice buttons styles */
     //  echo "
@@ -56,9 +56,9 @@ function marquee_adminmenu($currentoption = 0, $breadcrumb = '')
     //  }
     //
     //  if (file_exists(XOOPS_ROOT_PATH . '/modules/marquee/language/' . $xoopsConfig['language'] . '/modinfo.php')) {
-    //      include_once XOOPS_ROOT_PATH. '/modules/marquee/language/' . $xoopsConfig['language'] . '/modinfo.php';
+    //      require_once XOOPS_ROOT_PATH. '/modules/marquee/language/' . $xoopsConfig['language'] . '/modinfo.php';
     //  } else {
-    //      include_once XOOPS_ROOT_PATH . '/modules/marquee/language/english/modinfo.php';
+    //      require_once XOOPS_ROOT_PATH . '/modules/marquee/language/english/modinfo.php';
     //  }
     //
     //  echo "<div id='buttontop'>";
@@ -72,7 +72,7 @@ function marquee_adminmenu($currentoption = 0, $breadcrumb = '')
     //  echo "<ul>";
     //  echo "<li id='" . $tblColors[0] . "'><a href=\"index.php\"\"><span>"._MI_MARQUEE_MENU_01 ."</span></a></li>\n";
     //  echo "</ul></div>";
-    //  echo "<br /><br /><pre>&nbsp;</pre><pre>&nbsp;</pre><br />";*/
+    //  echo "<br><br><pre>&nbsp;</pre><pre>&nbsp;</pre><br>";*/
 }
 
 /**
@@ -107,8 +107,9 @@ function myglob($folder = '', $pattern = 'php')
             }
         }
         closedir($dir);
+
         return $result;
     } catch (Exception $e) {
-        echo 'Caught exception: ', $e->getMessage(), "\n", '<br/>';
+        echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
     }
 }

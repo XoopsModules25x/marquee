@@ -15,7 +15,6 @@
  * @license            http://www.fsf.org/copyleft/gpl.html GNU public license
  * @package            marquee
  * @author             Hervé Thouzard (http://www.herve-thouzard.com)
- * @version            $Id $
  * ****************************************************************************
  *
  * @param $limit
@@ -28,11 +27,11 @@
 // Script to list the recent polls from the xoopspoll module version 1.0
 function b_marquee_xoopspoll($limit, $dateFormat, $itemsSize)
 {
-    include_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
+    require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
     $block  = array();
     $myts   = MyTextSanitizer::getInstance();
     $db     = XoopsDatabaseFactory::getDatabaseConnection();
-    $result = $db->query('SELECT * FROM ' . $db->prefix('xoopspoll_desc') . ' WHERE start_time<=' . time() . ' and end_time>' . time() . ' ORDER BY start_time DESC', $limit, 0);
+    $result = $db->query('SELECT * FROM ' . $db->prefix('xoopspoll_desc') . ' WHERE start_time<=' . time() . ' AND end_time>' . time() . ' ORDER BY start_time DESC', $limit, 0);
     while ($myrow = $db->fetchArray($result)) {
         $title = $myts->htmlSpecialChars($myrow['question']);
         if ($itemsSize > 0) {

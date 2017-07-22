@@ -1,8 +1,3 @@
-/*
- * $Id: xbMarquee.js,v 1.21 2003/09/14 21:22:26 bc6ix Exp $
- *
- */
-
 /* ***** BEGIN LICENSE BLOCK *****
  * The contents of this file are subject to the Mozilla Public License Version
  * 1.1 (the "License"); you may not use this file except in compliance with

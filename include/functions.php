@@ -16,7 +16,7 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  */
 
@@ -46,16 +46,19 @@ function marquee_getmoduleoption($option, $repmodule = 'marquee')
     }
 
     $retval = false;
-    if (null !== $xoopsModuleConfig && (is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $repmodule && $xoopsModule->getVar('isactive'))) {
+    if (null !== $xoopsModuleConfig
+        && (is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $repmodule
+            && $xoopsModule->getVar('isactive'))) {
         if (isset($xoopsModuleConfig[$option])) {
             $retval = $xoopsModuleConfig[$option];
         }
     } else {
+        /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
-        $module         = $moduleHandler->getByDirname($repmodule);
+        $module        = $moduleHandler->getByDirname($repmodule);
         $configHandler = xoops_getHandler('config');
         if ($module) {
-            $moduleConfig =& $configHandler->getConfigsByCat(0, $module->getVar('mid'));
+            $moduleConfig = $configHandler->getConfigsByCat(0, $module->getVar('mid'));
             if (isset($moduleConfig[$option])) {
                 $retval = $moduleConfig[$option];
             }

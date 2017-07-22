@@ -14,21 +14,20 @@
  * @package             Marquee
  * @since               2.5.0
  * @author              Hervé Thouzard (http://www.herve-thouzard.com)
- * @version             $Id $
  **/
 
-include_once __DIR__ . '/../../include/cp_header.php';
+require_once __DIR__ . '/../../include/cp_header.php';
 
-defined('FRAMEWORKS_ART_FUNCTIONS_INI') || include_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.ini.php';
+defined('FRAMEWORKS_ART_FUNCTIONS_INI') || require_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.ini.php';
 load_functions('admin');
 global $xoopsModule, $xoopsConfig;
 
-if (!@include_once(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/main.php')) {
-    include_once(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/english/main.php');
+if (!@require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/main.php') {
+    require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/english/main.php';
 }
 
 if (null === $xoopsTpl || !is_object($xoopsTpl)) {
-    include_once(XOOPS_ROOT_PATH . '/class/template.php');
+    require_once XOOPS_ROOT_PATH . '/class/template.php';
     $xoopsTpl = new XoopsTpl();
 }
 

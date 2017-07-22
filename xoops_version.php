@@ -15,7 +15,6 @@
  * @license            http://www.fsf.org/copyleft/gpl.html GNU public license
  * @package            marquee
  * @author             Hervé Thouzard (http://www.herve-thouzard.com)
- * @version            $Id $
  * ****************************************************************************
  */
 
@@ -23,33 +22,35 @@
 
 $moduleDirName = basename(__DIR__);
 
-$modversion['name']           = _MI_MARQUEE_NAME;
-$modversion['version']        = '2.50';
-$modversion['description']    = _MI_MARQUEE_DESC;
-$modversion['credits']        = 'Carnuke, defkon1, the Newbb team, Mage, Mamba';
-$modversion['author']         = 'Hervé Thouzard';
-$modversion['nickname']       = 'hervet';
-$modversion['help']           = 'page=help';
-$modversion['license']        = 'GNU GPL 2.0';
-$modversion['license_url']    = 'www.gnu.org/licenses/gpl-2.0.html';
-$modversion['official']       = 0; //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
-$modversion['image']          = 'assets/images/logo_module.png';
-$modversion['dirname']        = basename(__DIR__);
-$modversion['dirmoduleadmin'] = 'Frameworks/moduleclasses';
-$modversion['icons16']        = 'Frameworks/moduleclasses/icons/16';
-$modversion['icons32']        = 'Frameworks/moduleclasses/icons/32';
+$modversion['version']       = '2.50';
+$modversion['module_status'] = 'RC 1';
+$modversion['release_date']  = '2016/03/23';
+$modversion['name']          = _MI_MARQUEE_NAME;
+$modversion['description']   = _MI_MARQUEE_DESC;
+$modversion['credits']       = 'Carnuke, defkon1, the Newbb team, Mage, Mamba';
+$modversion['author']        = 'Hervé Thouzard';
+$modversion['nickname']      = 'hervet';
+$modversion['help']          = 'page=help';
+$modversion['license']       = 'GNU GPL 2.0';
+$modversion['license_url']   = 'www.gnu.org/licenses/gpl-2.0.html';
+$modversion['official']      = 0; //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
+$modversion['image']         = 'assets/images/logoModule.png';
+$modversion['dirname']       = basename(__DIR__);
+//$modversion['dirmoduleadmin'] = 'Frameworks/moduleclasses';
+//$modversion['icons16']        = 'Frameworks/moduleclasses/icons/16';
+//$modversion['icons32']        = 'Frameworks/moduleclasses/icons/32';
+$modversion['modicons16'] = 'assets/images/icons/16';
+$modversion['modicons32'] = 'assets/images/icons/32';
 
 //about
-$modversion['module_status']       = 'RC 1';
-$modversion['release_date']        = '2016/03/23';
 $modversion['module_website_url']  = 'www.xoops.org/';
 $modversion['module_website_name'] = 'XOOPS';
 $modversion['author_website_url']  = 'https://xoops.org/';
 $modversion['author_website_name'] = 'Hervé Thouzard';
 $modversion['min_php']             = '5.5';
-$modversion['min_xoops']           = '2.5.8';
-$modversion['min_admin']           = '1.1';
-$modversion['min_db']              = array('mysql' => '5.0.7', 'mysqli' => '5.0.7');
+$modversion['min_xoops']           = '2.5.9';
+$modversion['min_admin']           = '1.2';
+$modversion['min_db']              = array('mysql' => '5.5');
 
 //update
 $modversion['onUpdate'] = 'include/update.php';

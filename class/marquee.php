@@ -15,19 +15,19 @@
  * @license            http://www.fsf.org/copyleft/gpl.html GNU public license
  * @package            marquee
  * @author             Hervé Thouzard (http://www.herve-thouzard.com)
- * @version            $Id $
  * ****************************************************************************
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-include_once XOOPS_ROOT_PATH . '/kernel/object.php';
-include_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
+require_once XOOPS_ROOT_PATH . '/kernel/object.php';
+require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
 if (!class_exists('MarqueePersistableObjectHandler')) {
-    include_once XOOPS_ROOT_PATH . '/modules/marquee/class/PersistableObjectHandler.php';
+    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/PersistableObjectHandler.php';
 }
 
 //class Marquee extends XoopsObject
+
 /**
  * Class Marquee
  */
@@ -66,7 +66,7 @@ class Marquee extends XoopsObject
      */
     public function constructmarquee($uniqid = '')
     {
-        include_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
+        require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
         $tblalign     = array('top', 'bottom', 'middle');
         $tblbehaviour = array('scroll', 'slide', 'alternate');
         $tbldirection = array('right', 'left', 'up', 'down');
@@ -82,12 +82,12 @@ class Marquee extends XoopsObject
         $br           = ' - ';
 
         if ($this->getVar('marquee_direction') > 1) {
-            $br = '<br />';
+            $br = '<br>';
         }
 
         $content = '';
         if ($this->getVar('marquee_source') !== 'fixed') {
-            include_once XOOPS_ROOT_PATH . '/modules/marquee/plugins/' . $this->getVar('marquee_source') . '.php';
+            require_once XOOPS_ROOT_PATH . '/modules/marquee/plugins/' . $this->getVar('marquee_source') . '.php';
             $function_name = 'b_marquee_' . $this->getVar('marquee_source'); // For example b_marquee_comments
             if (function_exists($function_name)) {
                 $limit      = marquee_getmoduleoption('itemscount');
@@ -111,13 +111,43 @@ class Marquee extends XoopsObject
         }
         if (!marquee_isbot()) { // We are using the microsoft html tag
             if (strtolower(marquee_getmoduleoption('methodtouse')) !== 'dhtml') {
-                return "<marquee align='" . $tblalign[$this->getVar('marquee_align')] . "' behavior='" . $tblbehaviour[$this->getVar('marquee_behaviour')] . "' direction='" . $tbldirection[$this->getVar('marquee_direction')] . "' " . $stop . $scrollamount . $bgcolor . $height . $hspace . $width . $scrolldelay . $loop . $vspace . '>' . $content . '</marquee>';
+                return "<marquee align='"
+                       . $tblalign[$this->getVar('marquee_align')]
+                       . "' behavior='"
+                       . $tblbehaviour[$this->getVar('marquee_behaviour')]
+                       . "' direction='"
+                       . $tbldirection[$this->getVar('marquee_direction')]
+                       . "' "
+                       . $stop
+                       . $scrollamount
+                       . $bgcolor
+                       . $height
+                       . $hspace
+                       . $width
+                       . $scrolldelay
+                       . $loop
+                       . $vspace
+                       . '>'
+                       . $content
+                       . '</marquee>';
             } else { // We are using the javascript method
                 $jscontent = '';
                 $jscontent .= "<script type=\"text/javascript\">\n";
                 $jscontent .= "html$uniqid = '';\n";
                 $jscontent .= "html$uniqid += '" . marquee_javascript_escape($content) . "' ;\n";
-                $jscontent .= "marquee$uniqid = new XbMarquee('marquee$uniqid', " . $this->getVar('marquee_height') . ', ' . $this->getVar('marquee_width') . ', ' . $this->getVar('marquee_scrollamount') . ', ' . $this->getVar('marquee_scrolldelay') . ", '" . $tbldirection[$this->getVar('marquee_direction')] . "', '" . $tblbehaviour[$this->getVar('marquee_behaviour')] . "', html$uniqid);\n";
+                $jscontent .= "marquee$uniqid = new XbMarquee('marquee$uniqid', "
+                              . $this->getVar('marquee_height')
+                              . ', '
+                              . $this->getVar('marquee_width')
+                              . ', '
+                              . $this->getVar('marquee_scrollamount')
+                              . ', '
+                              . $this->getVar('marquee_scrolldelay')
+                              . ", '"
+                              . $tbldirection[$this->getVar('marquee_direction')]
+                              . "', '"
+                              . $tblbehaviour[$this->getVar('marquee_behaviour')]
+                              . "', html$uniqid);\n";
                 $jscontent .= "init_$uniqid();\n";
                 $jscontent .= "</script>\n";
 
@@ -130,6 +160,7 @@ class Marquee extends XoopsObject
 }
 
 //class MarqueeMarqueeHandler extends MarqueePersistableObjectHandler
+
 /**
  * Class MarqueeMarqueeHandler
  */
@@ -138,7 +169,7 @@ class MarqueeMarqueeHandler extends MarqueePersistableObjectHandler
     /**
      * @param $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     {
         parent::__construct($db, 'marquee', 'marquee', 'marquee_marqueeid');
     }
@@ -158,7 +189,7 @@ class MarqueeMarqueeHandler extends MarqueePersistableObjectHandler
                 $selected = ' selected';
             }
             $content = xoops_trim(strip_tags($oneMarquee->getVar('marquee_content'))) !== '' ? xoops_substr(strip_tags($oneMarquee->getVar('marquee_content')), 0, 50) : $oneMarquee->getVar('marquee_source');
-            $ret .= '<option ' . $selected . " value='" . $oneMarquee->getVar('marquee_marqueeid') . "'>" . $content . '</option>';
+            $ret     .= '<option ' . $selected . " value='" . $oneMarquee->getVar('marquee_marqueeid') . "'>" . $content . '</option>';
         }
 
         return $ret;

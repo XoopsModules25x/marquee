@@ -16,7 +16,7 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  *
  * @param $limit
@@ -29,17 +29,18 @@
 // Script to list recent articles from wfsection 1 & 2
 function b_marquee_wfsection($limit, $dateFormat, $itemsSize)
 {
-    include_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
+    require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
     $block = array();
 
-    $myts              = MyTextSanitizer::getInstance();
+    $myts = MyTextSanitizer::getInstance();
+    /** @var XoopsModuleHandler $moduleHandler */
     $moduleHandler    = xoops_getHandler('module');
-    $wfsection         = $moduleHandler->getByDirname('wfsection');
+    $wfsection        = $moduleHandler->getByDirname('wfsection');
     $wfsectionVersion = (int)$wfsection->getInfo('version');
 
     if ($wfsectionVersion >= 2) {
     } else { // wfsection 1
-        include_once XOOPS_ROOT_PATH . '/modules/wfsection/include/groupaccess.php';
+        require_once XOOPS_ROOT_PATH . '/modules/wfsection/include/groupaccess.php';
         global $xoopsDB;
         $sql    = 'SELECT articleid, title, published, expired, counter, groupid, uid FROM ' . $xoopsDB->prefix('wfs_article') . ' WHERE published < ' . time() . ' AND published > 0 AND (expired = 0 OR expired > ' . time() . ') AND noshowart = 0 AND offline = 0 ORDER BY published DESC';
         $result = $xoopsDB->query($sql, $limit, 0);

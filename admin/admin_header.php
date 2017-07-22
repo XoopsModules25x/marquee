@@ -14,30 +14,37 @@
  * @package             Marquee
  * @since               2.5.0
  * @author              XOOPS Module Team
- * @version             $Id $
  **/
 
-$rootPath = dirname(dirname(dirname(__DIR__)));
-include_once $rootPath . '/mainfile.php';
-include_once $rootPath . '/include/cp_functions.php';
-require_once $rootPath . '/include/cp_header.php';
+require_once __DIR__ . '/../../../include/cp_header.php';
+//require_once __DIR__ . '/../../../class/xoopsformloader.php';
 
-global $xoopsModule;
+//require_once __DIR__ . '/../class/utility.php';
+//require_once __DIR__ . '/../include/common.php';
 
-$moduleDirName = dirname(__DIR__);
-
-xoops_load('XoopsRequest');
+$moduleDirName = basename(dirname(__DIR__));
 
 //if functions.php file exist
-require_once $moduleDirName . '/include/functions.php';
+require_once __DIR__ . '/../include/functions.php';
+
+if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
+} else {
+    $moduleHelper = Xmf\Module\Helper::getHelper('system');
+}
+$adminObject = \Xmf\Module\Admin::getInstance();
+
+$pathIcon16    = \Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon32    = \Xmf\Module\Admin::iconUrl('', 32);
+$pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
 
 // Load language files
-xoops_loadLanguage('admin', $moduleDirName);
-xoops_loadLanguage('modinfo', $moduleDirName);
-xoops_loadLanguage('main', $moduleDirName);
+$moduleHelper->loadLanguage('admin');
+$moduleHelper->loadLanguage('modinfo');
+$moduleHelper->loadLanguage('main');
 
-$pathIcon16      = XOOPS_URL . '/' . $xoopsModule->getInfo('icons16');
-$pathIcon32      = XOOPS_URL . '/' . $xoopsModule->getInfo('icons32');
-$pathModuleAdmin = XOOPS_ROOT_PATH . '/' . $xoopsModule->getInfo('dirmoduleadmin');
+$myts = MyTextSanitizer::getInstance();
 
-require_once $pathModuleAdmin . '/moduleadmin/moduleadmin.php';
+if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl)) {
+    require_once $GLOBALS['xoops']->path('class/template.php');
+    $xoopsTpl = new XoopsTpl();
+}

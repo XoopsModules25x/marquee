@@ -16,18 +16,20 @@
  * @package            marquee
  * @author             Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * @version            $Id $
  * ****************************************************************************
  */
-include_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+
+use Xmf\Request;
+
+require_once __DIR__ . '/../../../include/cp_header.php';
 require_once XOOPS_ROOT_PATH . '/modules/marquee/admin/functions.php';
 require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
 require_once XOOPS_ROOT_PATH . '/modules/marquee/class/marquee_utils.php';
-include_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/admin_header.php';
 
-$indexAdmin = new ModuleAdmin();
+$adminObject = \Xmf\Module\Admin::getInstance();
 
-$op = XoopsRequest::getCmd('op', XoopsRequest::getCmd('op', 'default', 'POST'), 'GET');
+$op = Request::getCmd('op', Request::getCmd('op', 'default', 'POST'), 'GET');
 
 // Verify that a field exists inside a mysql table
 
@@ -88,8 +90,26 @@ $marqueeHandler = xoops_getModuleHandler('marquee', 'marquee');
  * @param        $LabelSubmitButton
  * @param string $sourcevalue
  */
-function AddEditMarqueeForm($marqueeid, $Action, $FormTitle, $contentvalue, $bgcolorvalue, $widthvalue, $heightvalue, $scrollamountvalue, $hspacevalue, $vspacevalue, $scrolldelayvalue, $directionvalue, $behaviourvalue, $alignvalue, $loopvalue, $stopvalue, $LabelSubmitButton, $sourcevalue = 'fixed')
-{
+function AddEditMarqueeForm(
+    $marqueeid,
+    $Action,
+    $FormTitle,
+    $contentvalue,
+    $bgcolorvalue,
+    $widthvalue,
+    $heightvalue,
+    $scrollamountvalue,
+    $hspacevalue,
+    $vspacevalue,
+    $scrolldelayvalue,
+    $directionvalue,
+    $behaviourvalue,
+    $alignvalue,
+    $loopvalue,
+    $stopvalue,
+    $LabelSubmitButton,
+    $sourcevalue = 'fixed'
+) {
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     global $xoopsModule, $xoopsModuleConfig;
 
@@ -104,7 +124,7 @@ function AddEditMarqueeForm($marqueeid, $Action, $FormTitle, $contentvalue, $bgc
     }
     $sform->addElement($source);
 
-    $editor = MarqueeUtilities::getWysiwygForm(_AM_MARQUEE_CONTENT, 'content', $contentvalue, 15, 60, 'content_text_hidden');
+    $editor = MarqueeUtility::getWysiwygForm(_AM_MARQUEE_CONTENT, 'content', $contentvalue, 15, 60, 'content_text_hidden');
     if ($editor) {
         $sform->addElement($editor, false);
     }
@@ -174,24 +194,24 @@ function AddEditMarqueeForm($marqueeid, $Action, $FormTitle, $contentvalue, $bgc
 switch ($op) {
     // Verify before to edit an element
     case 'verifybeforeedit':
-        if ('' !== XoopsRequest::getString('submit', '', 'POST')) {
-            $marquee = $marqueeHandler->get(XoopsRequest::getInt('marqueeid', 0, 'POST'));
+        if ('' !== Request::getString('submit', '', 'POST')) {
+            $marquee = $marqueeHandler->get(Request::getInt('marqueeid', 0, 'POST'));
             if (is_object($marquee)) {
                 $marquee->setVar('marquee_uid', $xoopsUser->getVar('uid'));
-                $marquee->setVar('marquee_direction', XoopsRequest::getString('direction', '', 'POST'));
-                $marquee->setVar('marquee_scrollamount', XoopsRequest::getInt('scrollamount', 0, 'POST'));
-                $marquee->setVar('marquee_behaviour', XoopsRequest::getInt('behaviour', 0, 'POST'));
-                $marquee->setVar('marquee_bgcolor', XoopsRequest::getString('bgcolor', '', 'POST'));
-                $marquee->setVar('marquee_align', XoopsRequest::getInt('align', 0, 'POST'));
-                $marquee->setVar('marquee_height', XoopsRequest::getInt('height', 0, 'POST'));
-                $marquee->setVar('marquee_width', XoopsRequest::getString('width', '', 'POST'));
-                $marquee->setVar('marquee_hspace', XoopsRequest::getInt('hspace', 0, 'POST'));
-                $marquee->setVar('marquee_scrolldelay', XoopsRequest::getInt('scrolldelay', 0, 'POST'));
-                $marquee->setVar('marquee_stoponmouseover', XoopsRequest::getInt('stoponmouseover', 0, 'POST'));
-                $marquee->setVar('marquee_loop', XoopsRequest::getInt('loop', 0, 'POST'));
-                $marquee->setVar('marquee_vspace', XoopsRequest::getInt('vspace', 0, 'POST'));
-                $marquee->setVar('marquee_content', XoopsRequest::getString('content', '', 'POST'));
-                $marquee->setVar('marquee_source', XoopsRequest::getString('source', '', 'POST'));
+                $marquee->setVar('marquee_direction', Request::getString('direction', '', 'POST'));
+                $marquee->setVar('marquee_scrollamount', Request::getInt('scrollamount', 0, 'POST'));
+                $marquee->setVar('marquee_behaviour', Request::getInt('behaviour', 0, 'POST'));
+                $marquee->setVar('marquee_bgcolor', Request::getString('bgcolor', '', 'POST'));
+                $marquee->setVar('marquee_align', Request::getInt('align', 0, 'POST'));
+                $marquee->setVar('marquee_height', Request::getInt('height', 0, 'POST'));
+                $marquee->setVar('marquee_width', Request::getString('width', '', 'POST'));
+                $marquee->setVar('marquee_hspace', Request::getInt('hspace', 0, 'POST'));
+                $marquee->setVar('marquee_scrolldelay', Request::getInt('scrolldelay', 0, 'POST'));
+                $marquee->setVar('marquee_stoponmouseover', Request::getInt('stoponmouseover', 0, 'POST'));
+                $marquee->setVar('marquee_loop', Request::getInt('loop', 0, 'POST'));
+                $marquee->setVar('marquee_vspace', Request::getInt('vspace', 0, 'POST'));
+                $marquee->setVar('marquee_content', Request::getString('content', '', 'POST'));
+                $marquee->setVar('marquee_source', Request::getString('source', '', 'POST'));
                 if (!$marqueeHandler->insert($marquee)) {
                     redirect_header('main.php', 1, _AM_MARQUEE_ERROR_MODIFY_DB);
                 }
@@ -205,28 +225,34 @@ switch ($op) {
     // Edit an element
     case 'edit':
         xoops_cp_header();
-        echo $indexAdmin->addNavigation(basename(__FILE__));
+        $adminObject->displayNavigation(basename(__FILE__));
 
-        echo '<br />';
+        echo '<br>';
         if (isset($_GET['marqueeid'])) {
-            $marqueeid = XoopsRequest::getInt('marqueeid', 0, 'GET');
+            $marqueeid = Request::getInt('marqueeid', 0, 'GET');
             $marquee   = $marqueeHandler->get($marqueeid);
-            AddEditMarqueeForm($marqueeid, 'verifybeforeedit', _AM_MARQUEE_CONFIG, $marquee->getVar('marquee_content', 'e'), $marquee->getVar('marquee_bgcolor', 'e'), $marquee->getVar('marquee_width', 'e'), $marquee->getVar('marquee_height', 'e'), $marquee->getVar('marquee_scrollamount', 'e'), $marquee->getVar('marquee_hspace', 'e'), $marquee->getVar('marquee_vspace', 'e'), $marquee->getVar('marquee_scrolldelay', 'e'), $marquee->getVar('marquee_direction', 'e'), $marquee->getVar('marquee_behaviour', 'e'), $marquee->getVar('marquee_align', 'e'), $marquee->getVar('marquee_loop', 'e'), $marquee->getVar('marquee_stoponmouseover', 'e'), _AM_MARQUEE_UPDATE, $marquee->getVar('marquee_source', 'e'));
+            AddEditMarqueeForm($marqueeid, 'verifybeforeedit', _AM_MARQUEE_CONFIG, $marquee->getVar('marquee_content', 'e'), $marquee->getVar('marquee_bgcolor', 'e'), $marquee->getVar('marquee_width', 'e'), $marquee->getVar('marquee_height', 'e'), $marquee->getVar('marquee_scrollamount', 'e'),
+                               $marquee->getVar('marquee_hspace', 'e'), $marquee->getVar('marquee_vspace', 'e'), $marquee->getVar('marquee_scrolldelay', 'e'), $marquee->getVar('marquee_direction', 'e'), $marquee->getVar('marquee_behaviour', 'e'), $marquee->getVar('marquee_align', 'e'),
+                               $marquee->getVar('marquee_loop', 'e'), $marquee->getVar('marquee_stoponmouseover', 'e'), _AM_MARQUEE_UPDATE, $marquee->getVar('marquee_source', 'e'));
         }
         break;
 
     // Delete an element
     case 'delete':
-        if ('' !== XoopsRequest::getString('ok', '', 'POST')) {
+        if ('' !== Request::getString('ok', '', 'POST')) {
             xoops_cp_header();
-            echo $indexAdmin->addNavigation(basename(__FILE__));
+            $adminObject->displayNavigation(basename(__FILE__));
             // echo '<h4>' . _AM_MARQUEE_CONFIG . '</h4>';
-            xoops_confirm(array('op' => 'delete', 'marqueeid' => XoopsRequest::getInt('marqueeid', 0, 'GET'), 'ok' => 1), 'main.php', _AM_MARQUEE_RUSUREDEL);
+            xoops_confirm(array(
+                              'op'        => 'delete',
+                              'marqueeid' => Request::getInt('marqueeid', 0, 'GET'),
+                              'ok'        => 1
+                          ), 'main.php', _AM_MARQUEE_RUSUREDEL);
         } else {
             if (empty($_POST['marqueeid'])) {
                 redirect_header('main.php', 2, _AM_MARQUEE_ERROR_ADD_MARQUEE);
             }
-            $marqueeid = XoopsRequest::getInt('marqueeid', 0, 'POST');
+            $marqueeid = Request::getInt('marqueeid', 0, 'POST');
             $marquee   = $marqueeHandler->deleteAll(new Criteria('marquee_marqueeid', $marqueeid, '='));
             redirect_header('main.php', 1, _AM_MARQUEE_DBUPDATED);
         }
@@ -234,24 +260,24 @@ switch ($op) {
 
     // Verify before to add an element
     case 'verifytoadd':
-        if ('' !== XoopsRequest::getString('submit', '', 'POST')) {
+        if ('' !== Request::getString('submit', '', 'POST')) {
             $vres = $marqueeHandler->quickInsert(array(
-                                                      'marquee_uid'             => $xoopsUser->getVar('uid'),
-                                                      'marquee_direction'       => XoopsRequest::getString('direction', '', 'POST'),
-                                                      'marquee_scrollamount'    => XoopsRequest::getInt('scrollamount', 0, 'POST'),
-                                                      'marquee_behaviour'       => XoopsRequest::getInt('behaviour', 0, 'POST'),
-                                                      'marquee_bgcolor'         => XoopsRequest::getString('bgcolor', '', 'POST'),
-                                                      'marquee_align'           => XoopsRequest::getInt('align', 0, 'POST'),
-                                                      'marquee_height'          => XoopsRequest::getInt('height', 0, 'POST'),
-                                                      'marquee_width'           => XoopsRequest::getString('width', '', 'POST'),
-                                                      'marquee_hspace'          => XoopsRequest::getInt('hspace', 0, 'POST'),
-                                                      'marquee_scrolldelay'     => XoopsRequest::getInt('scrolldelay', 0, 'POST'),
-                                                      'marquee_stoponmouseover' => XoopsRequest::getInt('stoponmouseover', 0, 'POST'),
-                                                      'marquee_loop'            => XoopsRequest::getInt('loop', 0, 'POST'),
-                                                      'marquee_vspace'          => XoopsRequest::getInt('vspace', 0, 'POST'),
-                                                      'marquee_content'         => XoopsRequest::getString('content', '', 'POST'),
-                                                      'marquee_source'          => XoopsRequest::getString('source', '', 'POST')
-                                                  ));
+                                                     'marquee_uid'             => $xoopsUser->getVar('uid'),
+                                                     'marquee_direction'       => Request::getString('direction', '', 'POST'),
+                                                     'marquee_scrollamount'    => Request::getInt('scrollamount', 0, 'POST'),
+                                                     'marquee_behaviour'       => Request::getInt('behaviour', 0, 'POST'),
+                                                     'marquee_bgcolor'         => Request::getString('bgcolor', '', 'POST'),
+                                                     'marquee_align'           => Request::getInt('align', 0, 'POST'),
+                                                     'marquee_height'          => Request::getInt('height', 0, 'POST'),
+                                                     'marquee_width'           => Request::getString('width', '', 'POST'),
+                                                     'marquee_hspace'          => Request::getInt('hspace', 0, 'POST'),
+                                                     'marquee_scrolldelay'     => Request::getInt('scrolldelay', 0, 'POST'),
+                                                     'marquee_stoponmouseover' => Request::getInt('stoponmouseover', 0, 'POST'),
+                                                     'marquee_loop'            => Request::getInt('loop', 0, 'POST'),
+                                                     'marquee_vspace'          => Request::getInt('vspace', 0, 'POST'),
+                                                     'marquee_content'         => Request::getString('content', '', 'POST'),
+                                                     'marquee_source'          => Request::getString('source', '', 'POST')
+                                                 ));
             if (!$vres) {
                 redirect_header('main.php', 1, _AM_MARQUEE_ERROR_ADD_MARQUEE);
             }
@@ -262,24 +288,45 @@ switch ($op) {
     // Display the form to add an element
     case 'addmarquee':
         xoops_cp_header();
-        echo $indexAdmin->addNavigation(basename(__FILE__));
+        $adminObject->displayNavigation(basename(__FILE__));
 
-        echo '<br />';
+        echo '<br>';
         AddEditMarqueeForm(0, 'verifytoadd', _AM_MARQUEE_CONFIG, '', '', '', '', '', 0, 0, '', 0, 0, 0, 0, 0, _AM_MARQUEE_ADDBUTTON, 'fixed');
         break;
 
     // Default action, list all elements
     case 'default':
         xoops_cp_header();
-        echo $indexAdmin->addNavigation(basename(__FILE__));
+        $adminObject->displayNavigation(basename(__FILE__));
 
-        //        echo '<h4>' . _AM_MARQUEE_CONFIG . "</h4><br />\n";
+        //        echo '<h4>' . _AM_MARQUEE_CONFIG . "</h4><br>\n";
         echo "<table width='100%' border='0' cellspacing='1' class='outer'>\n";
-        echo "<tr><th align='center'>" . _AM_MARQUEE_ID . "</th><th align='center'>" . _AM_MARQUEE_CONTENT . "</th><th align='center'>" . _AM_MARQUEE_BGCOLOR_SHORT . "</th><th align='center'>" . _AM_MARQUEE_BEHAVIOUR . "</th><th align='center'>" . _AM_MARQUEE_SOURCE . "</th><th align='center'>" . _AM_MARQUEE_STOP . "</th><th align='center'>" . _AM_MARQUEE_DIRECTION . "</th><th align='center'>" . _AM_MARQUEE_ACTION . "</th></tr>\n";
+        echo "<tr><th align='center'>"
+             . _AM_MARQUEE_ID
+             . "</th><th align='center'>"
+             . _AM_MARQUEE_CONTENT
+             . "</th><th align='center'>"
+             . _AM_MARQUEE_BGCOLOR_SHORT
+             . "</th><th align='center'>"
+             . _AM_MARQUEE_BEHAVIOUR
+             . "</th><th align='center'>"
+             . _AM_MARQUEE_SOURCE
+             . "</th><th align='center'>"
+             . _AM_MARQUEE_STOP
+             . "</th><th align='center'>"
+             . _AM_MARQUEE_DIRECTION
+             . "</th><th align='center'>"
+             . _AM_MARQUEE_ACTION
+             . "</th></tr>\n";
         $marqueearray = $marqueeHandler->getObjects();
         $class        = 'even';
         $baseurl      = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/main.php';
-        $tbldirection = array(_AM_MARQUEE_DIRECTION1, _AM_MARQUEE_DIRECTION2, _AM_MARQUEE_DIRECTION3, _AM_MARQUEE_DIRECTION4);
+        $tbldirection = array(
+            _AM_MARQUEE_DIRECTION1,
+            _AM_MARQUEE_DIRECTION2,
+            _AM_MARQUEE_DIRECTION3,
+            _AM_MARQUEE_DIRECTION4
+        );
         $tblbehaviour = array(_AM_MARQUEE_BEHAVIOUR1, _AM_MARQUEE_BEHAVIOUR2, _AM_MARQUEE_BEHAVIOUR3);
         if (count($marqueearray) > 0) {
             foreach ($marqueearray as $marquee) {
@@ -300,19 +347,41 @@ switch ($op) {
                 if ($marquee->getVar('marquee_source') === 'fixed') {
                     $source = _AM_MARQUEE_SOURCE_FIXED;
                 }
-                echo "<tr class='" . $class . "'><td align='center'>" . $marquee->getVar('marquee_marqueeid') . "</td><td align='center'>" . xoops_substr(strip_tags($marquee->getVar('marquee_content')), 0, 60) . "</td><td align='center'>" . "<div style='height:12px; width:12px; background-color:" . $bgcolorvalue . "; border:1px solid black;float:left; margin-right:5px;'></div>" . $bgcolorvalue
+                echo "<tr class='"
+                     . $class
+                     . "'><td align='center'>"
+                     . $marquee->getVar('marquee_marqueeid')
+                     . "</td><td align='center'>"
+                     . xoops_substr(strip_tags($marquee->getVar('marquee_content')), 0, 60)
+                     . "</td><td align='center'>"
+                     . "<div style='height:12px; width:12px; background-color:"
+                     . $bgcolorvalue
+                     . "; border:1px solid black;float:left; margin-right:5px;'></div>"
+                     . $bgcolorvalue
 
-                     . "</td><td align='center'>" . $behaviour . "</td><td align='center'>" . $source . "</td><td align='center'>" . $stop . "</td><td align='center'>" . $direction . "</td><td align='center'>" . $action_edit . '&nbsp;&nbsp;' . $action_delete . "</td></tr>\n";
+                     . "</td><td align='center'>"
+                     . $behaviour
+                     . "</td><td align='center'>"
+                     . $source
+                     . "</td><td align='center'>"
+                     . $stop
+                     . "</td><td align='center'>"
+                     . $direction
+                     . "</td><td align='center'>"
+                     . $action_edit
+                     . '&nbsp;&nbsp;'
+                     . $action_delete
+                     . "</td></tr>\n";
                 $class = ($class === 'even') ? 'odd' : 'even';
             }
         }
 
-        //      echo "<tr class='".$class."'><td colspan='7' align='center'><form name='faddmarquee' method='post' action='main.php'><input type='hidden' name='op' value='addmarquee' /><input type='submit' name='submit' value='"._AM_MARQUEE_ADDMARQUEE."' /></td></tr>";
-        $indexAdmin->addItemButton(_AM_MARQUEE_ADDMARQUEE, 'main.php?op=addmarquee', 'add', '');
-        echo $indexAdmin->renderButton('left', '');
+        //      echo "<tr class='".$class."'><td colspan='7' align='center'><form name='faddmarquee' method='post' action='main.php'><input type='hidden' name='op' value='addmarquee'><input type='submit' name='submit' value='"._AM_MARQUEE_ADDMARQUEE."'></td></tr>";
+        $adminObject->addItemButton(_AM_MARQUEE_ADDMARQUEE, 'main.php?op=addmarquee', 'add', '');
+        $adminObject->displayButton('left', '');
         echo '</table>';
         break;
 }
 
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';
 //xoops_cp_footer();

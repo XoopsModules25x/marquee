@@ -16,7 +16,7 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  *
  * @param $limit
@@ -32,7 +32,7 @@ function b_marquee_xfsection($limit, $dateFormat, $itemsSize)
     $block = array();
     global $xoopsDB;
     if (!function_exists('xfblock_checkAccess')) {
-        include_once XOOPS_ROOT_PATH . '/modules/xfsection/include/xfblock_groupaccess.php';
+        require_once XOOPS_ROOT_PATH . '/modules/xfsection/include/xfblock_groupaccess.php';
     }
 
     $myts   = MyTextSanitizer::getInstance();

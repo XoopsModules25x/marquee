@@ -16,7 +16,7 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  *
  * @param $limit
@@ -32,14 +32,14 @@ function b_marquee_wfdownloads($limit, $dateFormat, $itemsSize)
     $block = array();
 
     global $xoopsUser;
-    $modhandler     = xoops_getHandler('module');
-    $wfModule       = $modhandler->getByDirname('wfdownloads');
-    $configHandler = xoops_getHandler('config');
+    $moduleHandler  = xoops_getHandler('module');
+    $wfModule       = $moduleHandler->getByDirname('wfdownloads');
+    $configHandler  = xoops_getHandler('config');
     $wfModuleConfig = $configHandler->getConfigsByCat(0, $wfModule->getVar('mid'));
 
-    $groups        = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $groups       = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
     $gpermHandler = xoops_getHandler('groupperm');
-    $allowed_cats  = $gpermHandler->getItemIds('WFDownCatPerm', $groups, $wfModule->getVar('mid'));
+    $allowed_cats = $gpermHandler->getItemIds('WFDownCatPerm', $groups, $wfModule->getVar('mid'));
 
     $criteria = new Criteria('cid', '(' . implode(',', $allowed_cats) . ')', 'IN');
     $criteria = new CriteriaCompo(new Criteria('offline', 0));
@@ -48,7 +48,7 @@ function b_marquee_wfdownloads($limit, $dateFormat, $itemsSize)
     $criteria->setLimit($limit);
     $downloadHandler = xoops_getModuleHandler('download', 'wfdownloads');
     $categoryHandler = xoops_getModuleHandler('category', 'wfdownloads');
-    $buffer_category  = array();
+    $buffer_category = array();
 
     $downloads = $downloadHandler->getObjects($criteria);
 

@@ -16,7 +16,7 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  *
  * @param $limit
@@ -33,15 +33,15 @@ function b_marquee_smartmedia($limit, $dateFormat, $itemsSize)
     if (!defined('SMARTMEDIA_DIRNAME')) {
         define('SMARTMEDIA_DIRNAME', 'smartmedia');
     }
-    include_once(XOOPS_ROOT_PATH . '/modules/' . SMARTMEDIA_DIRNAME . '/include/common.php');
+    require_once XOOPS_ROOT_PATH . '/modules/' . SMARTMEDIA_DIRNAME . '/include/common.php';
     $title_length = 99999;
     if ($itemsSize > 0) {
         $title_length = $itemsSize;
     }
     $maxClips = $limit;
 
-    $smartmediaClipHandler =& smartmedia_gethandler('clip');
-    
+    $smartmediaClipHandler = smartmedia_gethandler('clip');
+
     $clipsArray =& $smartmediaClipHandler->getClipsFromAdmin(0, $maxClips, 'clips.created_date', 'DESC', 'all');
 
     if ($clipsArray) {

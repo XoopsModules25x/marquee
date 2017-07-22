@@ -33,7 +33,7 @@ class MarqueeObject extends XoopsObject
  * @copyright copyright (c) 2000-2004 XOOPS.org
  * @package   Kernel
  */
-class MarqueePersistableObjectHandler extends XoopsPersistableObjectHandler//XoopsObjectHandler
+class MarqueePersistableObjectHandler extends XoopsPersistableObjectHandler //XoopsObjectHandler
 {
     /**#@+
      * Information about the class, the handler is managing
@@ -88,9 +88,9 @@ class MarqueePersistableObjectHandler extends XoopsPersistableObjectHandler//Xoo
     /**
      * retrieve an object
      *
-     * @param mixed $id        ID of the object - or array of ids for joint keys. Joint keys MUST be given in the same order as in the constructor
-     * @param null  $fields
-     * @param bool  $asObject whether to return an object or an array
+     * @param  mixed $id       ID of the object - or array of ids for joint keys. Joint keys MUST be given in the same order as in the constructor
+     * @param  null  $fields
+     * @param  bool  $asObject whether to return an object or an array
      * @return mixed reference to the object, FALSE if failed
      */
     public function get($id = null, $fields = null, $asObject = true)
@@ -120,7 +120,7 @@ class MarqueePersistableObjectHandler extends XoopsPersistableObjectHandler//Xoo
      *
      * @param CriteriaElement $criteria  {@link CriteriaElement} conditions to be met
      * @param bool            $id_as_key use the ID as key for the array?
-     * @param bool            $asObject return an array of objects?
+     * @param bool            $asObject  return an array of objects?
      *
      * @return array
      */
@@ -305,9 +305,9 @@ class MarqueePersistableObjectHandler extends XoopsPersistableObjectHandler//Xoo
     /**
      * delete an object from the database
      *
-     * @param XoopsObject $obj reference to the object to delete
-     * @param bool        $force
-     * @return bool FALSE if failed.
+     * @param  XoopsObject $obj reference to the object to delete
+     * @param  bool        $force
+     * @return bool        FALSE if failed.
      */
     public function delete(XoopsObject $obj, $force = false)//delete(CriteriaElement $obj, $force = false)
     {
@@ -362,7 +362,11 @@ class MarqueePersistableObjectHandler extends XoopsPersistableObjectHandler//Xoo
      * @return bool FALSE if failed, TRUE if already present and unchanged or successful
      */
 
-    public function insert(XoopsObject $obj, $force = false, $checkObject = true)//insert(CriteriaElement $obj, $force = false, $checkObject = true)
+    public function insert(
+        XoopsObject $obj,
+        $force = false,
+        $checkObject = true
+    )//insert(CriteriaElement $obj, $force = false, $checkObject = true)
     {
         $cleanvars = array();
         if (false !== $checkObject) {
@@ -413,13 +417,15 @@ class MarqueePersistableObjectHandler extends XoopsPersistableObjectHandler//Xoo
             $sql      = 'UPDATE ' . $this->table . ' SET';
             $notfirst = null;
             foreach ($cleanvars as $key => $value) {
-                if ((!is_array($this->keyName) && $key == $this->keyName) || (is_array($this->keyName) && in_array($key, $this->keyName))) {
+                if ((!is_array($this->keyName) && $key == $this->keyName)
+                    || (is_array($this->keyName)
+                        && in_array($key, $this->keyName))) {
                     continue;
                 }
                 if (null !== $notfirst) {
                     $sql .= ',';
                 }
-                $sql .= ' ' . $key . ' = ' . $value;
+                $sql      .= ' ' . $key . ' = ' . $value;
                 $notfirst = true;
             }
             if (is_array($this->keyName)) {
@@ -458,10 +464,15 @@ class MarqueePersistableObjectHandler extends XoopsPersistableObjectHandler//Xoo
      * @param string|array           $fieldvalue Value to write
      * @param CriteriaElement|object $criteria   {@link CriteriaElement}
      *
-     * @param bool                   $force
+     * @param  bool                  $force
      * @return bool
      */
-    public function updateAll($fieldname, $fieldvalue, CriteriaElement $criteria = null, $force = false)//function updateAll($fieldname, $fieldvalue, $criteria = null, $force = false)
+    public function updateAll(
+        $fieldname,
+        $fieldvalue,
+        CriteriaElement $criteria = null,
+        $force = false
+    )//function updateAll($fieldname, $fieldvalue, $criteria = null, $force = false)
     {
         $set_clause = $fieldname . ' = ';
         if (is_numeric($fieldvalue)) {
@@ -493,8 +504,8 @@ class MarqueePersistableObjectHandler extends XoopsPersistableObjectHandler//Xoo
      * @param CriteriaElement|object $criteria {@link CriteriaElement}
      *                                         with conditions to meet
      *
-     * @param bool                   $force
-     * @param bool                   $asObject
+     * @param  bool                  $force
+     * @param  bool                  $asObject
      * @return bool
      */
 

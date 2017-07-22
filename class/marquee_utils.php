@@ -16,7 +16,7 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  */
 
@@ -32,7 +32,7 @@
  */
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-class MarqueeUtilities
+class MarqueeUtility
 {
     const MODULE_NAME = 'marquee';
 
@@ -48,7 +48,7 @@ class MarqueeUtilities
     {
         static $instance;
         if (null === $instance) {
-            $instance = new MarqueeUtilities();
+            $instance = new static();
         }
 
         return $instance;
@@ -72,13 +72,16 @@ class MarqueeUtilities
         }
 
         $retval = false;
-        if (null !== $xoopsModuleConfig && (is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $repmodule && $xoopsModule->getVar('isactive'))) {
+        if (null !== $xoopsModuleConfig
+            && (is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $repmodule
+                && $xoopsModule->getVar('isactive'))) {
             if (isset($xoopsModuleConfig[$option])) {
                 $retval = $xoopsModuleConfig[$option];
             }
         } else {
+            /** @var XoopsModuleHandler $moduleHandler */
             $moduleHandler = xoops_getHandler('module');
-            $module         = $moduleHandler->getByDirname($repmodule);
+            $module        = $moduleHandler->getByDirname($repmodule);
             $configHandler = xoops_getHandler('config');
             if ($module) {
                 $moduleConfig = $configHandler->getConfigsByCat(0, $module->getVar('mid'));
@@ -120,8 +123,14 @@ class MarqueeUtilities
      *
      * @return object The editor to use
      */
-    public static function getWysiwygForm($caption, $name, $value = '', $width = '100%', $height = '400px', $supplemental = '')
-    {
+    public static function getWysiwygForm(
+        $caption,
+        $name,
+        $value = '',
+        $width = '100%',
+        $height = '400px',
+        $supplemental = ''
+    ) {
         global $xoopsModuleConfig;
         if (class_exists('XoopsFormEditor')) {
             $options['name']   = $name;
@@ -177,7 +186,8 @@ class MarqueeUtilities
         static $mymodule;
         if (null === $mymodule) {
             global $xoopsModule;
-            if (null !== $xoopsModule && is_object($xoopsModule) && $xoopsModule->getVar('dirname') == REFERENCES_DIRNAME) {
+            if (null !== $xoopsModule && is_object($xoopsModule)
+                && $xoopsModule->getVar('dirname') == REFERENCES_DIRNAME) {
                 $mymodule =& $xoopsModule;
             } else {
                 $hModule  = xoops_getHandler('module');
@@ -243,7 +253,7 @@ class MarqueeUtilities
                 $required[] = $item->_name;
             }
             $elements = array();
-            $elements = &$sform->getElements();
+            $elements =& $sform->getElements();
             $cnt      = count($elements);
             for ($i = 0; $i < $cnt; ++$i) {
                 if (is_object($elements[$i]) && in_array($elements[$i]->_name, $required)) {
