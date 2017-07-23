@@ -22,7 +22,7 @@ class MarqueeUtility extends XoopsObject
         //            }
         //        }
         //        catch (Exception $e) {
-        //            echo 'Caught exception: ', $e->getMessage(), "\n", '<br/>';
+        //            echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
         //        }
         try {
             if (!file_exists($folder)) {
@@ -33,7 +33,7 @@ class MarqueeUtility extends XoopsObject
                 }
             }
         } catch (Exception $e) {
-            echo 'Caught exception: ', $e->getMessage(), "\n", '<br/>';
+            echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
         }
     }
 
@@ -52,7 +52,7 @@ class MarqueeUtility extends XoopsObject
         //                return copy($file, $folder);
         //            }
         //        } catch (Exception $e) {
-        //            echo 'Caught exception: ', $e->getMessage(), "\n", "<br/>";
+        //            echo 'Caught exception: ', $e->getMessage(), "\n", "<br>";
         //        }
         //        return false;
     }
