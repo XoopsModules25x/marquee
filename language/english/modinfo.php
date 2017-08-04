@@ -45,3 +45,16 @@ define('_MI_MARQUE_TITLELENGTH', 'Titles length');
 define('_MI_MARQUE_TITLELENGTH_DESC', 'Define the maximum length for the items titles (0=no limit)');
 
 define('_MI_MARQUEE_TEXT_EDITOR', 'Text editor to use');
+//2.50
+//Help
+define('_MI_MARQUEE_DIRNAME', basename(dirname(dirname(__DIR__))));
+define('_MI_MARQUEE_HELP_HEADER', __DIR__.'/help/helpheader.tpl');
+define('_MI_MARQUEE_BACK_2_ADMIN', 'Back to Administration of ');
+define('_MI_MARQUEE_OVERVIEW', 'Overview');
+
+//define('_MI_MARQUEE_HELP_DIR', __DIR__);
+
+//help multi-page
+define('_MI_MARQUEE_DISCLAIMER', 'Disclaimer');
+define('_MI_MARQUEE_LICENSE', 'License');
+define('_MI_MARQUEE_SUPPORT', 'Support');

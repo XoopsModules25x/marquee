@@ -1,12 +1,7 @@
 <div id="help-template" class="outer">
-    <h1 class="head">Help:
-        <a class="ui-corner-all tooltip" href="<{$xoops_url}>/modules/marquee/admin/index.php"
-           title="Back to the administration of Marquee"> Marquee
-            <img src="<{xoAdminIcons home.png}>"
-                 alt="Back to the Administration of Marquee">
-        </a></h1>
+    <{include file=$smarty.const._MI_MARQUEE_HELP_HEADER}>
 
-    <h4 class="odd">DESCRIPTION</h4>
+    <h4 class="odd">DESCRIPTION</h4> <br>
 
     <p class="even">Marquee is a XOOPS module to create scrolling texts (marquees). You can
         create an unlimited number of marquees and use them in 4 blocks. Texts
