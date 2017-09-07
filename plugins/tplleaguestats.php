@@ -56,7 +56,7 @@ function b_marquee_tplleaguestats($limit, $dateFormat, $itemsSize)
         $dateFormat = $newDateformat;
     }
 
-    $block  = array();
+    $block  = [];
     $myts   = MyTextSanitizer::getInstance();
     $sql    = 'SELECT H.OpponentName as home, A.OpponentName as away, M.LeagueMatchHomeGoals as home_p, M.LeagueMatchAwayGoals as away_p,
                   M.LeagueMatchDate as date, S.SeasonName as season
@@ -82,13 +82,13 @@ function b_marquee_tplleaguestats($limit, $dateFormat, $itemsSize)
             $season = $myrow['season'];
         }
 
-        $block[] = array(
+        $block[] = [
             'date'     => formatTimestamp(mktime($hour, 0, 0, $arrDate[1], $arrDate[2], $arrDate[0]), $dateFormat),
             'category' => $season,
             'author'   => '',
             'title'    => $title,
             'link'     => "<a href=\"" . XOOPS_URL . "/modules/tplleaguestats\">" . $title . '</a>'
-        );
+        ];
     }
 
     return $block;

@@ -29,9 +29,9 @@
 // Script to list recent partners from the xoopspartners module (tested with version 1.1)
 function b_marquee_xoopspartners($limit, $dateFormat, $itemsSize)
 {
-    $block    = array();
+    $block    = [];
     $myts     = MyTextSanitizer::getInstance();
-    $arrayIds = array();
+    $arrayIds = [];
     $arrayIds = xoopspartners_random($limit);
     global $xoopsDB;
 
@@ -46,13 +46,13 @@ function b_marquee_xoopspartners($limit, $dateFormat, $itemsSize)
             $title = $myts->htmlSpecialChars($origtitle);
         }
 
-        $block[] = array(
+        $block[] = [
             'date'     => '',
             'category' => '',
             'author'   => '',
             'title'    => $title,
             'link'     => "<a href='" . XOOPS_URL . '/modules/xoopspartners/vpartner.php?id=' . $id . "'>" . $title . '</a>'
-        );
+        ];
     }
 
     return $block;
@@ -69,8 +69,8 @@ function b_marquee_xoopspartners($limit, $dateFormat, $itemsSize)
 function xoopspartners_random($numberPartners, $random = true, $orden = '', $desc = '')
 {
     global $xoopsDB;
-    $PartnersId  = array();
-    $ArrayReturn = array();
+    $PartnersId  = [];
+    $ArrayReturn = [];
     $numrows     = 0;
     if ($random) {
         $result  = $xoopsDB->query('SELECT id FROM ' . $xoopsDB->prefix('partners') . ' WHERE status = 1');

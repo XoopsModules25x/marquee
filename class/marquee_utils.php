@@ -30,7 +30,7 @@
  * Note: You should be able to use it without the need to instanciate it.
  *
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 class MarqueeUtility
 {
@@ -66,7 +66,7 @@ class MarqueeUtility
     {
         global $xoopsModuleConfig, $xoopsModule;
         $repmodule = self::MODULE_NAME;
-        static $options = array();
+        static $options = [];
         if (is_array($options) && array_key_exists($option, $options) && $withCache) {
             return $options[$option];
         }
@@ -248,11 +248,11 @@ class MarqueeUtility
     public function &formMarkRequiredFields(&$sform)
     {
         if (self::needsAsterisk()) {
-            $required = array();
+            $required = [];
             foreach ($sform->getRequired() as $item) {
                 $required[] = $item->_name;
             }
-            $elements = array();
+            $elements = [];
             $elements =& $sform->getElements();
             $cnt      = count($elements);
             for ($i = 0; $i < $cnt; ++$i) {

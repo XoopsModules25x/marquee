@@ -28,7 +28,7 @@
 function b_marquee_newbb($limit, $dateFormat, $itemsSize)
 {
     require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
-    $block = array();
+    $block = [];
 
     /** @var XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
@@ -73,7 +73,7 @@ function b_marquee_newbb($limit, $dateFormat, $itemsSize)
         if (!$result) {
             return '';
         }
-        $rows = array();
+        $rows = [];
         while ($row = $db->fetchArray($result)) {
             $rows[] = $row;
         }
@@ -88,13 +88,13 @@ function b_marquee_newbb($limit, $dateFormat, $itemsSize)
                 $title = xoops_substr($title, 0, $itemsSize + 3);
             }
 
-            $block[] = array(
+            $block[] = [
                 'date'     => formatTimestamp($arr['topic_time'], $dateFormat),
                 'category' => $arr['forum_name'],
                 'author'   => $arr['uid'],
                 'title'    => $title,
                 'link'     => "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $arr['topic_id'] . '&amp;post_id=' . $arr['post_id'] . '#forumpost' . $arr['post_id'] . "'>" . $title . '</a>'
-            );
+            ];
         }
     } else { // Newbb 1
         $db    = XoopsDatabaseFactory::getDatabaseConnection();
@@ -122,13 +122,13 @@ function b_marquee_newbb($limit, $dateFormat, $itemsSize)
                 $title = xoops_substr($title, 0, $itemsSize + 3);
             }
 
-            $block[] = array(
+            $block[] = [
                 'date'     => $time,
                 'category' => $arr['forum_name'],
                 'author'   => $tmpuser,
                 'title'    => $title,
                 'link'     => "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $arr['topic_id'] . '&amp;forum=' . $arr['forum_id'] . '&amp;post_id=' . $arr['topic_last_post_id'] . '#forumpost' . $arr['topic_last_post_id'] . "'>" . $title . '</a>'
-            );
+            ];
         }
     }
 

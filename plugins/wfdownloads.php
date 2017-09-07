@@ -29,7 +29,7 @@
 // Script to list recent files from the wfdownloads module (tested with wfdownloads 3.1)
 function b_marquee_wfdownloads($limit, $dateFormat, $itemsSize)
 {
-    $block = array();
+    $block = [];
 
     global $xoopsUser;
     $moduleHandler  = xoops_getHandler('module');
@@ -48,7 +48,7 @@ function b_marquee_wfdownloads($limit, $dateFormat, $itemsSize)
     $criteria->setLimit($limit);
     $downloadHandler = xoops_getModuleHandler('download', 'wfdownloads');
     $categoryHandler = xoops_getModuleHandler('category', 'wfdownloads');
-    $buffer_category = array();
+    $buffer_category = [];
 
     $downloads = $downloadHandler->getObjects($criteria);
 
@@ -65,13 +65,13 @@ function b_marquee_wfdownloads($limit, $dateFormat, $itemsSize)
             $category   = $categoryHandler->get($download['cid']);
             $categtitle = $buffer_category[$download['cid']] = $category->getVar('title');
         }
-        $block[] = array(
+        $block[] = [
             'date'     => formatTimestamp($download['published'], $wfModuleConfig['dateformat']),
             'category' => $categtitle,
             'author'   => $download['publisher'],
             'title'    => $title,
             'link'     => "<a href='" . XOOPS_URL . '/modules/wfdownloads/singlefile.php?cid=' . $download['cid'] . '&lid=' . $download['lid'] . "'>" . $title . '</a>'
-        );
+        ];
     }
 
     return $block;

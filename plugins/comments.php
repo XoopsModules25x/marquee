@@ -31,7 +31,7 @@ function b_marquee_comments($limit, $dateFormat, $itemsSize)
 {
     require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
     require_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
-    $block  = array();
+    $block  = [];
     $status = XOOPS_COMMENT_APPROVEUSER;
     $module = 0;
     /** @var XoopsModuleHandler $moduleHandler */
@@ -62,7 +62,7 @@ function b_marquee_comments($limit, $dateFormat, $itemsSize)
             } else {
                 $title = $comments[$i]->getVar('com_title');
             }
-            $block[] = array(
+            $block[] = [
                 'date'     => formatTimestamp($comments[$i]->getVar('com_created'), $dateFormat),
                 'category' => '',
                 'author'   => $comments[$i]->getVar('com_uid'),
@@ -88,7 +88,7 @@ function b_marquee_comments($limit, $dateFormat, $itemsSize)
                               . "'>"
                               . $title
                               . '</a>'
-            );
+            ];
         }
     }
 

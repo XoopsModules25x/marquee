@@ -29,7 +29,7 @@
 // Script to list recent partners from the smartpartner module (tested with smartparnter 1.2)
 function b_marquee_smartpartner($limit, $dateFormat, $itemsSize)
 {
-    $block = $newObjects = array();
+    $block = $newObjects = [];
     if (!defined('SMARTPARTNER_DIRNAME')) {
         define('SMARTPARTNER_DIRNAME', 'smartpartner');
     }
@@ -49,7 +49,7 @@ function b_marquee_smartpartner($limit, $dateFormat, $itemsSize)
         }
         $partnersObj = $newObjects;
     }
-    $catId = array();
+    $catId = [];
     foreach ($partnersObj as $partnerObj) {
         if (!in_array($partnerObj->categoryid(), $catId)) {
             $catId[] = $partnerObj->categoryid();
@@ -68,13 +68,13 @@ function b_marquee_smartpartner($limit, $dateFormat, $itemsSize)
                         $title = $partnersObj[$i]->title();
                     }
 
-                    $block[] = array(
+                    $block[] = [
                         'date'     => '',
                         'category' => '',
                         'author'   => '',
                         'title'    => $title,
                         'link'     => "<a href='" . XOOPS_URL . '/modules/smartpartner/partner.php?id=' . $partnersObj[$i]->id() . "'>" . $title . '</a>'
-                    );
+                    ];
                 }
             }
         }

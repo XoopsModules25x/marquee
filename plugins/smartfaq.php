@@ -30,7 +30,7 @@
 function b_marquee_smartfaq($limit, $dateFormat, $itemsSize)
 {
     require_once XOOPS_ROOT_PATH . '/modules/smartfaq/include/functions.php';
-    $block = array();
+    $block = [];
 
     $smartModule       =& sf_getModuleInfo();
     $smartModuleConfig =& sf_getModuleConfig();
@@ -52,7 +52,7 @@ function b_marquee_smartfaq($limit, $dateFormat, $itemsSize)
     $faqsObj       = $faqHandler->getAllPublished($limit, 0, $categoryid, $sort);
     $allcategories = $categoryHandler->getObjects(null, true);
     if ($faqsObj) {
-        $userids = $faqids = array();
+        $userids = $faqids = [];
         foreach ($faqsObj as $key => $thisfaq) {
             $faqids[]                 = $thisfaq->getVar('faqid');
             $userids[$thisfaq->uid()] = 1;
@@ -69,13 +69,13 @@ function b_marquee_smartfaq($limit, $dateFormat, $itemsSize)
         for ($i = 0, $iMax = count($faqsObj); $i < $iMax; ++$i) {
             $answerObj = $allanswers[$faqsObj[$i]->faqid()];
             $title     = $faqsObj[$i]->question($maxQuestionLength);
-            $block[]   = array(
+            $block[]   = [
                 'date'     => $faqsObj[$i]->datesub(),
                 'category' => $allcategories[$faqsObj[$i]->categoryid()]->getVar('name'),
                 'author'   => sf_getLinkedUnameFromId($answerObj->uid(), $smartModuleConfig['userealname'], $users),
                 'title'    => $title,
                 'link'     => "<a href='" . XOOPS_URL . '/modules/smartfaq/faq.php?faqid=' . $faqsObj[$i]->faqid() . "'>" . $title . '</a>'
-            );
+            ];
         }
     }
 

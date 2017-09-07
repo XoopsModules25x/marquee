@@ -29,7 +29,7 @@
 // Script to list recent clips from the smartmedia module (tested with smartmedia 0.85)
 function b_marquee_smartmedia($limit, $dateFormat, $itemsSize)
 {
-    $block = array();
+    $block = [];
     if (!defined('SMARTMEDIA_DIRNAME')) {
         define('SMARTMEDIA_DIRNAME', 'smartmedia');
     }
@@ -46,14 +46,14 @@ function b_marquee_smartmedia($limit, $dateFormat, $itemsSize)
 
     if ($clipsArray) {
         foreach ($clipsArray as $clipArray) {
-            $clip    = array();
-            $block[] = array(
+            $clip    = [];
+            $block[] = [
                 'date'     => '',
                 'category' => '',
                 'author'   => '',
                 'title'    => $clipArray['title'],
                 'link'     => '<a href="' . SMARTMEDIA_URL . 'clip.php?categoryid=' . $clipArray['categoryid'] . '&folderid=' . $clipArray['folderid'] . '&clipid=' . $clipArray['clipid'] . '">' . $clipArray['title'] . '</a>'
-            );
+            ];
             unset($clip);
         }
     }

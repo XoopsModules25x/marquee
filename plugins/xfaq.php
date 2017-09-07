@@ -28,7 +28,7 @@
 function b_marquee_xfaq($limit, $dateFormat, $itemsSize)
 {
     require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
-    $block  = array();
+    $block  = [];
     $myts   = MyTextSanitizer::getInstance();
     $db     = XoopsDatabaseFactory::getDatabaseConnection();
     $result = $db->query('SELECT f.*, t.topic_title, t.topic_submitter FROM ' . $db->prefix('xfaq_faq') . ' f, ' . $db->prefix('xfaq_topic') . ' t WHERE f.faq_online>0 AND (f.faq_topic=t.topic_id) ORDER BY faq_date_created DESC', $limit, 0);
@@ -37,13 +37,13 @@ function b_marquee_xfaq($limit, $dateFormat, $itemsSize)
         if ($itemsSize > 0) {
             $title = xoops_substr($title, 0, $itemsSize + 3);
         }
-        $block[] = array(
+        $block[] = [
             'date'     => formatTimestamp($myrow['faq_date_created'], $dateFormat),
             'category' => $myts->htmlSpecialChars($myrow['topic_title']),
             'author'   => XoopsUser::getUnameFromId((int)$myrow['topic_submitter']),
             'title'    => $title,
             'link'     => "<a href='" . XOOPS_URL . '/modules/xfaq/faq.php?faq_id=' . $myrow['faq_id'] . "'>{$title}</a>"
-        );
+        ];
     }
 
     return $block;

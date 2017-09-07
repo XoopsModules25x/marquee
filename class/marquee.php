@@ -18,7 +18,7 @@
  * ****************************************************************************
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 require_once XOOPS_ROOT_PATH . '/kernel/object.php';
 require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
@@ -67,9 +67,9 @@ class Marquee extends XoopsObject
     public function constructmarquee($uniqid = '')
     {
         require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
-        $tblalign     = array('top', 'bottom', 'middle');
-        $tblbehaviour = array('scroll', 'slide', 'alternate');
-        $tbldirection = array('right', 'left', 'up', 'down');
+        $tblalign     = ['top', 'bottom', 'middle'];
+        $tblbehaviour = ['scroll', 'slide', 'alternate'];
+        $tbldirection = ['right', 'left', 'up', 'down'];
         $stop         = $this->getVar('marquee_stoponmouseover') == 1 ? ' onmouseover="this.stop()" onmouseout="this.start()"' : '';
         $bgcolor      = trim($this->getVar('marquee_bgcolor')) !== '' ? " bgcolor='" . $this->getVar('marquee_bgcolor') . "'" : '';
         $height       = $this->getVar('marquee_height') != 0 ? ' height=' . $this->getVar('marquee_height') : '';

@@ -33,7 +33,7 @@ function b_marquee_smartsection($limit, $dateFormat, $itemsSize)
     xoops_load('xoopsuserutility');
     $myts        = MyTextSanitizer::getInstance();
     $smartModule =& smartsection_getModuleInfo();
-    $block       = array();
+    $block       = [];
     $categoryid  = -1;
     $sort        = 'datesub';
     $order       = smartsection_getOrderBy($sort);
@@ -48,13 +48,13 @@ function b_marquee_smartsection($limit, $dateFormat, $itemsSize)
             } else {
                 $title = $itemsObj[$i]->title();
             }
-            $block[] = array(
+            $block[] = [
                 'date'     => $itemsObj[$i]->datesub(),
                 'category' => $itemsObj[$i]->getCategoryName(),
                 'author'   => XoopsUserUtility::getUnameFromId($itemsObj[$i]->uid()),
                 'title'    => $title,
                 'link'     => "<a href='" . XOOPS_URL . '/modules/smartsection/item.php?itemid=' . $itemsObj[$i]->itemid() . "'>" . $title . '</a>'
-            );
+            ];
         }
     }
 

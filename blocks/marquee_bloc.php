@@ -29,7 +29,7 @@ function b_marquee_show($options)
     global $xoopsTpl;
     require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
     $marqueeHandler = xoops_getModuleHandler('marquee', 'marquee');
-    $block          = array();
+    $block          = [];
     $marqueeId      = (int)$options[0];
     if ($marqueeId > 0) {
         $marquee = null;

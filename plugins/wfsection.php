@@ -30,7 +30,7 @@
 function b_marquee_wfsection($limit, $dateFormat, $itemsSize)
 {
     require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
-    $block = array();
+    $block = [];
 
     $myts = MyTextSanitizer::getInstance();
     /** @var XoopsModuleHandler $moduleHandler */
@@ -46,7 +46,7 @@ function b_marquee_wfsection($limit, $dateFormat, $itemsSize)
         $result = $xoopsDB->query($sql, $limit, 0);
         while ($myrow = $xoopsDB->fetchArray($result)) {
             if (checkAccess($myrow['groupid'])) {
-                $wfs   = array();
+                $wfs   = [];
                 $title = $myts->htmlSpecialChars($myrow['title']);
                 if (!XOOPS_USE_MULTIBYTES) {
                     if ($itemsSize > 0) {
@@ -55,13 +55,13 @@ function b_marquee_wfsection($limit, $dateFormat, $itemsSize)
                         $title = $myts->htmlSpecialChars($myrow['title']);
                     }
                 }
-                $block[] = array(
+                $block[] = [
                     'date'     => formatTimestamp($myrow['published'], $dateFormat),
                     'category' => '',
                     'author'   => XoopsUser::getUnameFromId($myrow['uid']),
                     'title'    => $title,
                     'link'     => "<a href='" . XOOPS_URL . '/modules/wfsection/article.php?articleid=' . $myrow['articleid'] . "'>" . $title . '</a>'
-                );
+                ];
             }
         }
     } // wfsection 1 ou 2 ?

@@ -29,7 +29,7 @@
 // Script to list recent articles from the xfsection module (tested with xfsection 1.12)
 function b_marquee_xfsection($limit, $dateFormat, $itemsSize)
 {
-    $block = array();
+    $block = [];
     global $xoopsDB;
     if (!function_exists('xfblock_checkAccess')) {
         require_once XOOPS_ROOT_PATH . '/modules/xfsection/include/xfblock_groupaccess.php';
@@ -40,7 +40,7 @@ function b_marquee_xfsection($limit, $dateFormat, $itemsSize)
     $result = $xoopsDB->query($sql, $limit, 0);
     while ($myrow = $xoopsDB->fetchArray($result)) {
         if (xfblock_checkAccess($myrow['groupid'])) {
-            $wfs   = array();
+            $wfs   = [];
             $title = $myts->htmlSpecialChars($myrow['title']);
             if (!XOOPS_USE_MULTIBYTES) {
                 if ($itemsSize > 0) {
@@ -49,13 +49,13 @@ function b_marquee_xfsection($limit, $dateFormat, $itemsSize)
                     $title = $myts->htmlSpecialChars($myrow['title']);
                 }
             }
-            $block[] = array(
+            $block[] = [
                 'date'     => formatTimestamp($myrow['published'], $dateFormat),
                 'category' => '',
                 'author'   => XoopsUser::getUnameFromId($myrow['uid']),
                 'title'    => $title,
                 'link'     => "<a href='" . XOOPS_URL . '/modules/xfsection/article.php?articleid=' . $myrow['articleid'] . "'>" . $title . '</a>'
-            );
+            ];
         }
     }
 

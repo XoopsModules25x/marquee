@@ -16,7 +16,7 @@
  * @author              Hervé Thouzard (http://www.herve-thouzard.com)
  **/
 
-require_once __DIR__ . '/../../include/cp_header.php';
+require_once __DIR__ . '/../../mainfile.php';
 
 defined('FRAMEWORKS_ART_FUNCTIONS_INI') || require_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.ini.php';
 load_functions('admin');

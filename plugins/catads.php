@@ -31,7 +31,7 @@ function b_marquee_catads($limit, $dateFormat, $itemsSize)
 {
     global $xoopsModule, $xoopsModuleConfig, $xoopsDB;
     require_once XOOPS_ROOT_PATH . '/modules/catads/class/cat.php';
-    $block = array();
+    $block = [];
     if (empty($xoopsModule) || $xoopsModule->getVar('dirname') !== 'catads') {
         /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
@@ -52,8 +52,8 @@ function b_marquee_catads($limit, $dateFormat, $itemsSize)
     $criteria->setLimit($limit);
     $nbads = $ads_hnd->getCount($criteria);
 
-    $itemArray = array();
-    $catBuffer = array();
+    $itemArray = [];
+    $catBuffer = [];
 
     if ($nbads > 0) {
         $ads  = $ads_hnd->getObjects($criteria);
@@ -71,13 +71,13 @@ function b_marquee_catads($limit, $dateFormat, $itemsSize)
             } else {
                 $catTitle = $catBuffer[$oneads->getVar('cat_id')];
             }
-            $block[] = array(
+            $block[] = [
                 'date'     => formatTimestamp($oneads->getVar('published'), $dateFormat),
                 'category' => '',
                 'author'   => XoopsUser::getUnameFromId($oneads->getVar('uid')),
                 'title'    => $title,
                 'link'     => "<a href='" . XOOPS_URL . '/modules/catads/adsitem.php?ads_id=' . $oneads->getVar('ads_id') . "'>" . $title . '</a>'
-            );
+            ];
             unset($itemArray);
         }
     }

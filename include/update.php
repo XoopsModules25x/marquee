@@ -43,7 +43,7 @@ function xoops_module_update_marquee(XoopsObject $module, $oldversion = null)
 
         // delete old block html template files
         $templateDirectory = XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'n') . '/templates/blocks/';
-        $template_list     = array_diff(scandir($templateDirectory, SCANDIR_SORT_NONE), array('..', '.'));
+        $template_list     = array_diff(scandir($templateDirectory, SCANDIR_SORT_NONE), ['..', '.']);
         foreach ($template_list as $k => $v) {
             $fileinfo = new SplFileInfo($templateDirectory . $v);
             if ($fileinfo->getExtension() === 'html' && $fileinfo->getFilename() !== 'index.html') {

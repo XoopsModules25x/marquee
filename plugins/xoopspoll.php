@@ -28,7 +28,7 @@
 function b_marquee_xoopspoll($limit, $dateFormat, $itemsSize)
 {
     require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
-    $block  = array();
+    $block  = [];
     $myts   = MyTextSanitizer::getInstance();
     $db     = XoopsDatabaseFactory::getDatabaseConnection();
     $result = $db->query('SELECT * FROM ' . $db->prefix('xoopspoll_desc') . ' WHERE start_time<=' . time() . ' AND end_time>' . time() . ' ORDER BY start_time DESC', $limit, 0);
@@ -37,13 +37,13 @@ function b_marquee_xoopspoll($limit, $dateFormat, $itemsSize)
         if ($itemsSize > 0) {
             $title = xoops_substr($title, 0, $itemsSize + 3);
         }
-        $block[] = array(
+        $block[] = [
             'date'     => formatTimestamp($myrow['start_time'], $dateFormat),
             'category' => '',
             'author'   => $myrow['user_id'],
             'title'    => $title,
             'link'     => "<a href='" . XOOPS_URL . '/modules/xoopspoll/index.php?poll_id=' . $myrow['poll_id'] . "'>" . $title . '</a>'
-        );
+        ];
     }
 
     return $block;

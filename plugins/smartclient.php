@@ -29,7 +29,7 @@
 // Script to list recent clients from the smartclient module (tested with smartclient 1.02)
 function b_marquee_smartclient($limit, $dateFormat, $itemsSize)
 {
-    $block = array();
+    $block = [];
     if (!defined('SMARTCLIENT_DIRNAME')) {
         define('SMARTCLIENT_DIRNAME', 'smartclient');
     }
@@ -46,13 +46,13 @@ function b_marquee_smartclient($limit, $dateFormat, $itemsSize)
             } else {
                 $title = $clientsObj[$i]->title();
             }
-            $block[] = array(
+            $block[] = [
                 'date'     => '',
                 'category' => '',
                 'author'   => '',
                 'title'    => $title,
                 'link'     => "<a href='" . XOOPS_URL . '/modules/smartclient/client.php?id=' . $clientsObj[$i]->id() . "'>" . $title . '</a>'
-            );
+            ];
         }
     }
 

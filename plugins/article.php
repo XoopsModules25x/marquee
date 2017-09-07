@@ -36,7 +36,7 @@ function b_marquee_article($limit, $dateFormat, $itemsSize)
     global $xoopsDB;
     require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
     require_once XOOPS_ROOT_PATH . '/modules/article/include/functions.php';
-    $block = array();
+    $block = [];
     $myts  = MyTextSanitizer::getInstance();
 
     static $accessCats;
@@ -65,8 +65,8 @@ function b_marquee_article($limit, $dateFormat, $itemsSize)
     if (!$result = $xoopsDB->query($query)) {
         return false;
     }
-    $rows   = array();
-    $author = array();
+    $rows   = [];
+    $author = [];
     while ($row = $xoopsDB->fetchArray($result)) {
         $rows[]              = $row;
         $author[$row['uid']] = 1;
@@ -76,14 +76,14 @@ function b_marquee_article($limit, $dateFormat, $itemsSize)
     }
     $authorName = XoopsUser::getUnameFromId(array_keys($author));
 
-    $arts           = array();
-    $uids           = array();
-    $cids           = array();
+    $arts           = [];
+    $uids           = [];
+    $cids           = [];
     $articleHandler = xoops_getModuleHandler('article', 'article');
     foreach ($rows as $row) {
         $article = $articleHandler->create(false);
         $article->assignVars($row);
-        $_art = array();
+        $_art = [];
         foreach ($row as $tag => $val) {
             $_art[$tag] = @$article->getVar($tag);
         }

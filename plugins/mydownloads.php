@@ -29,7 +29,7 @@ function b_marquee_mydownloads($limit, $dateFormat, $itemsSize)
 {
     require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
     require_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
-    $block  = array();
+    $block  = [];
     $myts   = MyTextSanitizer::getInstance();
     $db     = XoopsDatabaseFactory::getDatabaseConnection();
     $result = $db->query('SELECT m.lid, m.cid, m.title, m.date, m.hits, m.submitter, c.title AS catitle, u.name, u.uname FROM '
@@ -49,13 +49,13 @@ function b_marquee_mydownloads($limit, $dateFormat, $itemsSize)
             $author = $myts->htmlSpecialChars($myrow['name']);
         }
         $category = $myts->htmlSpecialChars($myrow['catitle']);
-        $block[]  = array(
+        $block[]  = [
             'date'     => formatTimestamp($myrow['date'], $dateFormat),
             'category' => $category,
             'author'   => $author,
             'title'    => $title,
             'link'     => "<a href='" . XOOPS_URL . '/modules/mydownloads/singlefile.php?cid=' . $myrow['cid'] . '&amp;lid=' . $myrow['lid'] . "'>" . $title . '</a>'
-        );
+        ];
     }
 
     return $block;
