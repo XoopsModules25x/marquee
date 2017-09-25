@@ -187,7 +187,7 @@ class MarqueeUtility
         if (null === $mymodule) {
             global $xoopsModule;
             if (null !== $xoopsModule && is_object($xoopsModule)
-                && $xoopsModule->getVar('dirname') == REFERENCES_DIRNAME) {
+                && REFERENCES_DIRNAME == $xoopsModule->getVar('dirname')) {
                 $mymodule =& $xoopsModule;
             } else {
                 $hModule  = xoops_getHandler('module');
@@ -224,10 +224,10 @@ class MarqueeUtility
         if (self::isX23()) {
             return false;
         }
-        if (strpos(strtolower(XOOPS_VERSION), 'impresscms') !== false) {
+        if (false !== strpos(strtolower(XOOPS_VERSION), 'impresscms')) {
             return false;
         }
-        if (strpos(strtolower(XOOPS_VERSION), 'legacy') === false) {
+        if (false === strpos(strtolower(XOOPS_VERSION), 'legacy')) {
             $xv = xoops_trim(str_replace('XOOPS ', '', XOOPS_VERSION));
             if ((int)substr($xv, 4, 2) >= 17) {
                 return false;

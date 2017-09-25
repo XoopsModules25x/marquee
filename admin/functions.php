@@ -96,7 +96,7 @@ function myglob($folder = '', $pattern = 'php')
         if (!($dir = @opendir($folder))) {
             throw new \RuntimeException('Error, impossible to open the folder ' . $folder);
         }
-        while (($file = readdir($dir)) !== false) {
+        while (false !== ($file = readdir($dir))) {
             if (!is_dir($file)) {
                 $ext       = basename($file);
                 $ext       = explode('.', $ext);

@@ -36,7 +36,7 @@ function b_marquee_show($options)
         $marquee = $marqueeHandler->get($marqueeId);
         if (is_object($marquee)) {
             $uniqid = md5(uniqid(mt_rand(), true));
-            if (marquee_getmoduleoption('methodtouse') === 'DHTML') {
+            if ('DHTML' === marquee_getmoduleoption('methodtouse')) {
                 $link = '<script type="text/javascript" src="' . XOOPS_URL . '/modules/marquee/assets/js/xbMarquee.js"></script>';
                 $link .= "\n<script type=\"text/javascript\">\n";
                 $link .= 'var marquee' . $uniqid . ";\n";

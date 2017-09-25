@@ -32,7 +32,7 @@ function b_marquee_catads($limit, $dateFormat, $itemsSize)
     global $xoopsModule, $xoopsModuleConfig, $xoopsDB;
     require_once XOOPS_ROOT_PATH . '/modules/catads/class/cat.php';
     $block = [];
-    if (empty($xoopsModule) || $xoopsModule->getVar('dirname') !== 'catads') {
+    if (empty($xoopsModule) || 'catads' !== $xoopsModule->getVar('dirname')) {
         /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $module        = $moduleHandler->getByDirname('catads');

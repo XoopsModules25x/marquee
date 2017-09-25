@@ -45,7 +45,7 @@ function b_marquee_mydownloads($limit, $dateFormat, $itemsSize)
             $title = xoops_substr($title, 0, $itemsSize + 3);
         }
         $author = $myts->htmlSpecialChars($myrow['uname']);
-        if (xoops_trim($myrow['catitle']) !== '') {
+        if ('' !== xoops_trim($myrow['catitle'])) {
             $author = $myts->htmlSpecialChars($myrow['name']);
         }
         $category = $myts->htmlSpecialChars($myrow['catitle']);

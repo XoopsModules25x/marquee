@@ -70,15 +70,15 @@ class Marquee extends XoopsObject
         $tblalign     = ['top', 'bottom', 'middle'];
         $tblbehaviour = ['scroll', 'slide', 'alternate'];
         $tbldirection = ['right', 'left', 'up', 'down'];
-        $stop         = $this->getVar('marquee_stoponmouseover') == 1 ? ' onmouseover="this.stop()" onmouseout="this.start()"' : '';
-        $bgcolor      = trim($this->getVar('marquee_bgcolor')) !== '' ? " bgcolor='" . $this->getVar('marquee_bgcolor') . "'" : '';
-        $height       = $this->getVar('marquee_height') != 0 ? ' height=' . $this->getVar('marquee_height') : '';
-        $hspace       = $this->getVar('marquee_hspace') != 0 ? ' hspace=' . $this->getVar('marquee_hspace') : '';
-        $width        = trim($this->getVar('marquee_width')) !== '' ? " width='" . $this->getVar('marquee_width') . "'" : '';
-        $scrolldelay  = $this->getVar('marquee_scrolldelay') != 0 ? ' scrolldelay=' . $this->getVar('marquee_scrolldelay') : '';
-        $loop         = $this->getVar('marquee_loop') != 0 ? ' loop=' . $this->getVar('marquee_loop') : " loop='infinite'";
-        $vspace       = $this->getVar('marquee_vspace') != 0 ? ' vspace=' . $this->getVar('marquee_vspace') : '';
-        $scrollamount = $this->getVar('marquee_scrollamount') != 0 ? ' scrollamount=' . $this->getVar('marquee_scrollamount') : '';
+        $stop         = 1 == $this->getVar('marquee_stoponmouseover') ? ' onmouseover="this.stop()" onmouseout="this.start()"' : '';
+        $bgcolor      = '' !== trim($this->getVar('marquee_bgcolor')) ? " bgcolor='" . $this->getVar('marquee_bgcolor') . "'" : '';
+        $height       = 0 != $this->getVar('marquee_height') ? ' height=' . $this->getVar('marquee_height') : '';
+        $hspace       = 0 != $this->getVar('marquee_hspace') ? ' hspace=' . $this->getVar('marquee_hspace') : '';
+        $width        = '' !== trim($this->getVar('marquee_width')) ? " width='" . $this->getVar('marquee_width') . "'" : '';
+        $scrolldelay  = 0 != $this->getVar('marquee_scrolldelay') ? ' scrolldelay=' . $this->getVar('marquee_scrolldelay') : '';
+        $loop         = 0 != $this->getVar('marquee_loop') ? ' loop=' . $this->getVar('marquee_loop') : " loop='infinite'";
+        $vspace       = 0 != $this->getVar('marquee_vspace') ? ' vspace=' . $this->getVar('marquee_vspace') : '';
+        $scrollamount = 0 != $this->getVar('marquee_scrollamount') ? ' scrollamount=' . $this->getVar('marquee_scrollamount') : '';
         $br           = ' - ';
 
         if ($this->getVar('marquee_direction') > 1) {
@@ -86,7 +86,7 @@ class Marquee extends XoopsObject
         }
 
         $content = '';
-        if ($this->getVar('marquee_source') !== 'fixed') {
+        if ('fixed' !== $this->getVar('marquee_source')) {
             require_once XOOPS_ROOT_PATH . '/modules/marquee/plugins/' . $this->getVar('marquee_source') . '.php';
             $function_name = 'b_marquee_' . $this->getVar('marquee_source'); // For example b_marquee_comments
             if (function_exists($function_name)) {
@@ -96,10 +96,10 @@ class Marquee extends XoopsObject
                 $retval     = call_user_func($function_name, $limit, $dateFormat, $itemsSize);
                 if (is_array($retval) && count($retval) > 0) {
                     foreach ($retval as $onevalue) {
-                        if (isset($onevalue['category']) && xoops_trim($onevalue['category']) !== '') {
+                        if (isset($onevalue['category']) && '' !== xoops_trim($onevalue['category'])) {
                             $onevalue['category'] = ' - ' . $onevalue['category'];
                         }
-                        if (isset($onevalue['link']) && xoops_trim($onevalue['link']) !== '') {
+                        if (isset($onevalue['link']) && '' !== xoops_trim($onevalue['link'])) {
                             $onevalue['link'] = ' - ' . $onevalue['link'];
                         }
                         $content .= $onevalue['date'] . $onevalue['category'] . $onevalue['link'] . $br;
@@ -110,7 +110,7 @@ class Marquee extends XoopsObject
             $content = $this->getVar('marquee_content');
         }
         if (!marquee_isbot()) { // We are using the microsoft html tag
-            if (strtolower(marquee_getmoduleoption('methodtouse')) !== 'dhtml') {
+            if ('dhtml' !== strtolower(marquee_getmoduleoption('methodtouse'))) {
                 return "<marquee align='"
                        . $tblalign[$this->getVar('marquee_align')]
                        . "' behavior='"
@@ -188,7 +188,7 @@ class MarqueeMarqueeHandler extends MarqueePersistableObjectHandler
             if ($oneMarquee->getVar('marquee_marqueeid') == $selectedmarquee) {
                 $selected = ' selected';
             }
-            $content = xoops_trim(strip_tags($oneMarquee->getVar('marquee_content'))) !== '' ? xoops_substr(strip_tags($oneMarquee->getVar('marquee_content')), 0, 50) : $oneMarquee->getVar('marquee_source');
+            $content = '' !== xoops_trim(strip_tags($oneMarquee->getVar('marquee_content'))) ? xoops_substr(strip_tags($oneMarquee->getVar('marquee_content')), 0, 50) : $oneMarquee->getVar('marquee_source');
             $ret     .= '<option ' . $selected . " value='" . $oneMarquee->getVar('marquee_marqueeid') . "'>" . $content . '</option>';
         }
 

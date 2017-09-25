@@ -129,14 +129,14 @@ function AddEditMarqueeForm(
         $sform->addElement($editor, false);
     }
 
-    if (marquee_getmoduleoption('methodtouse') !== 'DHTML') {
+    if ('DHTML' !== marquee_getmoduleoption('methodtouse')) {
         // $sform->addElement(new XoopsFormText(_AM_MARQUEE_BGCOLOR, 'bgcolor', 7, 7, $bgcolorvalue), false);
         $sform->addElement(new XoopsFormColorPicker(_AM_MARQUEE_BGCOLOR, 'bgcolor', $bgcolorvalue), false);
     }
     $sform->addElement(new XoopsFormText(_AM_MARQUEE_WIDTH, 'width', 4, 4, $widthvalue), false);
     $sform->addElement(new XoopsFormText(_AM_MARQUEE_HEIGHT, 'height', 4, 4, $heightvalue), false);
     $sform->addElement(new XoopsFormText(_AM_MARQUEE_SCRAMOUNT, 'scrollamount', 4, 4, $scrollamountvalue), false);
-    if (marquee_getmoduleoption('methodtouse') !== 'DHTML') {
+    if ('DHTML' !== marquee_getmoduleoption('methodtouse')) {
         $sform->addElement(new XoopsFormText(_AM_MARQUEE_HSPACE, 'hspace', 4, 4, $hspacevalue), false);
         $sform->addElement(new XoopsFormText(_AM_MARQUEE_VSPACE, 'vspace', 4, 4, $vspacevalue), false);
     }
@@ -151,13 +151,13 @@ function AddEditMarqueeForm(
 
     $behaviour = new XoopsFormSelect(_AM_MARQUEE_BEHAVIOUR, 'behaviour', $behaviourvalue);
     $behaviour->addOption('0', _AM_MARQUEE_BEHAVIOUR1);
-    if (marquee_getmoduleoption('methodtouse') !== 'DHTML') {
+    if ('DHTML' !== marquee_getmoduleoption('methodtouse')) {
         $behaviour->addOption('1', _AM_MARQUEE_BEHAVIOUR2);
     }
     $behaviour->addOption('2', _AM_MARQUEE_BEHAVIOUR3);
     $sform->addElement($behaviour, true);
 
-    if (marquee_getmoduleoption('methodtouse') !== 'DHTML') {
+    if ('DHTML' !== marquee_getmoduleoption('methodtouse')) {
         $align = new XoopsFormSelect(_AM_MARQUEE_ALIGN, 'align', $alignvalue);
         $align->addOption('0', _AM_MARQUEE_ALIGN1);
         $align->addOption('1', _AM_MARQUEE_ALIGN2);
@@ -170,7 +170,7 @@ function AddEditMarqueeForm(
     for ($i = 1; $i <= 100; ++$i) {
         $loop->addOption($i, $i);
     }
-    if (marquee_getmoduleoption('methodtouse') !== 'DHTML') {
+    if ('DHTML' !== marquee_getmoduleoption('methodtouse')) {
         $sform->addElement($loop, true);
         $sform->addElement(new XoopsFormRadioYN(_AM_MARQUEE_STOP, 'stoponmouseover', $stopvalue, _YES, _NO));
     }
@@ -357,11 +357,11 @@ switch ($op) {
                 $direction    = $tbldirection[$marquee->getVar('marquee_direction')];
                 $behaviour    = $tblbehaviour[$marquee->getVar('marquee_behaviour')];
                 $stop         = _YES;
-                if ($marquee->getVar('marquee_stoponmouseover') == 0) {
+                if (0 == $marquee->getVar('marquee_stoponmouseover')) {
                     $stop = _NO;
                 }
                 $source = $marquee->getVar('marquee_source');
-                if ($marquee->getVar('marquee_source') === 'fixed') {
+                if ('fixed' === $marquee->getVar('marquee_source')) {
                     $source = _AM_MARQUEE_SOURCE_FIXED;
                 }
                 echo "<tr class='"
@@ -389,7 +389,7 @@ switch ($op) {
                      . '&nbsp;&nbsp;'
                      . $action_delete
                      . "</td></tr>\n";
-                $class = ($class === 'even') ? 'odd' : 'even';
+                $class = ('even' === $class) ? 'odd' : 'even';
             }
         }
 
