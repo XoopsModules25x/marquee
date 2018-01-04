@@ -33,7 +33,7 @@ function b_marquee_catads($limit, $dateFormat, $itemsSize)
     require_once XOOPS_ROOT_PATH . '/modules/catads/class/cat.php';
     $block = [];
     if (empty($xoopsModule) || 'catads' !== $xoopsModule->getVar('dirname')) {
-        /** @var XoopsModuleHandler $moduleHandler */
+        /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $module        = $moduleHandler->getByDirname('catads');
         $configHandler = xoops_getHandler('config');
@@ -57,7 +57,7 @@ function b_marquee_catads($limit, $dateFormat, $itemsSize)
 
     if ($nbads > 0) {
         $ads  = $ads_hnd->getObjects($criteria);
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         foreach ($ads as $oneads) {
             if ($itemsSize > 0) {
                 $title = xoops_substr($oneads->getVar('ads_title'), 0, $itemsSize);

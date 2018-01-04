@@ -27,7 +27,7 @@
 
 function marquee_adminmenu($currentoption = 0, $breadcrumb = '')
 {
-    ///*    require_once XOOPS_ROOT_PATH.'/modules/marquee/include/functions.php';
+    ///*    require_once XOOPS_ROOT_PATH.'/modules/marquee/class/Utility.php';
     //
     //  /* Nice buttons styles */
     //  echo "

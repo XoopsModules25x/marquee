@@ -20,12 +20,14 @@
  */
 
 use Xmf\Request;
+ use \XoopsModules\Marquee;
 
+require_once __DIR__ . '/admin_header.php';
 require_once __DIR__ . '/../../../include/cp_header.php';
 require_once XOOPS_ROOT_PATH . '/modules/marquee/admin/functions.php';
-require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
-require_once XOOPS_ROOT_PATH . '/modules/marquee/class/marquee_utils.php';
-require_once __DIR__ . '/admin_header.php';
+//require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
+//require_once XOOPS_ROOT_PATH . '/modules/marquee/class/marquee_utils.php';
+
 
 $adminObject = \Xmf\Module\Admin::getInstance();
 
@@ -67,7 +69,8 @@ if (!marquee_FieldExists('marquee_marqueeid', $xoopsDB->prefix('marquee'))) {
     $result = $xoopsDB->queryF('ALTER TABLE ' . $xoopsDB->prefix('marquee') . " CHANGE `source` `marquee_source` VARCHAR( 255 ) NOT NULL DEFAULT 'fixed'");
 }
 
-$marqueeHandler = xoops_getModuleHandler('marquee', 'marquee');
+//$marqueeHandler = xoops_getModuleHandler('marquee', 'marquee');
+//$marqueeHandler = new MarqueeHandler($db);
 
 // Function used to add and modify an element
 /**
@@ -113,9 +116,9 @@ function AddEditMarqueeForm(
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     global $xoopsModule, $xoopsModuleConfig;
 
-    $sform = new XoopsThemeForm($FormTitle, 'marqueeform', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/main.php');
+    $sform = new \XoopsThemeForm($FormTitle, 'marqueeform', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/main.php');
 
-    $source = new XoopsFormSelect(_AM_MARQUEE_SOURCE, 'source', $sourcevalue);
+    $source = new \XoopsFormSelect(_AM_MARQUEE_SOURCE, 'source', $sourcevalue);
     $source->addOption('fixed', _AM_MARQUEE_SOURCE_FIXED);
     $fileslst = myglob(XOOPS_ROOT_PATH . '/modules/marquee/plugins/', 'php');
     foreach ($fileslst as $onefile) {
@@ -124,65 +127,68 @@ function AddEditMarqueeForm(
     }
     $sform->addElement($source);
 
-    $editor = MarqueeUtility::getWysiwygForm(_AM_MARQUEE_CONTENT, 'content', $contentvalue, 15, 60, 'content_text_hidden');
+    /** @var \XoopsModules\Marquee\Utility $utility */
+    $utility = new Marquee\Utility();
+
+    $editor = $utility::getWysiwygForm(_AM_MARQUEE_CONTENT, 'content', $contentvalue, 15, 60, 'content_text_hidden');
     if ($editor) {
         $sform->addElement($editor, false);
     }
 
-    if ('DHTML' !== marquee_getmoduleoption('methodtouse')) {
+    if ('DHTML' !== $utility::getModuleOption('methodtouse')) {
         // $sform->addElement(new XoopsFormText(_AM_MARQUEE_BGCOLOR, 'bgcolor', 7, 7, $bgcolorvalue), false);
-        $sform->addElement(new XoopsFormColorPicker(_AM_MARQUEE_BGCOLOR, 'bgcolor', $bgcolorvalue), false);
+        $sform->addElement(new \XoopsFormColorPicker(_AM_MARQUEE_BGCOLOR, 'bgcolor', $bgcolorvalue), false);
     }
-    $sform->addElement(new XoopsFormText(_AM_MARQUEE_WIDTH, 'width', 4, 4, $widthvalue), false);
-    $sform->addElement(new XoopsFormText(_AM_MARQUEE_HEIGHT, 'height', 4, 4, $heightvalue), false);
-    $sform->addElement(new XoopsFormText(_AM_MARQUEE_SCRAMOUNT, 'scrollamount', 4, 4, $scrollamountvalue), false);
-    if ('DHTML' !== marquee_getmoduleoption('methodtouse')) {
-        $sform->addElement(new XoopsFormText(_AM_MARQUEE_HSPACE, 'hspace', 4, 4, $hspacevalue), false);
-        $sform->addElement(new XoopsFormText(_AM_MARQUEE_VSPACE, 'vspace', 4, 4, $vspacevalue), false);
+    $sform->addElement(new \XoopsFormText(_AM_MARQUEE_WIDTH, 'width', 4, 4, $widthvalue), false);
+    $sform->addElement(new \XoopsFormText(_AM_MARQUEE_HEIGHT, 'height', 4, 4, $heightvalue), false);
+    $sform->addElement(new \XoopsFormText(_AM_MARQUEE_SCRAMOUNT, 'scrollamount', 4, 4, $scrollamountvalue), false);
+    if ('DHTML' !== $utility::getModuleOption('methodtouse')) {
+        $sform->addElement(new \XoopsFormText(_AM_MARQUEE_HSPACE, 'hspace', 4, 4, $hspacevalue), false);
+        $sform->addElement(new \XoopsFormText(_AM_MARQUEE_VSPACE, 'vspace', 4, 4, $vspacevalue), false);
     }
 
-    $sform->addElement(new XoopsFormText(_AM_MARQUEE_SCRDELAY, 'scrolldelay', 6, 6, $scrolldelayvalue), false);
-    $direction = new XoopsFormSelect(_AM_MARQUEE_DIRECTION, 'direction', $directionvalue);
+    $sform->addElement(new \XoopsFormText(_AM_MARQUEE_SCRDELAY, 'scrolldelay', 6, 6, $scrolldelayvalue), false);
+    $direction = new \XoopsFormSelect(_AM_MARQUEE_DIRECTION, 'direction', $directionvalue);
     $direction->addOption('0', _AM_MARQUEE_DIRECTION1);
     $direction->addOption('1', _AM_MARQUEE_DIRECTION2);
     $direction->addOption('2', _AM_MARQUEE_DIRECTION3);
     $direction->addOption('3', _AM_MARQUEE_DIRECTION4);
     $sform->addElement($direction, true);
 
-    $behaviour = new XoopsFormSelect(_AM_MARQUEE_BEHAVIOUR, 'behaviour', $behaviourvalue);
+    $behaviour = new \XoopsFormSelect(_AM_MARQUEE_BEHAVIOUR, 'behaviour', $behaviourvalue);
     $behaviour->addOption('0', _AM_MARQUEE_BEHAVIOUR1);
-    if ('DHTML' !== marquee_getmoduleoption('methodtouse')) {
+    if ('DHTML' !== $utility::getModuleOption('methodtouse')) {
         $behaviour->addOption('1', _AM_MARQUEE_BEHAVIOUR2);
     }
     $behaviour->addOption('2', _AM_MARQUEE_BEHAVIOUR3);
     $sform->addElement($behaviour, true);
 
-    if ('DHTML' !== marquee_getmoduleoption('methodtouse')) {
-        $align = new XoopsFormSelect(_AM_MARQUEE_ALIGN, 'align', $alignvalue);
+    if ('DHTML' !== $utility::getModuleOption('methodtouse')) {
+        $align = new \XoopsFormSelect(_AM_MARQUEE_ALIGN, 'align', $alignvalue);
         $align->addOption('0', _AM_MARQUEE_ALIGN1);
         $align->addOption('1', _AM_MARQUEE_ALIGN2);
         $align->addOption('2', _AM_MARQUEE_ALIGN3);
         $sform->addElement($align, true);
     }
 
-    $loop = new XoopsFormSelect(_AM_MARQUEE_LOOP, 'loop', $loopvalue);
+    $loop = new \XoopsFormSelect(_AM_MARQUEE_LOOP, 'loop', $loopvalue);
     $loop->addOption('0', _AM_MARQUEE_INFINITELOOP);
     for ($i = 1; $i <= 100; ++$i) {
         $loop->addOption($i, $i);
     }
-    if ('DHTML' !== marquee_getmoduleoption('methodtouse')) {
+    if ('DHTML' !== $utility::getModuleOption('methodtouse')) {
         $sform->addElement($loop, true);
-        $sform->addElement(new XoopsFormRadioYN(_AM_MARQUEE_STOP, 'stoponmouseover', $stopvalue, _YES, _NO));
+        $sform->addElement(new \XoopsFormRadioYN(_AM_MARQUEE_STOP, 'stoponmouseover', $stopvalue, _YES, _NO));
     }
 
-    $sform->addElement(new XoopsFormHidden('op', $Action), false);
+    $sform->addElement(new \XoopsFormHidden('op', $Action), false);
     if (!empty($marqueeid)) {
-        $sform->addElement(new XoopsFormHidden('marqueeid', $marqueeid), false);
+        $sform->addElement(new \XoopsFormHidden('marqueeid', $marqueeid), false);
     }
-    $button_tray = new XoopsFormElementTray('', '');
-    $submit_btn  = new XoopsFormButton('', 'submit', $LabelSubmitButton, 'submit');
+    $button_tray = new \XoopsFormElementTray('', '');
+    $submit_btn  = new \XoopsFormButton('', 'submit', $LabelSubmitButton, 'submit');
     $button_tray->addElement($submit_btn);
-    $cancel_btn = new XoopsFormButton('', 'reset', _AM_MARQUEE_RESETBUTTON, 'reset');
+    $cancel_btn = new \XoopsFormButton('', 'reset', _AM_MARQUEE_RESETBUTTON, 'reset');
     $button_tray->addElement($cancel_btn);
     $sform->addElement($button_tray);
     $sform->display();

@@ -20,24 +20,26 @@
 
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
+include __DIR__ . '/preloads/autoloader.php';
+
 $moduleDirName = basename(__DIR__);
 
-$modversion['version']       = '2.50';
-$modversion['module_status'] = 'RC 1';
-$modversion['release_date']  = '2016/03/23';
-$modversion['name']          = _MI_MARQUEE_NAME;
-$modversion['description']   = _MI_MARQUEE_DESC;
-$modversion['credits']       = 'Carnuke, defkon1, the Newbb team, Mage, Mamba';
-$modversion['author']        = 'Hervé Thouzard';
-$modversion['nickname']      = 'hervet';
-$modversion['help']          = 'page=help';
-$modversion['license']       = 'GNU GPL 2.0';
-$modversion['license_url']   = 'www.gnu.org/licenses/gpl-2.0.html';
-$modversion['official']      = 0; //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
-$modversion['image']         = 'assets/images/logoModule.png';
-$modversion['dirname']       = basename(__DIR__);
-$modversion['modicons16'] = 'assets/images/icons/16';
-$modversion['modicons32'] = 'assets/images/icons/32';
+$modversion['version']             = '2.50';
+$modversion['module_status']       = 'RC 1';
+$modversion['release_date']        = '2016/03/23';
+$modversion['name']                = _MI_MARQUEE_NAME;
+$modversion['description']         = _MI_MARQUEE_DESC;
+$modversion['credits']             = 'Carnuke, defkon1, the Newbb team, Mage, Mamba';
+$modversion['author']              = 'Hervé Thouzard';
+$modversion['nickname']            = 'hervet';
+$modversion['help']                = 'page=help';
+$modversion['license']             = 'GNU GPL 2.0';
+$modversion['license_url']         = 'www.gnu.org/licenses/gpl-2.0.html';
+$modversion['official']            = 0; //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
+$modversion['image']               = 'assets/images/logoModule.png';
+$modversion['dirname']             = basename(__DIR__);
+$modversion['modicons16']          = 'assets/images/icons/16';
+$modversion['modicons32']          = 'assets/images/icons/32';
 $modversion['module_website_url']  = 'www.xoops.org/';
 $modversion['module_website_name'] = 'XOOPS';
 $modversion['author_website_url']  = 'https://xoops.org/';
@@ -48,7 +50,7 @@ $modversion['min_admin']           = '1.2';
 $modversion['min_db']              = ['mysql' => '5.5'];
 
 //update
-$modversion['onUpdate'] = 'include/update.php';
+//$modversion['onUpdate'] = 'include/onupdate.php';
 
 // SQL Tables
 $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
@@ -115,9 +117,6 @@ $modversion['blocks'][] = [
 // Search
 $modversion['hasSearch'] = 0;
 
-// Smarty
-$modversion['use_smarty'] = 1;
-
 // Options
 /**
  * Editor to use (was usekiovi)
@@ -157,7 +156,7 @@ $modversion['config'][] = [
     'description' => '_MI_MARQUEE_DATEFORMAT_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
-    'default'     => ''
+    'default'     => '_SHORTDATESTRING'
 ];
 
 /**

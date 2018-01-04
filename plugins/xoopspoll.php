@@ -27,10 +27,10 @@
 // Script to list the recent polls from the xoopspoll module version 1.0
 function b_marquee_xoopspoll($limit, $dateFormat, $itemsSize)
 {
-    require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
+    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     $block  = [];
-    $myts   = MyTextSanitizer::getInstance();
-    $db     = XoopsDatabaseFactory::getDatabaseConnection();
+    $myts   = \MyTextSanitizer::getInstance();
+    $db     = \XoopsDatabaseFactory::getDatabaseConnection();
     $result = $db->query('SELECT * FROM ' . $db->prefix('xoopspoll_desc') . ' WHERE start_time<=' . time() . ' AND end_time>' . time() . ' ORDER BY start_time DESC', $limit, 0);
     while ($myrow = $db->fetchArray($result)) {
         $title = $myts->htmlSpecialChars($myrow['question']);

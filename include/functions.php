@@ -53,7 +53,7 @@ function marquee_getmoduleoption($option, $repmodule = 'marquee')
             $retval = $xoopsModuleConfig[$option];
         }
     } else {
-        /** @var XoopsModuleHandler $moduleHandler */
+        /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $module        = $moduleHandler->getByDirname($repmodule);
         $configHandler = xoops_getHandler('config');

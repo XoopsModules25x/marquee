@@ -27,11 +27,11 @@
 // Script to list the recent links from the mydownloads module version 1.10
 function b_marquee_mydownloads($limit, $dateFormat, $itemsSize)
 {
-    require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
+    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     require_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
     $block  = [];
-    $myts   = MyTextSanitizer::getInstance();
-    $db     = XoopsDatabaseFactory::getDatabaseConnection();
+    $myts   = \MyTextSanitizer::getInstance();
+    $db     = \XoopsDatabaseFactory::getDatabaseConnection();
     $result = $db->query('SELECT m.lid, m.cid, m.title, m.date, m.hits, m.submitter, c.title AS catitle, u.name, u.uname FROM '
                          . $db->prefix('mydownloads_downloads')
                          . ' m, '

@@ -61,7 +61,7 @@ function b_marquee_smartpartner($limit, $dateFormat, $itemsSize)
             $categoryObj = $smartpartnerCategoryHandler->get($catId[$j]);
             for ($i = 0, $iMax = count($partnersObj); $i < $iMax; ++$i) {
                 if ($partnersObj[$i]->categoryid() == $catId[$j]) {
-                    $smartConfig =& smartpartner_getModuleConfig();
+                    $smartConfig = smartpartner_getModuleConfig();
                     if ($itemsSize > 0) {
                         $title = xoops_substr($partnersObj[$i]->title(), 0, $itemsSize + 3);
                     } else {

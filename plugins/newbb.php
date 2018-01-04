@@ -27,10 +27,10 @@
 // Script to list recent posts from Newbb 1 & 2
 function b_marquee_newbb($limit, $dateFormat, $itemsSize)
 {
-    require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
+    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     $block = [];
 
-    /** @var XoopsModuleHandler $moduleHandler */
+    /** @var \XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
     $newbb         = $moduleHandler->getByDirname('newbb');
     $newbbVersion  = (int)$newbb->getInfo('version');
@@ -38,23 +38,24 @@ function b_marquee_newbb($limit, $dateFormat, $itemsSize)
     if ($newbbVersion >= 2) {
         $order        = 't.topic_time';
         $forumHandler = xoops_getModuleHandler('forum', 'newbb');
-        /** @var XoopsModuleHandler $moduleHandler */
+        /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $newbb         = $moduleHandler->getByDirname('newbb');
 
-        if (!isset($newbbConfig)) {
+        if (null === ($newbbConfig)) {
+            /** @var \XoopsConfigHandler $configHandler */
             $configHandler = xoops_getHandler('config');
-            $newbbConfig   =& $configHandler->getConfigsByCat(0, $newbb->getVar('mid'));
+            $newbbConfig   = $configHandler->getConfigsByCat(0, $newbb->getVar('mid'));
         }
 
-        if (!isset($access_forums)) {
+        if (null === ($access_forums)) {
             $access_forums = $forumHandler->getForums(0, 'access'); // get all accessible forums
         }
         $validForums   = array_keys($access_forums);
         $forumCriteria = ' AND t.forum_id IN (' . implode(',', $validForums) . ')';
         unset($access_forums);
         $approveCriteria = ' AND t.approved = 1 AND p.approved = 1';
-        $db              = XoopsDatabaseFactory::getDatabaseConnection();
+        $db              = \XoopsDatabaseFactory::getDatabaseConnection();
         $query           = 'SELECT t.*, f.forum_name, f.allow_subject_prefix, p.post_id, p.icon, p.uid, p.poster_name, u.uname, u.name FROM '
                            . $db->prefix('bb_topics')
                            . ' t, '
@@ -80,7 +81,7 @@ function b_marquee_newbb($limit, $dateFormat, $itemsSize)
         if (count($rows) < 1) {
             return false;
         }
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
 
         foreach ($rows as $arr) {
             $title = $myts->htmlSpecialChars($arr['topic_title']);
@@ -97,8 +98,8 @@ function b_marquee_newbb($limit, $dateFormat, $itemsSize)
             ];
         }
     } else { // Newbb 1
-        $db    = XoopsDatabaseFactory::getDatabaseConnection();
-        $myts  = MyTextSanitizer::getInstance();
+        $db    = \XoopsDatabaseFactory::getDatabaseConnection();
+        $myts  = \MyTextSanitizer::getInstance();
         $order = 't.topic_time';
         $time  = $tmpuser = '';
         $query = 'SELECT t.topic_id, t.topic_title, t.topic_last_post_id, t.topic_time, t.topic_views, t.topic_replies, t.forum_id, f.forum_name FROM '

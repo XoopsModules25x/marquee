@@ -34,10 +34,10 @@
 function b_marquee_article($limit, $dateFormat, $itemsSize)
 {
     global $xoopsDB;
-    require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
+    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     require_once XOOPS_ROOT_PATH . '/modules/article/include/functions.php';
     $block = [];
-    $myts  = MyTextSanitizer::getInstance();
+    $myts  = \MyTextSanitizer::getInstance();
 
     static $accessCats;
 
@@ -52,7 +52,7 @@ function b_marquee_article($limit, $dateFormat, $itemsSize)
 
     $select .= ', cat_id, art_title, uid, art_time_publish';
 
-    if (!isset($accessCats)) {
+    if (null === $accessCats) {
         $permissionHandler = xoops_getModuleHandler('permission', 'article');
         $accessCats        = $permissionHandler->getCategories('access');
     }
@@ -97,7 +97,7 @@ function b_marquee_article($limit, $dateFormat, $itemsSize)
         $_art['category'] = '';
 
         $delimiter    = '/';
-        $_art['link'] = "<a href=\"" . XOOPS_URL . "modules/article/view.article.php$delimiter" . $_art['art_id'] . '/c' . $_art['cat_id'] . "\"><strong>" . $_art['art_title'] . '</strong></a>';
+        $_art['link'] = '<a href="' . XOOPS_URL . "modules/article/view.article.php$delimiter" . $_art['art_id'] . '/c' . $_art['cat_id'] . '"><strong>' . $_art['art_title'] . '</strong></a>';
 
         $arts[] = $_art;
         unset($article, $_art);

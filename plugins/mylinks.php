@@ -27,11 +27,11 @@
 // Script to list the recent links from the mylinks module version 1.10
 function b_marquee_mylinks($limit, $dateFormat, $itemsSize)
 {
-    require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
+    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     require_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
     $block  = [];
-    $myts   = MyTextSanitizer::getInstance();
-    $db     = XoopsDatabaseFactory::getDatabaseConnection();
+    $myts   = \MyTextSanitizer::getInstance();
+    $db     = \XoopsDatabaseFactory::getDatabaseConnection();
     $result = $db->query('SELECT m.lid, m.cid, m.title, m.date, m.hits, m.submitter, c.title AS catitle FROM ' . $db->prefix('mylinks_links') . ' m, ' . $db->prefix('mylinks_cat') . ' c WHERE (c.cid=m.cid) AND (m.status>0) ORDER BY date DESC', $limit, 0);
     while ($myrow = $db->fetchArray($result)) {
         $title = $myts->htmlSpecialChars($myrow['title']);

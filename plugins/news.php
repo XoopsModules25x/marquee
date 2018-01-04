@@ -26,14 +26,16 @@
  * @return array
  */
 
+use XoopsModules\Marquee;
+
 // Script to list recent articles from the News module (version >=1.21)
 function b_marquee_news($limit, $dateFormat, $itemsSize)
 {
-    require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
+    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     require_once XOOPS_ROOT_PATH . '/modules/news/class/class.newsstory.php';
     $block      = $stories = [];
     $story      = new NewsStory();
-    $restricted = marquee_getmoduleoption('restrictindex', 'news');
+    $restricted = Utility::getModuleOption('restrictindex', 'news');
     $stories    = NewsStory::getAllPublished($limit, 0, $restricted, 0, 1, true, 'published');
     if (count($stories) > 0) {
         foreach ($stories as $onestory) {

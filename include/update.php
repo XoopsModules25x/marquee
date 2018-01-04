@@ -26,7 +26,7 @@
 
 //function xoops_module_update_marquee()
 //{
-//    $db = XoopsDatabaseFactory::getDatabaseConnection();
+//    $db = \XoopsDatabaseFactory::getDatabaseConnection();
 //    $sql = "ALTER TABLE `" . $db->prefix('marquee') . "` MODIFY `marquee_bgcolor` varchar(7) NOT NULL default '';";
 //    $db->query($sql);
 //
@@ -35,7 +35,7 @@
 
 function xoops_module_update_marquee(XoopsObject $module, $oldversion = null)
 {
-    $db  = XoopsDatabaseFactory::getDatabaseConnection();
+    $db  = \XoopsDatabaseFactory::getDatabaseConnection();
     $sql = 'ALTER TABLE `' . $db->prefix('marquee') . "` MODIFY `marquee_bgcolor` VARCHAR(7) NOT NULL DEFAULT '';";
     $db->query($sql);
 

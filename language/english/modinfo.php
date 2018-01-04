@@ -40,7 +40,7 @@ define(
 define('_MI_MARQUEE_MARQUEE', 'Marquee');
 define('_MI_MARQUEE_DHTML', 'Javascript');
 define('_MI_MARQUEE_DATEFORMAT', "Date's format");
-define('_MI_MARQUEE_DATEFORMAT_DESC', "Please refer to the Php documentation (http://fr.php.net/manual/en/function.date.php) for more information on how to select the format. Note, if you don't type anything then the default date's format will be used");
+define('_MI_MARQUEE_DATEFORMAT_DESC', "Please refer to the Php documentation (http://php.net/manual/en/function.date.php) for more information on how to select the format. Note, if you don't type anything then the default date's format will be used");
 define('_MI_MARQUE_ITEMSCOUNT', 'Items count');
 define('_MI_MARQUE_ITEMSCOUNT_DESC', 'When you select to use the content of another module (and not a fixed text) to create Marquees, this is the number of items to list');
 define('_MI_MARQUE_TITLELENGTH', 'Titles length');
@@ -60,3 +60,6 @@ define('_MI_MARQUEE_OVERVIEW', 'Overview');
 define('_MI_MARQUEE_DISCLAIMER', 'Disclaimer');
 define('_MI_MARQUEE_LICENSE', 'License');
 define('_MI_MARQUEE_SUPPORT', 'Support');
+
+define('_MI_MARQUEE_HOME', 'Home');
+define('_MI_MARQUEE_ABOUT', 'About');

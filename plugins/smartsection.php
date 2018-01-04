@@ -31,8 +31,8 @@ function b_marquee_smartsection($limit, $dateFormat, $itemsSize)
 {
     require_once XOOPS_ROOT_PATH . '/modules/smartsection/include/common.php';
     xoops_load('xoopsuserutility');
-    $myts        = MyTextSanitizer::getInstance();
-    $smartModule =& smartsection_getModuleInfo();
+    $myts        = \MyTextSanitizer::getInstance();
+    $smartModule = smartsection_getModuleInfo();
     $block       = [];
     $categoryid  = -1;
     $sort        = 'datesub';

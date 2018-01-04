@@ -30,14 +30,14 @@
 function b_marquee_xoopspartners($limit, $dateFormat, $itemsSize)
 {
     $block    = [];
-    $myts     = MyTextSanitizer::getInstance();
+    $myts     = \MyTextSanitizer::getInstance();
     $arrayIds = [];
     $arrayIds = xoopspartners_random($limit);
     global $xoopsDB;
 
     foreach ($arrayIds as $id) {
         $result = $xoopsDB->query('SELECT id, url, image, title FROM ' . $xoopsDB->prefix('partners') . " WHERE id=$id");
-        list($id, $url, $image, $title) = $xoopsDB->fetchrow($result);
+        list($id, $url, $image, $title) = $xoopsDB->fetchRow($result);
         $origtitle = $title;
         $title     = $myts->htmlSpecialChars($title);
         if ($itemsSize > 0) {

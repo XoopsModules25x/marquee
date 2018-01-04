@@ -27,10 +27,10 @@
 // Script to list the recent links from the mylinks module version 1.10
 function b_marquee_xoopsfaq($limit, $dateFormat, $itemsSize)
 {
-    require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
+    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     $block  = [];
-    $myts   = MyTextSanitizer::getInstance();
-    $db     = XoopsDatabaseFactory::getDatabaseConnection();
+    $myts   = \MyTextSanitizer::getInstance();
+    $db     = \XoopsDatabaseFactory::getDatabaseConnection();
     $result = $db->query('SELECT c.*, t.category_title FROM ' . $db->prefix('xoopsfaq_contents') . ' c, ' . $db->prefix('xoopsfaq_categories') . ' t WHERE c.contents_visible>0 AND (c. category_id=t.category_id) ORDER BY contents_time DESC', $limit, 0);
     while ($myrow = $db->fetchArray($result)) {
         $title = $myts->htmlSpecialChars($myrow['contents_title']);

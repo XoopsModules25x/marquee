@@ -33,7 +33,7 @@
 
 function b_marquee_tplleaguestats($limit, $dateFormat, $itemsSize)
 {
-    require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
+    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
 
     //######################## SETTINGS ######################
     $displaySeason  = false; // display season name?
@@ -57,7 +57,7 @@ function b_marquee_tplleaguestats($limit, $dateFormat, $itemsSize)
     }
 
     $block  = [];
-    $myts   = MyTextSanitizer::getInstance();
+    $myts   = \MyTextSanitizer::getInstance();
     $sql    = 'SELECT H.OpponentName as home, A.OpponentName as away, M.LeagueMatchHomeGoals as home_p, M.LeagueMatchAwayGoals as away_p,
                   M.LeagueMatchDate as date, S.SeasonName as season
            FROM ' . $xoopsDB->prefix('tplls_leaguematches') . ' M
@@ -87,7 +87,7 @@ function b_marquee_tplleaguestats($limit, $dateFormat, $itemsSize)
             'category' => $season,
             'author'   => '',
             'title'    => $title,
-            'link'     => "<a href=\"" . XOOPS_URL . "/modules/tplleaguestats\">" . $title . '</a>'
+            'link'     => '<a href="' . XOOPS_URL . '/modules/tplleaguestats">' . $title . '</a>'
         ];
     }
 

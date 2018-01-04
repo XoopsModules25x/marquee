@@ -1,153 +1,247 @@
-<?php
+<?php namespace XoopsModules\Marquee;
+
+use Xmf\Request;
+ use \XoopsModules\Marquee\Common;
+
+
+require_once __DIR__ . '/../include/common.php';
 
 /**
- * Class MyalbumUtil
+ * Class Utility
  */
-class MarqueeUtility extends XoopsObject
+class Utility
 {
-    /**
-     * Function responsible for checking if a directory exists, we can also write in and create an index.html file
-     *
-     * @param string $folder The full path of the directory to check
-     *
-     * @return void
-     */
-    public static function createFolder($folder)
-    {
-        //        try {
-        //            if (!mkdir($folder) && !is_dir($folder)) {
-        //                throw new \RuntimeException(sprintf('Unable to create the %s directory', $folder));
-        //            } else {
-        //                file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
-        //            }
-        //        }
-        //        catch (Exception $e) {
-        //            echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
-        //        }
-        try {
-            if (!file_exists($folder)) {
-                if (!mkdir($folder) && !is_dir($folder)) {
-                    throw new \RuntimeException(sprintf('Unable to create the %s directory', $folder));
-                } else {
-                    file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
-                }
-            }
-        } catch (Exception $e) {
-            echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
-        }
-    }
+    use common\VersionChecks; //checkVerXoops, checkVerPhp Traits
+
+    use common\ServerStats; // getServerStats Trait
+
+    use common\FilesManagement; // Files Management Trait
+
+    //--------------- Custom module methods -----------------------------
+    const MODULE_NAME = 'marquee';
 
     /**
-     * @param $file
-     * @param $folder
-     * @return bool
-     */
-    public static function copyFile($file, $folder)
-    {
-        return copy($file, $folder);
-        //        try {
-        //            if (!is_dir($folder)) {
-        //                throw new \RuntimeException(sprintf('Unable to copy file as: %s ', $folder));
-        //            } else {
-        //                return copy($file, $folder);
-        //            }
-        //        } catch (Exception $e) {
-        //            echo 'Caught exception: ', $e->getMessage(), "\n", "<br>";
-        //        }
-        //        return false;
-    }
-
-    /**
-     * @param $src
-     * @param $dst
-     */
-    public static function recurseCopy($src, $dst)
-    {
-        $dir = opendir($src);
-        //    @mkdir($dst);
-        while (false !== ($file = readdir($dir))) {
-            if (('.' !== $file) && ('..' !== $file)) {
-                if (is_dir($src . '/' . $file)) {
-                    self::recurseCopy($src . '/' . $file, $dst . '/' . $file);
-                } else {
-                    copy($src . '/' . $file, $dst . '/' . $file);
-                }
-            }
-        }
-        closedir($dir);
-    }
-
-    /**
+     * Access the only instance of this class
      *
-     * Verifies XOOPS version meets minimum requirements for this module
+     * @return \XoopsModules\Marquee\Utility
+     *
      * @static
-     * @param XoopsModule $module
-     * @param null|string $requiredVer
-     *
-     * @return bool true if meets requirements, false if not
+     * @staticvar   object
      */
-    public static function checkVerXoops(XoopsModule $module = null, $requiredVer = null)
+    public static function getInstance()
     {
-        $moduleDirName = basename(dirname(__DIR__));
-        if (null === $module) {
-            $module = XoopsModule::getByDirname($moduleDirName);
+        static $instance;
+        if (null === $instance) {
+            $instance = new static();
         }
-        xoops_loadLanguage('admin', $moduleDirName);
-        //check for minimum XOOPS version
-        $currentVer = substr(XOOPS_VERSION, 6); // get the numeric part of string
-        $currArray  = explode('.', $currentVer);
-        if (null === $requiredVer) {
-            $requiredVer = '' . $module->getInfo('min_xoops'); //making sure it's a string
+
+        return $instance;
+    }
+
+    /**
+     * Returns a module's option (with cache)
+     *
+     * @param string  $option    module option's name
+     * @param boolean $withCache Do we have to use some cache ?
+     *
+     * @return mixed option's value
+     */
+    public static function getModuleOption($option, $withCache = true)
+    {
+        global $xoopsModuleConfig, $xoopsModule;
+        $repmodule = self::MODULE_NAME;
+        static $options = [];
+        if (is_array($options) && array_key_exists($option, $options) && $withCache) {
+            return $options[$option];
         }
-        $reqArray = explode('.', $requiredVer);
-        $success  = true;
-        foreach ($reqArray as $k => $v) {
-            if (isset($currArray[$k])) {
-                if ($currArray[$k] > $v) {
-                    break;
-                } elseif ($currArray[$k] == $v) {
-                    continue;
-                } else {
-                    $success = false;
-                    break;
+
+        $retval = false;
+        if (null !== $xoopsModuleConfig && (is_object($xoopsModule) && ($xoopsModule->getVar('dirname') == $repmodule) && $xoopsModule->getVar('isactive'))) {
+            if (isset($xoopsModuleConfig[$option])) {
+                $retval = $xoopsModuleConfig[$option];
+            }
+        } else {
+            /** @var \XoopsModuleHandler $moduleHandler */
+            $moduleHandler = xoops_getHandler('module');
+            $module        = $moduleHandler->getByDirname($repmodule);
+            $configHandler = xoops_getHandler('config');
+            if ($module) {
+                $moduleConfig = $configHandler->getConfigsByCat(0, $module->getVar('mid'));
+                if (isset($moduleConfig[$option])) {
+                    $retval = $moduleConfig[$option];
                 }
+            }
+        }
+        $options[$option] = $retval;
+
+        return $retval;
+    }
+
+    /**
+     * Is Xoops 2.3.x ?
+     *
+     * @return boolean need to say it ?
+     */
+    //    function isX23()
+    //    {
+    //        $x23 = false;
+    //        $xv  = str_replace('XOOPS ', '', XOOPS_VERSION);
+    //        if ((int)(substr($xv, 2, 1)) >= 3) {
+    //            $x23 = true;
+    //        }
+    //
+    //        return $x23;
+    //    }
+
+    /**
+     * Retreive an editor according to the module's option "form_options"
+     *
+     * @param string $caption Caption to give to the editor
+     * @param string $name    Editor's name
+     * @param string $value   Editor's value
+     * @param string $width   Editor's width
+     * @param string $height  Editor's height
+     * @param string $supplemental
+     *
+     * @return \XoopsFormDhtmlTextArea|\XoopsFormEditor The editor to use
+     */
+    public static function getWysiwygForm(
+        $caption,
+        $name,
+        $value = '',
+        $width = '100%',
+        $height = '400px',
+        $supplemental = ''
+    ) {
+        global $xoopsModuleConfig;
+        if (class_exists('XoopsFormEditor')) {
+            $options['name']   = $name;
+            $options['value']  = $value;
+            $options['rows']   = 35;
+            $options['cols']   = '100%';
+            $options['width']  = '100%';
+            $options['height'] = '400px';
+            $editor            = new \XoopsFormEditor($caption, $xoopsModuleConfig['form_options'], $options, $nohtml = false, $onfailure = 'textarea');
+        } else {
+            $editor = new \XoopsFormDhtmlTextArea($caption, $name, $value, '100%', '100%');
+        }
+
+        return $editor;
+    }
+
+    /**
+     * Create (in a link) a javascript confirmation's box
+     *
+     * @param string  $message Message to display
+     * @param boolean $form    Is this a confirmation for a form ?
+     *
+     * @return string the javascript code to insert in the link (or in the form)
+     */
+    public static function javascriptLinkConfirm($message, $form = false)
+    {
+        if (!$form) {
+            return "onclick=\"javascript:return confirm('" . str_replace("'", ' ', $message) . "')\"";
+        } else {
+            return "onSubmit=\"javascript:return confirm('" . str_replace("'", ' ', $message) . "')\"";
+        }
+    }
+
+    /**
+     * Redirect user with a message
+     *
+     * @param string $message message to display
+     * @param string $url     The place where to go
+     * @param        integer  timeout Time to wait before to redirect
+     */
+    public static function redirect($message = '', $url = 'index.php', $time = 2)
+    {
+        redirect_header($url, $time, $message);
+    }
+
+    /**
+     * Internal function used to get the handler of the current module
+     *
+     * @return \XoopsModule The module
+     */
+    protected static function getModule()
+    {
+        static $mymodule;
+        if (null === $mymodule) {
+            global $xoopsModule;
+            if (null !== $xoopsModule && is_object($xoopsModule) && REFERENCES_DIRNAME == $xoopsModule->getVar('dirname')) {
+                $mymodule =& $xoopsModule;
             } else {
-                if ((int)$v > 0) { // handles versions like x.x.x.0_RC2
-                    $success = false;
-                    break;
+                $hModule  = xoops_getHandler('module');
+                $mymodule = $hModule->getByDirname(REFERENCES_DIRNAME);
+            }
+        }
+
+        return $mymodule;
+    }
+
+    /**
+     * Returns the module's name (as defined by the user in the module manager) with cache
+     *
+     * @return string Module's name
+     */
+    public static function getModuleName()
+    {
+        static $moduleName;
+        if (null === $moduleName) {
+            $mymodule   = self::getModule();
+            $moduleName = $mymodule->getVar('name');
+        }
+
+        return $moduleName;
+    }
+
+    /**
+     * This function indicates if the current Xoops version needs to add asterisks to required fields in forms
+     *
+     * @return boolean Yes = we need to add them, false = no
+     */
+    public static function needsAsterisk()
+    {
+        if (self::isX23()) {
+            return false;
+        }
+        if (false !== stripos(XOOPS_VERSION, 'impresscms')) {
+            return false;
+        }
+        if (false === stripos(XOOPS_VERSION, 'legacy')) {
+            $xv = xoops_trim(str_replace('XOOPS ', '', XOOPS_VERSION));
+            if ((int)substr($xv, 4, 2) >= 17) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Mark the mandatory fields of a form with a star
+     *
+     * @param \XoopsThemeForm $sform The form to modify
+     *
+     * @internal param string $caracter The character to use to mark fields
+     * @return \XoopsThemeForm The modified form
+     */
+    public static function formMarkRequiredFields(&$sform)
+    {
+        $required = $elements = [];
+        if (self::needsAsterisk()) {
+            foreach ($sform->getRequired() as $item) {
+                $required[] = $item->_name;
+            }
+            $elements =& $sform->getElements();
+            $cnt      = count($elements);
+            for ($i = 0; $i < $cnt; ++$i) {
+                if (is_object($elements[$i]) && in_array($elements[$i]->_name, $required)) {
+                    $elements[$i]->_caption .= ' *';
                 }
             }
         }
 
-        if (false === $success) {
-            $module->setErrors(sprintf(_AM_MARQUEE_ERROR_BAD_XOOPS, $requiredVer, $currentVer));
-        }
-
-        return $success;
-    }
-
-    /**
-     *
-     * Verifies PHP version meets minimum requirements for this module
-     * @static
-     * @param XoopsModule $module
-     *
-     * @return bool true if meets requirements, false if not
-     */
-    public static function checkVerPhp(XoopsModule $module)
-    {
-        xoops_loadLanguage('admin', $module->dirname());
-        // check for minimum PHP version
-        $success = true;
-        $verNum  = PHP_VERSION;
-        $reqVer  = $module->getInfo('min_php');
-        if (false !== $reqVer && '' !== $reqVer) {
-            if (version_compare($verNum, $reqVer, '<')) {
-                $module->setErrors(sprintf(_AM_MARQUEE_ERROR_BAD_PHP, $reqVer, $verNum));
-                $success = false;
-            }
-        }
-
-        return $success;
+        return $sform;
     }
 }

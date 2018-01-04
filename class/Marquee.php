@@ -1,4 +1,5 @@
-<?php
+<?php namespace XoopsModules\Marquee;
+
 /**
  * ****************************************************************************
  * marquee - MODULE FOR XOOPS
@@ -18,20 +19,21 @@
  * ****************************************************************************
  */
 
+use XoopsModules\Marquee;
+
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 require_once XOOPS_ROOT_PATH . '/kernel/object.php';
-require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
-if (!class_exists('MarqueePersistableObjectHandler')) {
-    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/PersistableObjectHandler.php';
-}
+require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
+//if (!class_exists('MarqueePersistableObjectHandler')) {
+//    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/PersistableObjectHandler.php';
+//}
 
-//class Marquee extends XoopsObject
 
 /**
  * Class Marquee
  */
-class Marquee extends XoopsObject
+class Marquee extends \XoopsObject
 {
     /**
      * marquee constructor.
@@ -66,7 +68,7 @@ class Marquee extends XoopsObject
      */
     public function constructmarquee($uniqid = '')
     {
-        require_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
+        require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
         $tblalign     = ['top', 'bottom', 'middle'];
         $tblbehaviour = ['scroll', 'slide', 'alternate'];
         $tbldirection = ['right', 'left', 'up', 'down'];
@@ -90,10 +92,10 @@ class Marquee extends XoopsObject
             require_once XOOPS_ROOT_PATH . '/modules/marquee/plugins/' . $this->getVar('marquee_source') . '.php';
             $function_name = 'b_marquee_' . $this->getVar('marquee_source'); // For example b_marquee_comments
             if (function_exists($function_name)) {
-                $limit      = marquee_getmoduleoption('itemscount');
-                $dateFormat = marquee_getmoduleoption('dateformat');
-                $itemsSize  = marquee_getmoduleoption('itemssize');
-                $retval     = call_user_func($function_name, $limit, $dateFormat, $itemsSize);
+                $limit      = Utility::getModuleOption('itemscount');
+                $dateFormat = Utility::getModuleOption('dateformat');
+                $itemsSize  = Utility::getModuleOption('itemssize');
+                $retval     = $function_name($limit, $dateFormat, $itemsSize);
                 if (is_array($retval) && count($retval) > 0) {
                     foreach ($retval as $onevalue) {
                         if (isset($onevalue['category']) && '' !== xoops_trim($onevalue['category'])) {
@@ -110,7 +112,7 @@ class Marquee extends XoopsObject
             $content = $this->getVar('marquee_content');
         }
         if (!marquee_isbot()) { // We are using the microsoft html tag
-            if ('dhtml' !== strtolower(marquee_getmoduleoption('methodtouse'))) {
+            if ('dhtml' !== strtolower(Utility::getModuleOption('methodtouse'))) {
                 return "<marquee align='"
                        . $tblalign[$this->getVar('marquee_align')]
                        . "' behavior='"
@@ -159,39 +161,3 @@ class Marquee extends XoopsObject
     }
 }
 
-//class MarqueeMarqueeHandler extends MarqueePersistableObjectHandler
-
-/**
- * Class MarqueeMarqueeHandler
- */
-class MarqueeMarqueeHandler extends MarqueePersistableObjectHandler
-{
-    /**
-     * @param $db
-     */
-    public function __construct(XoopsDatabase $db)
-    {
-        parent::__construct($db, 'marquee', 'marquee', 'marquee_marqueeid');
-    }
-
-    /**
-     * @param int $selectedmarquee
-     *
-     * @return string
-     */
-    public function getHtmlMarqueesList($selectedmarquee = 0)
-    {
-        $ret         = '';
-        $tbl_marquee = $this->getObjects();
-        foreach ($tbl_marquee as $oneMarquee) {
-            $selected = '';
-            if ($oneMarquee->getVar('marquee_marqueeid') == $selectedmarquee) {
-                $selected = ' selected';
-            }
-            $content = '' !== xoops_trim(strip_tags($oneMarquee->getVar('marquee_content'))) ? xoops_substr(strip_tags($oneMarquee->getVar('marquee_content')), 0, 50) : $oneMarquee->getVar('marquee_source');
-            $ret     .= '<option ' . $selected . " value='" . $oneMarquee->getVar('marquee_marqueeid') . "'>" . $content . '</option>';
-        }
-
-        return $ret;
-    }
-}

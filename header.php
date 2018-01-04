@@ -17,23 +17,22 @@
  **/
 
 require_once __DIR__ . '/../../mainfile.php';
+require_once __DIR__ . '/include/common.php';
 
-defined('FRAMEWORKS_ART_FUNCTIONS_INI') || require_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.ini.php';
-load_functions('admin');
-global $xoopsModule, $xoopsConfig;
+//defined('FRAMEWORKS_ART_FUNCTIONS_INI') || require_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.ini.php';
+//load_functions('admin');
 
-if (!@require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/main.php') {
-    require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/english/main.php';
-}
+$helper->loadLanguage('main');
 
-if (null === $xoopsTpl || !is_object($xoopsTpl)) {
-    require_once XOOPS_ROOT_PATH . '/class/template.php';
-    $xoopsTpl = new XoopsTpl();
-}
+//if (null === $xoopsTpl || !is_object($xoopsTpl)) {
+//    require_once XOOPS_ROOT_PATH . '/class/template.php';
+//    $xoopsTpl = new XoopsTpl();
+//}
 
 xoops_cp_header();
 
 // Define Stylesheet and JScript
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/css/admin.css');
+
 //$xoTheme->addScript("browse.php?Frameworks/jquery/jquery.js");
 //$xoTheme->addScript("browse.php?modules/" . $xoopsModule->getVar("dirname") . "/assets/js/admin.js");
