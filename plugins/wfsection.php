@@ -29,7 +29,7 @@
 // Script to list recent articles from wfsection 1 & 2
 function b_marquee_wfsection($limit, $dateFormat, $itemsSize)
 {
-    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
+//    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     $block = [];
 
     $myts = \MyTextSanitizer::getInstance();

@@ -21,8 +21,8 @@
 
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
-require_once XOOPS_ROOT_PATH . '/kernel/object.php';
-require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
+//require_once XOOPS_ROOT_PATH . '/kernel/object.php';
+//require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
 //if (!class_exists('MarqueePersistableObjectHandler')) {
 //    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/PersistableObjectHandler.php';
 //}
@@ -34,14 +34,14 @@ require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
 /**
  * Class MarqueeHandler
  */
-class MarqueeHandler extends \XoopsPersistableObjectHandler //MarqueePersistableObjectHandler
+class MarqueexHandler extends \XoopsPersistableObjectHandler //MarqueePersistableObjectHandler
 {
     /**
      * @param $db
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'marquee', Marquee::class, 'marquee_marqueeid');
+        parent::__construct($db, 'marquee', Marqueex::class, 'marquee_marqueeid');
     }
 
     /**

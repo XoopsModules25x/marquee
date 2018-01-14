@@ -33,7 +33,7 @@
 
 function b_marquee_tplleaguestats($limit, $dateFormat, $itemsSize)
 {
-    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
+//    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
 
     //######################## SETTINGS ######################
     $displaySeason  = false; // display season name?

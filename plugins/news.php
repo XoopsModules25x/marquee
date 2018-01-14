@@ -31,7 +31,7 @@ use XoopsModules\Marquee;
 // Script to list recent articles from the News module (version >=1.21)
 function b_marquee_news($limit, $dateFormat, $itemsSize)
 {
-    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
+//    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     require_once XOOPS_ROOT_PATH . '/modules/news/class/class.newsstory.php';
     $block      = $stories = [];
     $story      = new NewsStory();

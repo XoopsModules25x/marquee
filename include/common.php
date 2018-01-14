@@ -19,17 +19,19 @@
 
 use XoopsModules\Marquee;
 
+include __DIR__ . '/../preloads/autoloader.php';
+
 $moduleDirName = basename(dirname(__DIR__));
 
-require_once __DIR__ . '/../class/Helper.php';
-require_once __DIR__ . '/../class/Utility.php';
-require_once __DIR__ . '/../class/Marquee.php';
-require_once __DIR__ . '/../class/MarqueeHandler.php';
+//require_once __DIR__ . '/../class/Helper.php';
+//require_once __DIR__ . '/../class/Utility.php';
+//require_once __DIR__ . '/../class/Marquee.php';
+//require_once __DIR__ . '/../class/MarqueeHandler.php';
 
 $db     = \XoopsDatabaseFactory::getDatabase();
 $helper = Marquee\Helper::getInstance();
 
-/** @var \XoopsModules\Marquee\Utility $utility */
+/** @var Marquee\Utility $utility */
 $utility = new Marquee\Utility();
 
 if (!defined('MARQUEE_MODULE_PATH')) {
@@ -87,7 +89,7 @@ $GLOBALS['xoopsTpl']->assign('pathModIcon32', $pathModIcon32);
 
 //module handlers
 
-/** @var PluginHandler $pluginHandler */
-$pluginHandler  = $helper->getHandler('plugin');
-$marquee        = new Marquee\Marquee();
-$marqueeHandler = new Marquee\MarqueeHandler($db);
+///** @var Marquee\PluginHandler $pluginHandler */
+//$pluginHandler  = $helper->getHandler('Plugin');
+$marquee        = new Marquee\Marqueex();
+$marqueeHandler = new Marquee\MarqueexHandler($db);

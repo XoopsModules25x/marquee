@@ -24,10 +24,12 @@
  * @return array
  */
 
+use XoopsModules\Newbb;
+
 // Script to list recent posts from Newbb 1 & 2
 function b_marquee_newbb($limit, $dateFormat, $itemsSize)
 {
-    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
+//    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     $block = [];
 
     /** @var \XoopsModuleHandler $moduleHandler */
@@ -37,18 +39,18 @@ function b_marquee_newbb($limit, $dateFormat, $itemsSize)
 
     if ($newbbVersion >= 2) {
         $order        = 't.topic_time';
-        $forumHandler = xoops_getModuleHandler('forum', 'newbb');
+        $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
         /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $newbb         = $moduleHandler->getByDirname('newbb');
 
-        if (null === ($newbbConfig)) {
+        if (null === $newbbConfig) {
             /** @var \XoopsConfigHandler $configHandler */
             $configHandler = xoops_getHandler('config');
             $newbbConfig   = $configHandler->getConfigsByCat(0, $newbb->getVar('mid'));
         }
 
-        if (null === ($access_forums)) {
+        if (null === $access_forums) {
             $access_forums = $forumHandler->getForums(0, 'access'); // get all accessible forums
         }
         $validForums   = array_keys($access_forums);

@@ -19,7 +19,7 @@
  * Version :
  * ****************************************************************************
  *
- * @param XoopsModule|XoopsObject $module
+ * @param XoopsModule|\XoopsObject $module
  * @param null                    $oldversion
  * @return mixed
  */
@@ -45,7 +45,7 @@ function xoops_module_update_marquee(XoopsObject $module, $oldversion = null)
         $templateDirectory = XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'n') . '/templates/blocks/';
         $template_list     = array_diff(scandir($templateDirectory, SCANDIR_SORT_NONE), ['..', '.']);
         foreach ($template_list as $k => $v) {
-            $fileinfo = new SplFileInfo($templateDirectory . $v);
+            $fileinfo = new \SplFileInfo($templateDirectory . $v);
             if ('html' === $fileinfo->getExtension() && 'index.html' !== $fileinfo->getFilename()) {
                 // @unlink($templateDirectory . $v);
                 if (false === @unlink($templateDirectory . $v)) {

@@ -23,17 +23,16 @@ use XoopsModules\Marquee;
 
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
-require_once XOOPS_ROOT_PATH . '/kernel/object.php';
-require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
+//require_once XOOPS_ROOT_PATH . '/kernel/object.php';
+//require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
 //if (!class_exists('MarqueePersistableObjectHandler')) {
 //    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/PersistableObjectHandler.php';
 //}
 
-
 /**
- * Class Marquee
+ * Class Marqueex
  */
-class Marquee extends \XoopsObject
+class Marqueex extends \XoopsObject
 {
     /**
      * marquee constructor.
@@ -55,7 +54,7 @@ class Marquee extends \XoopsObject
         $this->initVar('marquee_stoponmouseover', XOBJ_DTYPE_INT, null, false);
         $this->initVar('marquee_loop', XOBJ_DTYPE_INT, null, false);
         $this->initVar('marquee_vspace', XOBJ_DTYPE_INT, null, false);
-        $this->initVar('marquee_content', XOBJ_DTYPE_TXTAREA, null, false);
+        $this->initVar('marquee_content', XOBJ_DTYPE_OTHER, null, false);
         $this->initVar('marquee_source', XOBJ_DTYPE_TXTBOX, null, false, 255);
         // To be able to use html
         $this->initVar('dohtml', XOBJ_DTYPE_INT, 1);
@@ -66,9 +65,9 @@ class Marquee extends \XoopsObject
      *
      * @return mixed|string
      */
-    public function constructmarquee($uniqid = '')
+    public function constructMarquee($uniqid = '')
     {
-        require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
+        //        require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
         $tblalign     = ['top', 'bottom', 'middle'];
         $tblbehaviour = ['scroll', 'slide', 'alternate'];
         $tbldirection = ['right', 'left', 'up', 'down'];
@@ -92,9 +91,9 @@ class Marquee extends \XoopsObject
             require_once XOOPS_ROOT_PATH . '/modules/marquee/plugins/' . $this->getVar('marquee_source') . '.php';
             $function_name = 'b_marquee_' . $this->getVar('marquee_source'); // For example b_marquee_comments
             if (function_exists($function_name)) {
-                $limit      = Utility::getModuleOption('itemscount');
-                $dateFormat = Utility::getModuleOption('dateformat');
-                $itemsSize  = Utility::getModuleOption('itemssize');
+                $limit      = Marquee\Utility::getModuleOption('itemscount');
+                $dateFormat = Marquee\Utility::getModuleOption('dateformat');
+                $itemsSize  = Marquee\Utility::getModuleOption('itemssize');
                 $retval     = $function_name($limit, $dateFormat, $itemsSize);
                 if (is_array($retval) && count($retval) > 0) {
                     foreach ($retval as $onevalue) {
@@ -111,7 +110,7 @@ class Marquee extends \XoopsObject
         } else {
             $content = $this->getVar('marquee_content');
         }
-        if (!marquee_isbot()) { // We are using the microsoft html tag
+        if (!Marquee\Utility::isBot()) { // We are using the microsoft html tag
             if ('dhtml' !== strtolower(Utility::getModuleOption('methodtouse'))) {
                 return "<marquee align='"
                        . $tblalign[$this->getVar('marquee_align')]
@@ -136,7 +135,7 @@ class Marquee extends \XoopsObject
                 $jscontent = '';
                 $jscontent .= "<script type=\"text/javascript\">\n";
                 $jscontent .= "html$uniqid = '';\n";
-                $jscontent .= "html$uniqid += '" . marquee_javascript_escape($content) . "' ;\n";
+                $jscontent .= "html$uniqid += '" . Marquee\Utility::javascriptEscape($content) . "' ;\n";
                 $jscontent .= "marquee$uniqid = new XbMarquee('marquee$uniqid', "
                               . $this->getVar('marquee_height')
                               . ', '

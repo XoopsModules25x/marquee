@@ -27,7 +27,7 @@ require_once __DIR__ . '/../include/common.php';
 $moduleDirName = basename(dirname(__DIR__));
 
 //if functions.php file exist
-require_once __DIR__ . '/../include/functions.php';
+//require_once __DIR__ . '/../include/functions.php';
 $helper = Marquee\Helper::getInstance();
 $adminObject = \Xmf\Module\Admin::getInstance();
 

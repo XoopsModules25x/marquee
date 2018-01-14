@@ -26,6 +26,8 @@
  * @return array
  */
 
+use XoopsModules\Wfdownloads;
+
 // Script to list recent files from the wfdownloads module (tested with wfdownloads 3.1)
 function b_marquee_wfdownloads($limit, $dateFormat, $itemsSize)
 {
@@ -46,8 +48,8 @@ function b_marquee_wfdownloads($limit, $dateFormat, $itemsSize)
     $criteria->setSort('published');
     $criteria->setOrder('DESC');
     $criteria->setLimit($limit);
-    $downloadHandler = xoops_getModuleHandler('download', 'wfdownloads');
-    $categoryHandler = xoops_getModuleHandler('category', 'wfdownloads');
+    $downloadHandler = Wfdownloads\Helper::getInstance()->getHandler('Download');
+    $categoryHandler = Wfdownloads\Helper::getInstance()->getHandler('Category');
     $buffer_category = [];
 
     $downloads = $downloadHandler->getObjects($criteria);

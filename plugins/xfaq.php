@@ -27,7 +27,7 @@
 // Script to list the recent faqs from the xfaq module version 1.01
 function b_marquee_xfaq($limit, $dateFormat, $itemsSize)
 {
-    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
+//    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     $block  = [];
     $myts   = \MyTextSanitizer::getInstance();
     $db     = \XoopsDatabaseFactory::getDatabaseConnection();

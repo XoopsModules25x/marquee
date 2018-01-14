@@ -17,7 +17,7 @@
  * @author       XOOPS Development Team
  */
 
-if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof XoopsUser)
+if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof \XoopsUser)
     || !$GLOBALS['xoopsUser']->IsAdmin()
 ) {
     exit('Restricted access' . PHP_EOL);
@@ -98,7 +98,7 @@ function xoops_module_update_marquee(XoopsModule $module, $previousVersion = nul
                 if (is_dir($templateFolder)) {
                     $templateList = array_diff(scandir($templateFolder, SCANDIR_SORT_NONE), ['..', '.']);
                     foreach ($templateList as $k => $v) {
-                        $fileInfo = new SplFileInfo($templateFolder . $v);
+                        $fileInfo = new \SplFileInfo($templateFolder . $v);
                         if ('html' === $fileInfo->getExtension() && 'index.html' !== $fileInfo->getFilename()) {
                             if (file_exists($templateFolder . $v)) {
                                 unlink($templateFolder . $v);

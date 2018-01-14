@@ -27,7 +27,7 @@
 // Script to list the recent links from the mylinks module version 1.10
 function b_marquee_mylinks($limit, $dateFormat, $itemsSize)
 {
-    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
+//    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     require_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
     $block  = [];
     $myts   = \MyTextSanitizer::getInstance();

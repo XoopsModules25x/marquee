@@ -27,7 +27,7 @@
 // Script to list the recent polls from the xoopspoll module version 1.0
 function b_marquee_xoopspoll($limit, $dateFormat, $itemsSize)
 {
-    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
+//    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     $block  = [];
     $myts   = \MyTextSanitizer::getInstance();
     $db     = \XoopsDatabaseFactory::getDatabaseConnection();

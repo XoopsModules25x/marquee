@@ -24,9 +24,9 @@ include __DIR__ . '/preloads/autoloader.php';
 
 $moduleDirName = basename(__DIR__);
 
-$modversion['version']             = '2.50';
-$modversion['module_status']       = 'RC 1';
-$modversion['release_date']        = '2016/03/23';
+$modversion['version']             = '2.60';
+$modversion['module_status']       = 'Beta 1';
+$modversion['release_date']        = '2018/01/13';
 $modversion['name']                = _MI_MARQUEE_NAME;
 $modversion['description']         = _MI_MARQUEE_DESC;
 $modversion['credits']             = 'Carnuke, defkon1, the Newbb team, Mage, Mamba';

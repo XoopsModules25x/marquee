@@ -20,7 +20,7 @@
  */
 
 use Xmf\Request;
- use \XoopsModules\Marquee;
+ use XoopsModules\Marquee;
 
 require_once __DIR__ . '/admin_header.php';
 require_once __DIR__ . '/../../../include/cp_header.php';
@@ -69,7 +69,7 @@ if (!marquee_FieldExists('marquee_marqueeid', $xoopsDB->prefix('marquee'))) {
     $result = $xoopsDB->queryF('ALTER TABLE ' . $xoopsDB->prefix('marquee') . " CHANGE `source` `marquee_source` VARCHAR( 255 ) NOT NULL DEFAULT 'fixed'");
 }
 
-//$marqueeHandler = xoops_getModuleHandler('marquee', 'marquee');
+//$marqueeHandler = Marquee\Helper::getInstance()->getHandler('Marqueex');
 //$marqueeHandler = new MarqueeHandler($db);
 
 // Function used to add and modify an element
@@ -216,7 +216,7 @@ switch ($op) {
                 $marquee->setVar('marquee_stoponmouseover', Request::getInt('stoponmouseover', 0, 'POST'));
                 $marquee->setVar('marquee_loop', Request::getInt('loop', 0, 'POST'));
                 $marquee->setVar('marquee_vspace', Request::getInt('vspace', 0, 'POST'));
-                $marquee->setVar('marquee_content', Request::getString('content', '', 'POST'));
+                $marquee->setVar('marquee_content', Request::getText('content', '', 'POST'));
                 $marquee->setVar('marquee_source', Request::getString('source', '', 'POST'));
                 if (!$marqueeHandler->insert($marquee)) {
                     redirect_header('main.php', 1, _AM_MARQUEE_ERROR_MODIFY_DB);
@@ -298,7 +298,7 @@ switch ($op) {
                                                      'marquee_stoponmouseover' => Request::getInt('stoponmouseover', 0, 'POST'),
                                                      'marquee_loop'            => Request::getInt('loop', 0, 'POST'),
                                                      'marquee_vspace'          => Request::getInt('vspace', 0, 'POST'),
-                                                     'marquee_content'         => Request::getString('content', '', 'POST'),
+                                                     'marquee_content'         => Request::getText('content', '', 'POST'),
                                                      'marquee_source'          => Request::getString('source', '', 'POST')
                                                  ]);
             if (!$vres) {
@@ -374,8 +374,8 @@ switch ($op) {
                      . $class
                      . "'><td align='center'>"
                      . $marquee->getVar('marquee_marqueeid')
-                     . "</td><td align='center'>"
-                     . xoops_substr(strip_tags($marquee->getVar('marquee_content')), 0, 60)
+                     . "</td><td align='left'>"
+                     . Marquee\Utility::truncateHtml($marquee->getVar('marquee_content'), 80, '...', false, true )
                      . "</td><td align='center'>"
                      . "<div style='height:12px; width:12px; background-color:"
                      . $bgcolorvalue

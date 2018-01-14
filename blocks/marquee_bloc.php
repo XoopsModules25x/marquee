@@ -30,15 +30,15 @@ function b_marquee_show($options)
 {
     global $xoopsTpl;
     $marquee = null;
-    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
-    $marqueeHandler = xoops_getModuleHandler('marquee', 'marquee');
+//    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
+    $marqueeHandler = Marquee\Helper::getInstance()->getHandler('Marqueex');
     $block          = [];
     $marqueeId      = (int)$options[0];
     if ($marqueeId > 0) {
         $marquee = $marqueeHandler->get($marqueeId);
         if (is_object($marquee)) {
             $uniqid = md5(uniqid(mt_rand(), true));
-            if ('DHTML' === Utility::getModuleOption('methodtouse')) {
+            if ('DHTML' === Marquee\Utility::getModuleOption('methodtouse')) {
                 $link = '<script type="text/javascript" src="' . XOOPS_URL . '/modules/marquee/assets/js/xbMarquee.js"></script>';
                 $link .= "\n<script type=\"text/javascript\">\n";
                 $link .= 'var marquee' . $uniqid . ";\n";
@@ -50,7 +50,7 @@ function b_marquee_show($options)
                 $link .= "</script>\n";
                 $xoopsTpl->assign('xoops_module_header', $link);
             }
-            $block['marqueecode'] = $marquee->constructmarquee($uniqid);
+            $block['marqueecode'] = $marquee->constructMarquee($uniqid);
         }
     }
 
@@ -64,7 +64,7 @@ function b_marquee_show($options)
  */
 function b_marquee_edit($options)
 {
-    $marqueeHandler = xoops_getModuleHandler('marquee', 'marquee');
+    $marqueeHandler = Marquee\Helper::getInstance()->getHandler('Marqueex');
     $form           = "<table border='0'>";
     $form           .= '<tr><td>' . _MB_MARQUEE_SELECT . "</td><td><select name='options[0]'>" . $marqueeHandler->getHtmlMarqueesList($options[0]) . '</select></td></tr>';
     $form           .= '</table>';

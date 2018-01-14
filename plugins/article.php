@@ -31,10 +31,12 @@
 //  written by Defkon1 [defkon1 at gmail dot com]                            //
 //  ------------------------------------------------------------------------ //
 
+use XoopsModules\Article;
+
 function b_marquee_article($limit, $dateFormat, $itemsSize)
 {
     global $xoopsDB;
-    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
+//    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     require_once XOOPS_ROOT_PATH . '/modules/article/include/functions.php';
     $block = [];
     $myts  = \MyTextSanitizer::getInstance();
@@ -53,7 +55,7 @@ function b_marquee_article($limit, $dateFormat, $itemsSize)
     $select .= ', cat_id, art_title, uid, art_time_publish';
 
     if (null === $accessCats) {
-        $permissionHandler = xoops_getModuleHandler('permission', 'article');
+        $permissionHandler = Article\Helper::getInstance()->getHandler('Permission');
         $accessCats        = $permissionHandler->getCategories('access');
     }
     $allowedCats = $accessCats;
@@ -79,7 +81,7 @@ function b_marquee_article($limit, $dateFormat, $itemsSize)
     $arts           = [];
     $uids           = [];
     $cids           = [];
-    $articleHandler = xoops_getModuleHandler('article', 'article');
+    $articleHandler = Article\Helper::getInstance()->getHandler('Article');
     foreach ($rows as $row) {
         $article = $articleHandler->create(false);
         $article->assignVars($row);

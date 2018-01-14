@@ -26,6 +26,8 @@
  * @return array
  */
 
+use XoopsModules\Catads;
+
 // Script to list recent ads from the catads module (tested with catads v 1.4)
 function b_marquee_catads($limit, $dateFormat, $itemsSize)
 {
@@ -39,11 +41,11 @@ function b_marquee_catads($limit, $dateFormat, $itemsSize)
         $configHandler = xoops_getHandler('config');
         $config        = $configHandler->getConfigsByCat(0, $module->getVar('mid'));
     } else {
-        $module =& $xoopsModule;
-        $config =& $xoopsModuleConfig;
+        $module = $xoopsModule;
+        $config = $xoopsModuleConfig;
     }
     //echo '<br>ok';
-    $ads_hnd  = xoops_getModuleHandler('ads', 'catads');
+    $ads_hnd  = Catads\Helper::getInstance()->getHandler('Ads');
     $criteria = new CriteriaCompo(new Criteria('waiting', '0'));
     $criteria->add(new Criteria('published', time(), '<'));
     $criteria->add(new Criteria('expired', time(), '>'));
