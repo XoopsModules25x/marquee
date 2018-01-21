@@ -1,6 +1,5 @@
 <?php namespace XoopsModules\Marquee;
 
-use Xmf\Request;
 use \XoopsModules\Marquee\Common;
 
 /**
@@ -271,7 +270,7 @@ class Utility
         if (null === $mymodule) {
             global $xoopsModule;
             if (null !== $xoopsModule && is_object($xoopsModule) && REFERENCES_DIRNAME == $xoopsModule->getVar('dirname')) {
-                $mymodule =& $xoopsModule;
+                $mymodule = $xoopsModule;
             } else {
                 $hModule  = xoops_getHandler('module');
                 $mymodule = $hModule->getByDirname(REFERENCES_DIRNAME);
@@ -347,6 +346,11 @@ class Utility
         return $sform;
     }
 
+    /**
+     * @param        $option
+     * @param string $repmodule
+     * @return bool
+     */
     public static function getModuleOption($option, $repmodule = 'marquee')
     {
         global $xoopsModuleConfig, $xoopsModule;

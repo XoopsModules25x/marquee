@@ -17,6 +17,8 @@
  * @author       XOOPS Development Team
  */
 
+use XoopsModules\Marquee;
+
 if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof \XoopsUser)
     || !$GLOBALS['xoopsUser']->IsAdmin()
 ) {
@@ -44,10 +46,7 @@ function tableExists($tablename)
  */
 function xoops_module_pre_update_marquee(XoopsModule $module)
 {
-    /** @var Marquee\Helper $helper */
     /** @var Marquee\Utility $utility */
-    $moduleDirName = basename(dirname(__DIR__));
-    $helper       = Marquee\Helper::getInstance();
     $utility      = new Marquee\Utility();
 
     $xoopsSuccess = $utility::checkVerXoops($module);
@@ -58,28 +57,28 @@ function xoops_module_pre_update_marquee(XoopsModule $module)
 /**
  *
  * Performs tasks required during update of the module
- * @param XoopsModule $module {@link XoopsModule}
+ * @param \XoopsModule $module {@link XoopsModule}
  * @param null        $previousVersion
  *
  * @return bool true if update successful, false if not
  */
 
-function xoops_module_update_marquee(XoopsModule $module, $previousVersion = null)
+function xoops_module_update_marquee(\XoopsModule $module, $previousVersion = null)
 {
     $moduleDirName = basename(dirname(__DIR__));
     $capsDirName   = strtoupper($moduleDirName);
 
     /** @var Marquee\Helper $helper */
     /** @var Marquee\Utility $utility */
-    /** @var Marquee\Configurator $configurator */
+    /** @var Marquee\Common\Configurator $configurator */
     $helper  = Marquee\Helper::getInstance();
     $utility = new Marquee\Utility();
-    $configurator = new Marquee\Configurator();
+    $configurator = new Marquee\Common\Configurator();
 
-    if ($previousVersion < 240) {
+    if ($previousVersion < 260) {
 
         //rename column EXAMPLE
-        $tables     = new Tables();
+        $tables     = new Xmf\Database\Tables();
         $table      = 'marqueex_categories';
         $column     = 'ordre';
         $newName    = 'order';
@@ -141,10 +140,10 @@ function xoops_module_update_marquee(XoopsModule $module, $previousVersion = nul
         }
 
         //  ---  COPY blank.png FILES ---------------
-        if (count($configurator->blankFiles) > 0) {
+        if (count($configurator->copyBlankFiles) > 0) {
             $file = __DIR__ . '/../assets/images/blank.png';
-            foreach (array_keys($configurator->blankFiles) as $i) {
-                $dest = $configurator->blankFiles[$i] . '/blank.png';
+            foreach (array_keys($configurator->copyBlankFiles) as $i) {
+                $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
                 $utility::copyFile($file, $dest);
             }
         }

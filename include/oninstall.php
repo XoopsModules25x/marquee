@@ -32,8 +32,8 @@ function xoops_module_pre_install_marquee(\XoopsModule $module)
 {
 
     include __DIR__ . '/../preloads/autoloader.php';
-    /** @var \Utility $utility */
-    $utility = new \Marquee\Utility();
+    /** @var Marquee\Utility $utility */
+    $utility = new Marquee\Utility();
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
 
@@ -61,9 +61,12 @@ function xoops_module_install_marquee(\XoopsModule $module)
 
     $moduleDirName = basename(dirname(__DIR__));
 
+    /** @var Marquee\Helper $helper */
+    /** @var Marquee\Utility $utility */
+    /** @var Marquee\Common\Configurator $configurator */    
     $helper       = Marquee\Helper::getInstance();
     $utility      = new Marquee\Utility();
-    $configurator = new Marquee\Configurator();
+    $configurator = new Marquee\Common\Configurator();
     // Load language files
     $helper->loadLanguage('admin');
     $helper->loadLanguage('modinfo');
@@ -90,10 +93,10 @@ function xoops_module_install_marquee(\XoopsModule $module)
     }
 
     //  ---  COPY blank.png FILES ---------------
-    if (count($configurator->blankFiles) > 0) {
+    if (count($configurator->copyBlankFiles) > 0) {
         $file = __DIR__ . '/../assets/images/blank.png';
-        foreach (array_keys($configurator->blankFiles) as $i) {
-            $dest = $configurator->blankFiles[$i] . '/blank.png';
+        foreach (array_keys($configurator->copyBlankFiles) as $i) {
+            $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
             $utility::copyFile($file, $dest);
         }
     }

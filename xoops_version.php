@@ -26,7 +26,7 @@ $moduleDirName = basename(__DIR__);
 
 $modversion['version']             = '2.60';
 $modversion['module_status']       = 'Beta 1';
-$modversion['release_date']        = '2018/01/13';
+$modversion['release_date']        = '2018/01/19';
 $modversion['name']                = _MI_MARQUEE_NAME;
 $modversion['description']         = _MI_MARQUEE_DESC;
 $modversion['credits']             = 'Carnuke, defkon1, the Newbb team, Mage, Mamba';

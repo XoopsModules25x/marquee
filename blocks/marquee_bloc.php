@@ -26,6 +26,10 @@
 
 use XoopsModules\Marquee;
 
+/**
+ * @param $options
+ * @return array
+ */
 function b_marquee_show($options)
 {
     global $xoopsTpl;

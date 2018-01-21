@@ -29,6 +29,12 @@
 use XoopsModules\Wfdownloads;
 
 // Script to list recent files from the wfdownloads module (tested with wfdownloads 3.1)
+/**
+ * @param $limit
+ * @param $dateFormat
+ * @param $itemsSize
+ * @return array
+ */
 function b_marquee_wfdownloads($limit, $dateFormat, $itemsSize)
 {
     $block = [];

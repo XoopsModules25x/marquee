@@ -92,6 +92,7 @@ if (!marquee_FieldExists('marquee_marqueeid', $xoopsDB->prefix('marquee'))) {
  * @param        $stopvalue
  * @param        $LabelSubmitButton
  * @param string $sourcevalue
+ * @throws \Exception
  */
 function AddEditMarqueeForm(
     $marqueeid,
@@ -114,7 +115,7 @@ function AddEditMarqueeForm(
     $sourcevalue = 'fixed'
 ) {
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    global $xoopsModule, $xoopsModuleConfig;
+    global $xoopsModule;
 
     $sform = new \XoopsThemeForm($FormTitle, 'marqueeform', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/main.php');
 

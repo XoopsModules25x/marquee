@@ -88,13 +88,14 @@ function marquee_adminmenu($currentoption = 0, $breadcrumb = '')
  * @param string $pattern Pattern used to filter files
  *
  * @return array Files that match the pattern in the selected folder
+ * @throws \Exception
  */
 function myglob($folder = '', $pattern = 'php')
 {
     $result = [];
     try {
-        if (!($dir = @opendir($folder))) {
-            throw new \RuntimeException('Error, impossible to open the folder ' . $folder);
+        if (!($dir = opendir($folder))) {
+            throw new \Exception('Error, impossible to open the folder ' . $folder);
         }
         while (false !== ($file = readdir($dir))) {
             if (!is_dir($file)) {
@@ -109,7 +110,8 @@ function myglob($folder = '', $pattern = 'php')
         closedir($dir);
 
         return $result;
-    } catch (Exception $e) {
-        echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
+    } catch (\Exception $e) {
+//        echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
+        throw $e;
     }
 }

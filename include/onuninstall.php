@@ -8,6 +8,7 @@
  * @link            https://xoops.org XOOPS
  */
 
+use XoopsModules\Marquee;
 
 /**
  * Prepares system prior to attempting to uninstall module
@@ -34,10 +35,10 @@ function xoops_module_uninstall_marquee(XoopsModule $module)
 //    return true;
 
     $moduleDirName = basename(dirname(__DIR__));
-    $helper = \XoopsModules\Marquee\Helper::getInstance();
+    $helper = Marquee\Helper::getInstance();
 
-    /** @var \Utility $utility */
-    $utility = new \XoopsModules\Marquee\Utility();
+    /** @var Marquee\Utility $utility */
+    $utility = new Marquee\Utility();
 
     $success = true;
     $helper->loadLanguage('admin');

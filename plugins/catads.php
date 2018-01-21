@@ -29,6 +29,12 @@
 use XoopsModules\Catads;
 
 // Script to list recent ads from the catads module (tested with catads v 1.4)
+/**
+ * @param $limit
+ * @param $dateFormat
+ * @param $itemsSize
+ * @return array
+ */
 function b_marquee_catads($limit, $dateFormat, $itemsSize)
 {
     global $xoopsModule, $xoopsModuleConfig, $xoopsDB;
@@ -67,7 +73,7 @@ function b_marquee_catads($limit, $dateFormat, $itemsSize)
                 $title = $oneads->getVar('ads_title');
             }
             if (!isset($catBuffer[$oneads->getVar('cat_id')])) {
-                $tmpcat                               = new AdsCategory($oneads->getVar('cat_id'));
+                $tmpcat                               = new Catads\AdsCategory($oneads->getVar('cat_id'));
                 $catBuffer[$oneads->getVar('cat_id')] = $tmpcat->title();
                 $catTitle                             = $tmpcat->title();
             } else {
@@ -76,7 +82,7 @@ function b_marquee_catads($limit, $dateFormat, $itemsSize)
             $block[] = [
                 'date'     => formatTimestamp($oneads->getVar('published'), $dateFormat),
                 'category' => '',
-                'author'   => XoopsUser::getUnameFromId($oneads->getVar('uid')),
+                'author'   => \XoopsUser::getUnameFromId($oneads->getVar('uid')),
                 'title'    => $title,
                 'link'     => "<a href='" . XOOPS_URL . '/modules/catads/adsitem.php?ads_id=' . $oneads->getVar('ads_id') . "'>" . $title . '</a>'
             ];

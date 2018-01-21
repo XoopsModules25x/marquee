@@ -33,6 +33,12 @@
 
 use XoopsModules\Article;
 
+/**
+ * @param $limit
+ * @param $dateFormat
+ * @param $itemsSize
+ * @return array
+ */
 function b_marquee_article($limit, $dateFormat, $itemsSize)
 {
     global $xoopsDB;

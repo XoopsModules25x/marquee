@@ -27,6 +27,12 @@
 use XoopsModules\Newbb;
 
 // Script to list recent posts from Newbb 1 & 2
+/**
+ * @param $limit
+ * @param $dateFormat
+ * @param $itemsSize
+ * @return array
+ */
 function b_marquee_newbb($limit, $dateFormat, $itemsSize)
 {
 //    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';

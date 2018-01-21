@@ -8,6 +8,9 @@
 
 use XoopsModules\Marquee\Utility\test;
 
+/**
+ * Class UtilityTest
+ */
 class UtilityTest extends \Codeception\Test\Unit
 {
 
