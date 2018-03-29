@@ -32,7 +32,7 @@ function b_marquee_xfaq($limit, $dateFormat, $itemsSize)
     $myts   = \MyTextSanitizer::getInstance();
     $db     = \XoopsDatabaseFactory::getDatabaseConnection();
     $result = $db->query('SELECT f.*, t.topic_title, t.topic_submitter FROM ' . $db->prefix('xfaq_faq') . ' f, ' . $db->prefix('xfaq_topic') . ' t WHERE f.faq_online>0 AND (f.faq_topic=t.topic_id) ORDER BY faq_date_created DESC', $limit, 0);
-    while ($myrow = $db->fetchArray($result)) {
+    while (false !== ($myrow = $db->fetchArray($result))) {
         $title = $myts->htmlSpecialChars($myrow['faq_question']);
         if ($itemsSize > 0) {
             $title = xoops_substr($title, 0, $itemsSize + 3);

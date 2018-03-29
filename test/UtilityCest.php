@@ -14,7 +14,6 @@ class UtilityCest
      */
     public function testGetInstance(FunctionalTester $I)
     {
-
     }
 
     /**
@@ -22,7 +21,6 @@ class UtilityCest
      */
     public function testGetModuleOption(FunctionalTester $I)
     {
-
     }
 
     /**
@@ -30,7 +28,6 @@ class UtilityCest
      */
     public function testGetWysiwygForm(FunctionalTester $I)
     {
-
     }
 
     /**
@@ -38,7 +35,6 @@ class UtilityCest
      */
     public function testJavascriptLinkConfirm(FunctionalTester $I)
     {
-
     }
 
     /**
@@ -46,7 +42,6 @@ class UtilityCest
      */
     public function testRedirect(FunctionalTester $I)
     {
-
     }
 
     /**
@@ -54,7 +49,6 @@ class UtilityCest
      */
     public function testGetModuleName(FunctionalTester $I)
     {
-
     }
 
     /**
@@ -62,7 +56,6 @@ class UtilityCest
      */
     public function testNeedsAsterisk(FunctionalTester $I)
     {
-
     }
 
     /**
@@ -70,6 +63,5 @@ class UtilityCest
      */
     public function testFormMarkRequiredFields(FunctionalTester $I)
     {
-
     }
 }

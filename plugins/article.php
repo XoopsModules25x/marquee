@@ -37,7 +37,7 @@ use XoopsModules\Article;
  * @param $limit
  * @param $dateFormat
  * @param $itemsSize
- * @return array
+ * @return array|false
  */
 function b_marquee_article($limit, $dateFormat, $itemsSize)
 {
@@ -75,7 +75,7 @@ function b_marquee_article($limit, $dateFormat, $itemsSize)
     }
     $rows   = [];
     $author = [];
-    while ($row = $xoopsDB->fetchArray($result)) {
+    while (false !== ($row = $xoopsDB->fetchArray($result))) {
         $rows[]              = $row;
         $author[$row['uid']] = 1;
     }

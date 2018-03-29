@@ -67,7 +67,7 @@ function b_marquee_tplleaguestats($limit, $dateFormat, $itemsSize)
            ORDER BY M.LeagueMatchDate DESC
            LIMIT 0,$limit";
     $result = $xoopsDB->query($sql);
-    while ($myrow = $xoopsDB->fetchArray($result)) {
+    while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $title = $myts->htmlSpecialChars($myrow['home']) . ' - ' . $myts->htmlSpecialChars($myrow['away']) . ' ' . $myts->htmlSpecialChars($myrow['home_p']) . '-' . $myts->htmlSpecialChars($myrow['away_p']);
 
         if ($useItemSize && $itemsSize > 0) {

@@ -44,7 +44,7 @@ function tableExists($tablename)
  *
  * @return bool true if ready to install, false if not
  */
-function xoops_module_pre_update_marquee(XoopsModule $module)
+function xoops_module_pre_update_marquee(\XoopsModule $module)
 {
     /** @var Marquee\Utility $utility */
     $utility      = new Marquee\Utility();
@@ -155,8 +155,6 @@ function xoops_module_update_marquee(\XoopsModule $module, $previousVersion = nu
         /** @var \XoopsGroupPermHandler $gpermHandler */
         $gpermHandler = xoops_getHandler('groupperm');
         return $gpermHandler->deleteByModule($module->getVar('mid'), 'item_read');
-
     }
     return true;
 }
-

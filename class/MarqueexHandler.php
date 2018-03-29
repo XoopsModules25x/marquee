@@ -19,7 +19,7 @@
  * ****************************************************************************
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 //require_once XOOPS_ROOT_PATH . '/kernel/object.php';
 //require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';

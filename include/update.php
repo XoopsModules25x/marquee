@@ -33,7 +33,7 @@
 //    return true;
 //}
 
-function xoops_module_update_marquee(XoopsObject $module, $oldversion = null)
+function xoops_module_update_marquee(\XoopsObject $module, $oldversion = null)
 {
     $db  = \XoopsDatabaseFactory::getDatabaseConnection();
     $sql = 'ALTER TABLE `' . $db->prefix('marquee') . "` MODIFY `marquee_bgcolor` VARCHAR(7) NOT NULL DEFAULT '';";

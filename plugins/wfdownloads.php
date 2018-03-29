@@ -49,8 +49,8 @@ function b_marquee_wfdownloads($limit, $dateFormat, $itemsSize)
     $gpermHandler = xoops_getHandler('groupperm');
     $allowed_cats = $gpermHandler->getItemIds('WFDownCatPerm', $groups, $wfModule->getVar('mid'));
 
-    $criteria = new Criteria('cid', '(' . implode(',', $allowed_cats) . ')', 'IN');
-    $criteria = new CriteriaCompo(new Criteria('offline', 0));
+    $criteria = new \Criteria('cid', '(' . implode(',', $allowed_cats) . ')', 'IN');
+    $criteria = new \CriteriaCompo(new \Criteria('offline', 0));
     $criteria->setSort('published');
     $criteria->setOrder('DESC');
     $criteria->setLimit($limit);

@@ -32,7 +32,7 @@ function b_marquee_xoopsfaq($limit, $dateFormat, $itemsSize)
     $myts   = \MyTextSanitizer::getInstance();
     $db     = \XoopsDatabaseFactory::getDatabaseConnection();
     $result = $db->query('SELECT c.*, t.category_title FROM ' . $db->prefix('xoopsfaq_contents') . ' c, ' . $db->prefix('xoopsfaq_categories') . ' t WHERE c.contents_visible>0 AND (c. category_id=t.category_id) ORDER BY contents_time DESC', $limit, 0);
-    while ($myrow = $db->fetchArray($result)) {
+    while (false !== ($myrow = $db->fetchArray($result))) {
         $title = $myts->htmlSpecialChars($myrow['contents_title']);
         if ($itemsSize > 0) {
             $title = xoops_substr($title, 0, $itemsSize + 3);

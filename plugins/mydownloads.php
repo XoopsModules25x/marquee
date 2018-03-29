@@ -39,7 +39,7 @@ function b_marquee_mydownloads($limit, $dateFormat, $itemsSize)
                          . '  c, '
                          . $db->prefix('users')
                          . ' u  WHERE (c.cid=m.cid) AND (m.submitter=u.uid) AND (m.status>0) ORDER BY m.date DESC', $limit, 0);
-    while ($myrow = $db->fetchArray($result)) {
+    while (false !== ($myrow = $db->fetchArray($result))) {
         $title = $myts->htmlSpecialChars($myrow['title']);
         if ($itemsSize > 0) {
             $title = xoops_substr($title, 0, $itemsSize + 3);

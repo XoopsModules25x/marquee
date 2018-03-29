@@ -35,10 +35,11 @@ function b_marquee_show($options)
     global $xoopsTpl;
     $marquee = null;
 //    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
-    $marqueeHandler = Marquee\Helper::getInstance()->getHandler('Marqueex');
+    $marqueeHandler = XoopsModules\Marquee\Helper::getInstance()->getHandler('Marqueex');
     $block          = [];
     $marqueeId      = (int)$options[0];
     if ($marqueeId > 0) {
+        /** @var Marquee\Marqueex $marquee */
         $marquee = $marqueeHandler->get($marqueeId);
         if (is_object($marquee)) {
             $uniqid = md5(uniqid(mt_rand(), true));
@@ -68,6 +69,7 @@ function b_marquee_show($options)
  */
 function b_marquee_edit($options)
 {
+    /** @var Marquee\MarqueexHandler $marqueeHandler */
     $marqueeHandler = Marquee\Helper::getInstance()->getHandler('Marqueex');
     $form           = "<table border='0'>";
     $form           .= '<tr><td>' . _MB_MARQUEE_SELECT . "</td><td><select name='options[0]'>" . $marqueeHandler->getHtmlMarqueesList($options[0]) . '</select></td></tr>';

@@ -26,7 +26,7 @@ $helper->loadLanguage('main');
 
 //if (null === $xoopsTpl || !is_object($xoopsTpl)) {
 //    require_once XOOPS_ROOT_PATH . '/class/template.php';
-//    $xoopsTpl = new XoopsTpl();
+//    $xoopsTpl = new \XoopsTpl();
 //}
 
 xoops_cp_header();

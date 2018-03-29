@@ -31,7 +31,7 @@ use XoopsModules\Newbb;
  * @param $limit
  * @param $dateFormat
  * @param $itemsSize
- * @return array
+ * @return array|false
  */
 function b_marquee_newbb($limit, $dateFormat, $itemsSize)
 {
@@ -80,10 +80,10 @@ function b_marquee_newbb($limit, $dateFormat, $itemsSize)
                            . ' DESC';
         $result          = $db->query($query, $limit, 0);
         if (!$result) {
-            return '';
+            return false;
         }
         $rows = [];
-        while ($row = $db->fetchArray($result)) {
+        while (false !== ($row = $db->fetchArray($result))) {
             $rows[] = $row;
         }
         if (count($rows) < 1) {
@@ -118,11 +118,11 @@ function b_marquee_newbb($limit, $dateFormat, $itemsSize)
                  . $order
                  . ' DESC';
         if (!$result = $db->query($query, $limit, 0)) {
-            return '';
+            return false;
         }
-        while ($arr = $db->fetchArray($result)) {
+        while (false !== ($arr = $db->fetchArray($result))) {
             $lastpostername = $db->query('SELECT post_id, uid FROM ' . $db->prefix('bb_posts') . ' WHERE post_id = ' . $arr['topic_last_post_id']);
-            while ($tmpdb = $db->fetchArray($lastpostername)) {
+            while (false !== ($tmpdb = $db->fetchArray($lastpostername))) {
                 $tmpuser = XoopsUser::getUnameFromId($tmpdb['uid']);
                 $time    = formatTimestamp($arr['topic_time'], $dateFormat);
             }

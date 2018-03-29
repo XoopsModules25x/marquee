@@ -78,7 +78,7 @@ function xoopspartners_random($numberPartners, $random = true, $orden = '', $des
     } else {
         $result = $xoopsDB->query('SELECT id FROM ' . $xoopsDB->prefix('partners') . ' WHERE status = 1 ORDER BY ' . $orden . ' ' . $desc, $numberPartners);
     }
-    while ($ret = $xoopsDB->fetchArray($result)) {
+    while (false !== ($ret = $xoopsDB->fetchArray($result))) {
         $PartnersId[] = $ret['id'];
     }
     if (($numrows <= $numberPartners) || (!$random)) {

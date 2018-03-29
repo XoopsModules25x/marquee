@@ -21,7 +21,7 @@ use XoopsModules\Marquee;
 require_once __DIR__ . '/../../../include/cp_header.php';
 //require_once __DIR__ . '/../../../class/xoopsformloader.php';
 
-//require_once __DIR__ . '/../class/Utility.php';
+// require_once __DIR__ . '/../class/Utility.php';
 require_once __DIR__ . '/../include/common.php';
 
 $moduleDirName = basename(dirname(__DIR__));

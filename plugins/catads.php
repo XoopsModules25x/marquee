@@ -52,9 +52,9 @@ function b_marquee_catads($limit, $dateFormat, $itemsSize)
     }
     //echo '<br>ok';
     $ads_hnd  = Catads\Helper::getInstance()->getHandler('Ads');
-    $criteria = new CriteriaCompo(new Criteria('waiting', '0'));
-    $criteria->add(new Criteria('published', time(), '<'));
-    $criteria->add(new Criteria('expired', time(), '>'));
+    $criteria = new \CriteriaCompo(new \Criteria('waiting', '0'));
+    $criteria->add(new \Criteria('published', time(), '<'));
+    $criteria->add(new \Criteria('expired', time(), '>'));
     $criteria->setSort('published');
     $criteria->setOrder('DESC');
     $criteria->setLimit($limit);

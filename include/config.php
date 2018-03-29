@@ -17,14 +17,13 @@
  * @author     XOOPS Development Team
  */
 
-$moduleDirName      = basename(dirname(__DIR__));
-$moduleDirNameUpper = strtoupper($moduleDirName);
-
 /**
  * @return object
  */
 function getConfig()
 {
+    $moduleDirName      = basename(dirname(__DIR__));
+    $moduleDirNameUpper = strtoupper($moduleDirName);
     return (object)[
         'name'           => strtoupper($moduleDirName) . ' Module Configurator',
         'paths'          => [

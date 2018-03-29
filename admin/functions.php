@@ -23,7 +23,7 @@
  * @param string $breadcrumb
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 function marquee_adminmenu($currentoption = 0, $breadcrumb = '')
 {
@@ -95,7 +95,7 @@ function myglob($folder = '', $pattern = 'php')
     $result = [];
     try {
         if (!($dir = opendir($folder))) {
-            throw new \Exception('Error, impossible to open the folder ' . $folder);
+            throw new \RuntimeException('Error, impossible to open the folder ' . $folder);
         }
         while (false !== ($file = readdir($dir))) {
             if (!is_dir($file)) {

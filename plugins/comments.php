@@ -36,13 +36,14 @@ function b_marquee_comments($limit, $dateFormat, $itemsSize)
     $module = 0;
     /** @var \XoopsModuleHandler $moduleHandler */
     $moduleHandler  = xoops_getHandler('module');
+    /** @var \XoopsCommentHandler $commentHandler */
     $commentHandler = xoops_getHandler('comment');
-    $criteria       = new CriteriaCompo();
+    $criteria       = new \CriteriaCompo();
     if ($status > 0) {
-        $criteria->add(new Criteria('com_status', $status));
+        $criteria->add(new \Criteria('com_status', $status));
     }
     if ($module > 0) {
-        $criteria->add(new Criteria('com_modid', $module));
+        $criteria->add(new \Criteria('com_modid', $module));
     }
     $total = $commentHandler->getCount($criteria);
     if ($total > 0) {

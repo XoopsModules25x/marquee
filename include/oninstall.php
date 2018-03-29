@@ -19,8 +19,6 @@ use \XoopsModules\Marquee;
  * @author       XOOPS Development Team
  */
 
-//require_once __DIR__ . '/setup.php';
-
 /**
  *
  * Prepares system prior to attempting to install module
@@ -30,7 +28,6 @@ use \XoopsModules\Marquee;
  */
 function xoops_module_pre_install_marquee(\XoopsModule $module)
 {
-
     include __DIR__ . '/../preloads/autoloader.php';
     /** @var Marquee\Utility $utility */
     $utility = new Marquee\Utility();
@@ -63,7 +60,7 @@ function xoops_module_install_marquee(\XoopsModule $module)
 
     /** @var Marquee\Helper $helper */
     /** @var Marquee\Utility $utility */
-    /** @var Marquee\Common\Configurator $configurator */    
+    /** @var Marquee\Common\Configurator $configurator */
     $helper       = Marquee\Helper::getInstance();
     $utility      = new Marquee\Utility();
     $configurator = new Marquee\Common\Configurator();
@@ -86,7 +83,6 @@ function xoops_module_install_marquee(\XoopsModule $module)
 
     //  ---  CREATE FOLDERS ---------------
     if (count($configurator->uploadFolders) > 0) {
-        //    foreach (array_keys($GLOBALS['uploadFolders']) as $i) {
         foreach (array_keys($configurator->uploadFolders) as $i) {
             $utility::createFolder($configurator->uploadFolders[$i]);
         }
@@ -106,4 +102,3 @@ function xoops_module_install_marquee(\XoopsModule $module)
 
     return true;
 }
-

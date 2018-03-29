@@ -33,7 +33,7 @@ function b_marquee_mylinks($limit, $dateFormat, $itemsSize)
     $myts   = \MyTextSanitizer::getInstance();
     $db     = \XoopsDatabaseFactory::getDatabaseConnection();
     $result = $db->query('SELECT m.lid, m.cid, m.title, m.date, m.hits, m.submitter, c.title AS catitle FROM ' . $db->prefix('mylinks_links') . ' m, ' . $db->prefix('mylinks_cat') . ' c WHERE (c.cid=m.cid) AND (m.status>0) ORDER BY date DESC', $limit, 0);
-    while ($myrow = $db->fetchArray($result)) {
+    while (false !== ($myrow = $db->fetchArray($result))) {
         $title = $myts->htmlSpecialChars($myrow['title']);
         if ($itemsSize > 0) {
             $title = xoops_substr($title, 0, $itemsSize + 3);

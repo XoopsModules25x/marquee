@@ -3,7 +3,7 @@
 use XoopsModules\Marquee;
 
 require_once __DIR__ . '/admin_header.php';
-//require_once __DIR__ . '/../class/helper.php';
+// require_once __DIR__ . '/../class/helper.php';
 //require_once __DIR__ . '/../include/common.php';
 $helper = Marquee\Helper::getInstance();
 

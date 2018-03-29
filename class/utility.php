@@ -1,5 +1,6 @@
 <?php namespace XoopsModules\Marquee;
 
+use \XoopsModules\Marquee;
 use \XoopsModules\Marquee\Common;
 
 /**
@@ -214,7 +215,10 @@ class Utility
         $height = '400px',
         $supplemental = ''
     ) {
-        global $xoopsModuleConfig;
+
+        /** @var Marquee\Helper $helper */
+        $helper = Marquee\Helper::getInstance();
+
         if (class_exists('XoopsFormEditor')) {
             $options['name']   = $name;
             $options['value']  = $value;
@@ -222,7 +226,7 @@ class Utility
             $options['cols']   = '100%';
             $options['width']  = '100%';
             $options['height'] = '400px';
-            $editor            = new \XoopsFormEditor($caption, $xoopsModuleConfig['form_options'], $options, $nohtml = false, $onfailure = 'textarea');
+            $editor            = new \XoopsFormEditor($caption, $helper->getConfig('form_options'), $options, $nohtml = false, $onfailure = 'textarea');
         } else {
             $editor = new \XoopsFormDhtmlTextArea($caption, $name, $value, '100%', '100%');
         }
@@ -261,40 +265,26 @@ class Utility
 
     /**
      * Internal function used to get the handler of the current module
-     *
+     * @deprecated  use $helper->getModule();
      * @return \XoopsModule The module
      */
     protected static function getModule()
     {
+        $moduleDirName = basename(dirname(__DIR__));
         static $mymodule;
         if (null === $mymodule) {
             global $xoopsModule;
-            if (null !== $xoopsModule && is_object($xoopsModule) && REFERENCES_DIRNAME == $xoopsModule->getVar('dirname')) {
+            if (null !== $xoopsModule && is_object($xoopsModule) && $moduleDirName == $xoopsModule->getVar('dirname')) {
                 $mymodule = $xoopsModule;
             } else {
                 $hModule  = xoops_getHandler('module');
-                $mymodule = $hModule->getByDirname(REFERENCES_DIRNAME);
+                $mymodule = $hModule->getByDirname($moduleDirName);
             }
         }
 
         return $mymodule;
     }
 
-    /**
-     * Returns the module's name (as defined by the user in the module manager) with cache
-     *
-     * @return string Module's name
-     */
-    public static function getModuleName()
-    {
-        static $moduleName;
-        if (null === $moduleName) {
-            $mymodule   = self::getModule();
-            $moduleName = $mymodule->getVar('name');
-        }
-
-        return $moduleName;
-    }
 
     /**
      * This function indicates if the current Xoops version needs to add asterisks to required fields in forms
@@ -303,12 +293,6 @@ class Utility
      */
     public static function needsAsterisk()
     {
-        if (self::isX23()) {
-            return false;
-        }
-        if (false !== stripos(XOOPS_VERSION, 'impresscms')) {
-            return false;
-        }
         if (false === stripos(XOOPS_VERSION, 'legacy')) {
             $xv = xoops_trim(str_replace('XOOPS ', '', XOOPS_VERSION));
             if ((int)substr($xv, 4, 2) >= 17) {
@@ -335,10 +319,9 @@ class Utility
                 $required[] = $item->_name;
             }
             $elements =& $sform->getElements();
-            $cnt      = count($elements);
-            for ($i = 0; $i < $cnt; ++$i) {
-                if (is_object($elements[$i]) && in_array($elements[$i]->_name, $required)) {
-                    $elements[$i]->_caption .= ' *';
+            foreach ($elements as $i => $iValue) {
+                if (is_object($elements[$i]) && in_array($iValue->_name, $required)) {
+                    $iValue->_caption .= ' *';
                 }
             }
         }
@@ -353,18 +336,21 @@ class Utility
      */
     public static function getModuleOption($option, $repmodule = 'marquee')
     {
-        global $xoopsModuleConfig, $xoopsModule;
+        global  $xoopsModule;
+        /** @var Marquee\Helper $helper */
+        $helper = Marquee\Helper::getInstance();
+
         static $tbloptions = [];
         if (is_array($tbloptions) && array_key_exists($option, $tbloptions)) {
             return $tbloptions[$option];
         }
 
         $retval = false;
-        if (null !== $xoopsModuleConfig
+        if (null !== $helper->getModule()
             && (is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $repmodule
                 && $xoopsModule->getVar('isactive'))) {
-            if (isset($xoopsModuleConfig[$option])) {
-                $retval = $xoopsModuleConfig[$option];
+            if ('' !== ($helper->getConfig($option))) {
+                $retval = $helper->getConfig($option);
             }
         } else {
             /** @var \XoopsModuleHandler $moduleHandler */

@@ -57,10 +57,10 @@ function b_marquee_smartpartner($limit, $dateFormat, $itemsSize)
     }
 
     if ($partnersObj) {
-        for ($j = 0, $jMax = count($catId); $j < $jMax; ++$j) {
+        foreach ($catId as $j => $jValue) {
             $categoryObj = $smartpartnerCategoryHandler->get($catId[$j]);
             for ($i = 0, $iMax = count($partnersObj); $i < $iMax; ++$i) {
-                if ($partnersObj[$i]->categoryid() == $catId[$j]) {
+                if ($partnersObj[$i]->categoryid() == $jValue) {
                     $smartConfig = smartpartner_getModuleConfig();
                     if ($itemsSize > 0) {
                         $title = xoops_substr($partnersObj[$i]->title(), 0, $itemsSize + 3);

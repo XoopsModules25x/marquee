@@ -41,7 +41,7 @@ trait VersionChecks
         }
         $success     = true;
 
-        if (version_compare($currentVer, $requiredVer, '<')){
+        if (version_compare($currentVer, $requiredVer, '<')) {
             $success     = false;
             $module->setErrors(sprintf(_AM_MARQUEE_ERROR_BAD_XOOPS, $requiredVer, $currentVer));
         }

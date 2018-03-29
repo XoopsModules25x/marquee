@@ -44,7 +44,7 @@ function b_marquee_wfsection($limit, $dateFormat, $itemsSize)
         global $xoopsDB;
         $sql    = 'SELECT articleid, title, published, expired, counter, groupid, uid FROM ' . $xoopsDB->prefix('wfs_article') . ' WHERE published < ' . time() . ' AND published > 0 AND (expired = 0 OR expired > ' . time() . ') AND noshowart = 0 AND offline = 0 ORDER BY published DESC';
         $result = $xoopsDB->query($sql, $limit, 0);
-        while ($myrow = $xoopsDB->fetchArray($result)) {
+        while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
             if (checkAccess($myrow['groupid'])) {
                 $wfs   = [];
                 $title = $myts->htmlSpecialChars($myrow['title']);

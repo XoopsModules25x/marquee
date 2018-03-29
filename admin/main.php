@@ -20,7 +20,7 @@
  */
 
 use Xmf\Request;
- use XoopsModules\Marquee;
+use XoopsModules\Marquee;
 
 require_once __DIR__ . '/admin_header.php';
 require_once __DIR__ . '/../../../include/cp_header.php';
@@ -137,7 +137,7 @@ function AddEditMarqueeForm(
     }
 
     if ('DHTML' !== $utility::getModuleOption('methodtouse')) {
-        // $sform->addElement(new XoopsFormText(_AM_MARQUEE_BGCOLOR, 'bgcolor', 7, 7, $bgcolorvalue), false);
+        // $sform->addElement(new \XoopsFormText(_AM_MARQUEE_BGCOLOR, 'bgcolor', 7, 7, $bgcolorvalue), false);
         $sform->addElement(new \XoopsFormColorPicker(_AM_MARQUEE_BGCOLOR, 'bgcolor', $bgcolorvalue), false);
     }
     $sform->addElement(new \XoopsFormText(_AM_MARQUEE_WIDTH, 'width', 4, 4, $widthvalue), false);
@@ -277,7 +277,7 @@ switch ($op) {
                 redirect_header('main.php', 2, _AM_MARQUEE_ERROR_ADD_MARQUEE);
             }
             $marqueeid = Request::getInt('marqueeid', 0, 'POST');
-            $marquee   = $marqueeHandler->deleteAll(new Criteria('marquee_marqueeid', $marqueeid, '='));
+            $marquee   = $marqueeHandler->deleteAll(new \Criteria('marquee_marqueeid', $marqueeid, '='));
             redirect_header('main.php', 1, _AM_MARQUEE_DBUPDATED);
         }
         break;
@@ -315,7 +315,10 @@ switch ($op) {
         $adminObject->displayNavigation(basename(__FILE__));
 
         echo '<br>';
-        AddEditMarqueeForm(0, 'verifytoadd', _AM_MARQUEE_CONFIG, '', '', '', '', '', 0, 0, '', 0, 0, 0, 0, 0, _AM_MARQUEE_ADDBUTTON, 'fixed');
+        try {
+            AddEditMarqueeForm(0, 'verifytoadd', _AM_MARQUEE_CONFIG, '', '', '', '', '', 0, 0, '', 0, 0, 0, 0, 0, _AM_MARQUEE_ADDBUTTON, 'fixed');
+        } catch (\Exception $e) {
+        }
         break;
 
     // Default action, list all elements
@@ -342,7 +345,7 @@ switch ($op) {
              . "</th><th align='center'>"
              . _AM_MARQUEE_ACTION
              . "</th></tr>\n";
-        $marqueearray = $marqueeHandler->getObjects();
+        $marqueeArray = $marqueeHandler->getObjects();
         $class        = 'even';
         $baseurl      = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/main.php';
         $tbldirection = [
@@ -352,8 +355,9 @@ switch ($op) {
             _AM_MARQUEE_DIRECTION4
         ];
         $tblbehaviour = [_AM_MARQUEE_BEHAVIOUR1, _AM_MARQUEE_BEHAVIOUR2, _AM_MARQUEE_BEHAVIOUR3];
-        if (count($marqueearray) > 0) {
-            foreach ($marqueearray as $marquee) {
+        if (count($marqueeArray) > 0) {
+            /** @var Marquee\Marqueex $marquee */
+            foreach ($marqueeArray as $marquee) {
                 //              $action_edit="<a href='".$baseurl."?op=edit&marqueeid=".$marquee->getVar('marquee_marqueeid')."'>"._AM_MARQUEE_EDIT."</a>";
                 //              $action_delete="<a href='".$baseurl."?op=delete&marqueeid=".$marquee->getVar('marquee_marqueeid')."'>"._AM_MARQUEE_DELETE."</a>";
 
@@ -376,7 +380,7 @@ switch ($op) {
                      . "'><td align='center'>"
                      . $marquee->getVar('marquee_marqueeid')
                      . "</td><td align='left'>"
-                     . Marquee\Utility::truncateHtml($marquee->getVar('marquee_content'), 80, '...', false, true )
+                     . Marquee\Utility::truncateHtml($marquee->getVar('marquee_content'), 80, '...', false, true)
                      . "</td><td align='center'>"
                      . "<div style='height:12px; width:12px; background-color:"
                      . $bgcolorvalue
