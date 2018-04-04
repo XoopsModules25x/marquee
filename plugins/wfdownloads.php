@@ -46,8 +46,8 @@ function b_marquee_wfdownloads($limit, $dateFormat, $itemsSize)
     $wfModuleConfig = $configHandler->getConfigsByCat(0, $wfModule->getVar('mid'));
 
     $groups       = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-    $gpermHandler = xoops_getHandler('groupperm');
-    $allowed_cats = $gpermHandler->getItemIds('WFDownCatPerm', $groups, $wfModule->getVar('mid'));
+    $grouppermHandler = xoops_getHandler('groupperm');
+    $allowed_cats = $grouppermHandler->getItemIds('WFDownCatPerm', $groups, $wfModule->getVar('mid'));
 
     $criteria = new \Criteria('cid', '(' . implode(',', $allowed_cats) . ')', 'IN');
     $criteria = new \CriteriaCompo(new \Criteria('offline', 0));

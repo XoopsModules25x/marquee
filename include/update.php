@@ -69,7 +69,7 @@ function xoops_module_update_marquee(\XoopsObject $module, $oldversion = null)
         $folderHandler->delete($deleteFile);
     }
 
-    $gpermHandler = xoops_getHandler('groupperm');
+    $grouppermHandler = xoops_getHandler('groupperm');
 
-    return $gpermHandler->deleteByModule($module->getVar('mid'), 'item_read');
+    return $grouppermHandler->deleteByModule($module->getVar('mid'), 'item_read');
 }
