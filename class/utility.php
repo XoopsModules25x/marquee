@@ -349,7 +349,7 @@ class Utility
         if (null !== $helper->getModule()
             && (is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $repmodule
                 && $xoopsModule->getVar('isactive'))) {
-            if ('' !== ($helper->getConfig($option))) {
+            if ('' !== $helper->getConfig($option)) {
                 $retval = $helper->getConfig($option);
             }
         } else {

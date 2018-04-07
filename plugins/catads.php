@@ -38,7 +38,7 @@ use XoopsModules\Catads;
 function b_marquee_catads($limit, $dateFormat, $itemsSize)
 {
     global $xoopsModule, $xoopsModuleConfig, $xoopsDB;
-    require_once XOOPS_ROOT_PATH . '/modules/catads/class/cat.php';
+//    require_once XOOPS_ROOT_PATH . '/modules/catads/class/cat.php';
     $block = [];
     if (empty($xoopsModule) || 'catads' !== $xoopsModule->getVar('dirname')) {
         /** @var \XoopsModuleHandler $moduleHandler */
