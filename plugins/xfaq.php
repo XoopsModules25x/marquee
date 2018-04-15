@@ -40,7 +40,7 @@ function b_marquee_xfaq($limit, $dateFormat, $itemsSize)
         $block[] = [
             'date'     => formatTimestamp($myrow['faq_date_created'], $dateFormat),
             'category' => $myts->htmlSpecialChars($myrow['topic_title']),
-            'author'   => XoopsUser::getUnameFromId((int)$myrow['topic_submitter']),
+            'author'   => \XoopsUser::getUnameFromId((int)$myrow['topic_submitter']),
             'title'    => $title,
             'link'     => "<a href='" . XOOPS_URL . '/modules/xfaq/faq.php?faq_id=' . $myrow['faq_id'] . "'>{$title}</a>"
         ];

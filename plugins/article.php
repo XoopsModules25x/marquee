@@ -82,7 +82,7 @@ function b_marquee_article($limit, $dateFormat, $itemsSize)
     if (count($rows) < 1) {
         return false;
     }
-    $authorName = XoopsUser::getUnameFromId(array_keys($author));
+    $authorName = \XoopsUser::getUnameFromId(array_keys($author));
 
     $arts           = [];
     $uids           = [];

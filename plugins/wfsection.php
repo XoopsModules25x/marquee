@@ -58,7 +58,7 @@ function b_marquee_wfsection($limit, $dateFormat, $itemsSize)
                 $block[] = [
                     'date'     => formatTimestamp($myrow['published'], $dateFormat),
                     'category' => '',
-                    'author'   => XoopsUser::getUnameFromId($myrow['uid']),
+                    'author'   => \XoopsUser::getUnameFromId($myrow['uid']),
                     'title'    => $title,
                     'link'     => "<a href='" . XOOPS_URL . '/modules/wfsection/article.php?articleid=' . $myrow['articleid'] . "'>" . $title . '</a>'
                 ];

@@ -20,7 +20,7 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
 /**
  * Class MarqueeCorePreload
  */
-class MarqueeCorePreload extends XoopsPreloadItem
+class MarqueeCorePreload extends \XoopsPreloadItem
 {
     // to add PSR-4 autoloader
     /**

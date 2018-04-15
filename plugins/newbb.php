@@ -123,7 +123,7 @@ function b_marquee_newbb($limit, $dateFormat, $itemsSize)
         while (false !== ($arr = $db->fetchArray($result))) {
             $lastpostername = $db->query('SELECT post_id, uid FROM ' . $db->prefix('bb_posts') . ' WHERE post_id = ' . $arr['topic_last_post_id']);
             while (false !== ($tmpdb = $db->fetchArray($lastpostername))) {
-                $tmpuser = XoopsUser::getUnameFromId($tmpdb['uid']);
+                $tmpuser = \XoopsUser::getUnameFromId($tmpdb['uid']);
                 $time    = formatTimestamp($arr['topic_time'], $dateFormat);
             }
             $title = $myts->htmlSpecialChars($arr['topic_title']);

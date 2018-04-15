@@ -23,7 +23,7 @@ use Xmf\Request;
 use XoopsModules\Marquee;
 
 require_once __DIR__ . '/admin_header.php';
-require_once __DIR__ . '/../../../include/cp_header.php';
+require_once  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 require_once XOOPS_ROOT_PATH . '/modules/marquee/admin/functions.php';
 //require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
 //require_once XOOPS_ROOT_PATH . '/modules/marquee/class/marquee_utils.php';

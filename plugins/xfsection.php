@@ -52,7 +52,7 @@ function b_marquee_xfsection($limit, $dateFormat, $itemsSize)
             $block[] = [
                 'date'     => formatTimestamp($myrow['published'], $dateFormat),
                 'category' => '',
-                'author'   => XoopsUser::getUnameFromId($myrow['uid']),
+                'author'   => \XoopsUser::getUnameFromId($myrow['uid']),
                 'title'    => $title,
                 'link'     => "<a href='" . XOOPS_URL . '/modules/xfsection/article.php?articleid=' . $myrow['articleid'] . "'>" . $title . '</a>'
             ];
