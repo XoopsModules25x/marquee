@@ -19,7 +19,6 @@
  * Version :
  * ****************************************************************************
  */
-
 define('_EXT_MARQUEE_ALTWMP', 'Add a marquee from Marquee module');
 define('_EXT_MARQUEE_TEXTID', "Marquee's Id you want to display");
 define('_EXT_MARQUEE_TEXTTITLE', 'Enter marquee title');

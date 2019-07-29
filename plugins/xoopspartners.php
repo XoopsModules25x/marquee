@@ -41,7 +41,7 @@ function b_marquee_xoopspartners($limit, $dateFormat, $itemsSize)
         $origtitle = $title;
         $title     = $myts->htmlSpecialChars($title);
         if ($itemsSize > 0) {
-            $title = $myts->htmlSpecialChars(substr($origtitle, 0, 19));
+            $title = $myts->htmlSpecialChars(mb_substr($origtitle, 0, 19));
         } else {
             $title = $myts->htmlSpecialChars($origtitle);
         }
@@ -51,7 +51,7 @@ function b_marquee_xoopspartners($limit, $dateFormat, $itemsSize)
             'category' => '',
             'author'   => '',
             'title'    => $title,
-            'link'     => "<a href='" . XOOPS_URL . '/modules/xoopspartners/vpartner.php?id=' . $id . "'>" . $title . '</a>'
+            'link'     => "<a href='" . XOOPS_URL . '/modules/xoopspartners/vpartner.php?id=' . $id . "'>" . $title . '</a>',
         ];
     }
 

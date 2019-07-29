@@ -23,15 +23,14 @@ use Xmf\Request;
 use XoopsModules\Marquee;
 
 require_once __DIR__ . '/admin_header.php';
-require_once  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 require_once XOOPS_ROOT_PATH . '/modules/marquee/admin/functions.php';
 //require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
 //require_once XOOPS_ROOT_PATH . '/modules/marquee/class/marquee_utils.php';
 
-
 $adminObject = \Xmf\Module\Admin::getInstance();
 
-$op = Request::getCmd('op', Request::getCmd('op', 'default', 'POST'), 'GET');
+$op = Request::getString('op', Request::getCmd('op', 'default', 'POST'), 'GET');
 
 // Verify that a field exists inside a mysql table
 
@@ -112,8 +111,8 @@ function AddEditMarqueeForm(
     $loopvalue,
     $stopvalue,
     $LabelSubmitButton,
-    $sourcevalue = 'fixed'
-) {
+    $sourcevalue = 'fixed')
+{
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     global $xoopsModule;
 
@@ -186,12 +185,12 @@ function AddEditMarqueeForm(
     if (!empty($marqueeid)) {
         $sform->addElement(new \XoopsFormHidden('marqueeid', $marqueeid), false);
     }
-    $button_tray = new \XoopsFormElementTray('', '');
-    $submit_btn  = new \XoopsFormButton('', 'submit', $LabelSubmitButton, 'submit');
-    $button_tray->addElement($submit_btn);
+    $buttonTray = new \XoopsFormElementTray('', '');
+    $submit_btn = new \XoopsFormButton('', 'submit', $LabelSubmitButton, 'submit');
+    $buttonTray->addElement($submit_btn);
     $cancel_btn = new \XoopsFormButton('', 'reset', _AM_MARQUEE_RESETBUTTON, 'reset');
-    $button_tray->addElement($cancel_btn);
-    $sform->addElement($button_tray);
+    $buttonTray->addElement($cancel_btn);
+    $sform->addElement($buttonTray);
     $sform->display();
 }
 
@@ -228,39 +227,20 @@ switch ($op) {
             }
         }
         break;
-
     // Edit an element
     case 'edit':
         xoops_cp_header();
         $adminObject->displayNavigation(basename(__FILE__));
 
         echo '<br>';
-        if (isset($_GET['marqueeid'])) {
+        if (\Xmf\Request::hasVar('marqueeid', 'GET')) {
             $marqueeid = Request::getInt('marqueeid', 0, 'GET');
             $marquee   = $marqueeHandler->get($marqueeid);
-            AddEditMarqueeForm(
-                $marqueeid,
-                'verifybeforeedit',
-                _AM_MARQUEE_CONFIG,
-                $marquee->getVar('marquee_content', 'e'),
-                $marquee->getVar('marquee_bgcolor', 'e'),
-                $marquee->getVar('marquee_width', 'e'),
-                $marquee->getVar('marquee_height', 'e'),
-                $marquee->getVar('marquee_scrollamount', 'e'),
-                               $marquee->getVar('marquee_hspace', 'e'),
-                $marquee->getVar('marquee_vspace', 'e'),
-                $marquee->getVar('marquee_scrolldelay', 'e'),
-                $marquee->getVar('marquee_direction', 'e'),
-                $marquee->getVar('marquee_behaviour', 'e'),
-                $marquee->getVar('marquee_align', 'e'),
-                               $marquee->getVar('marquee_loop', 'e'),
-                $marquee->getVar('marquee_stoponmouseover', 'e'),
-                _AM_MARQUEE_UPDATE,
-                $marquee->getVar('marquee_source', 'e')
-            );
+            AddEditMarqueeForm($marqueeid, 'verifybeforeedit', _AM_MARQUEE_CONFIG, $marquee->getVar('marquee_content', 'e'), $marquee->getVar('marquee_bgcolor', 'e'), $marquee->getVar('marquee_width', 'e'), $marquee->getVar('marquee_height', 'e'), $marquee->getVar('marquee_scrollamount', 'e'),
+                               $marquee->getVar('marquee_hspace', 'e'), $marquee->getVar('marquee_vspace', 'e'), $marquee->getVar('marquee_scrolldelay', 'e'), $marquee->getVar('marquee_direction', 'e'), $marquee->getVar('marquee_behaviour', 'e'), $marquee->getVar('marquee_align', 'e'),
+                               $marquee->getVar('marquee_loop', 'e'), $marquee->getVar('marquee_stoponmouseover', 'e'), _AM_MARQUEE_UPDATE, $marquee->getVar('marquee_source', 'e'));
         }
         break;
-
     // Delete an element
     case 'delete':
         if ('' !== Request::getString('ok', '', 'POST')) {
@@ -270,7 +250,7 @@ switch ($op) {
             xoops_confirm([
                               'op'        => 'delete',
                               'marqueeid' => Request::getInt('marqueeid', 0, 'GET'),
-                              'ok'        => 1
+                              'ok'        => 1,
                           ], 'main.php', _AM_MARQUEE_RUSUREDEL);
         } else {
             if (empty($_POST['marqueeid'])) {
@@ -281,7 +261,6 @@ switch ($op) {
             redirect_header('main.php', 1, _AM_MARQUEE_DBUPDATED);
         }
         break;
-
     // Verify before to add an element
     case 'verifytoadd':
         if ('' !== Request::getString('submit', '', 'POST')) {
@@ -300,7 +279,7 @@ switch ($op) {
                                                      'marquee_loop'            => Request::getInt('loop', 0, 'POST'),
                                                      'marquee_vspace'          => Request::getInt('vspace', 0, 'POST'),
                                                      'marquee_content'         => Request::getText('content', '', 'POST'),
-                                                     'marquee_source'          => Request::getString('source', '', 'POST')
+                                                     'marquee_source'          => Request::getString('source', '', 'POST'),
                                                  ]);
             if (!$vres) {
                 redirect_header('main.php', 1, _AM_MARQUEE_ERROR_ADD_MARQUEE);
@@ -308,19 +287,19 @@ switch ($op) {
             redirect_header('main.php', 1, _AM_MARQUEE_ADDED_OK);
         }
         break;
-
     // Display the form to add an element
     case 'addmarquee':
         xoops_cp_header();
         $adminObject->displayNavigation(basename(__FILE__));
 
         echo '<br>';
+
         try {
             AddEditMarqueeForm(0, 'verifytoadd', _AM_MARQUEE_CONFIG, '', '', '', '', '', 0, 0, '', 0, 0, 0, 0, 0, _AM_MARQUEE_ADDBUTTON, 'fixed');
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
         }
         break;
-
     // Default action, list all elements
     case 'default':
         xoops_cp_header();
@@ -352,7 +331,7 @@ switch ($op) {
             _AM_MARQUEE_DIRECTION1,
             _AM_MARQUEE_DIRECTION2,
             _AM_MARQUEE_DIRECTION3,
-            _AM_MARQUEE_DIRECTION4
+            _AM_MARQUEE_DIRECTION4,
         ];
         $tblbehaviour = [_AM_MARQUEE_BEHAVIOUR1, _AM_MARQUEE_BEHAVIOUR2, _AM_MARQUEE_BEHAVIOUR3];
         if (count($marqueeArray) > 0) {

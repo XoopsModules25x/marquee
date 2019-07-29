@@ -19,8 +19,8 @@
  * Version :
  * ****************************************************************************
  *
- * @param XoopsModule|\XoopsObject $module
- * @param null                    $oldversion
+ * @param \XoopsModule|\XoopsObject $module
+ * @param null                     $oldversion
  * @return mixed
  */
 
@@ -40,7 +40,6 @@ function xoops_module_update_marquee(\XoopsObject $module, $oldversion = null)
     $db->query($sql);
 
     if ($oldversion < 250) {
-
         // delete old block html template files
         $templateDirectory = XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'n') . '/templates/blocks/';
         $template_list     = array_diff(scandir($templateDirectory, SCANDIR_SORT_NONE), ['..', '.']);

@@ -29,7 +29,7 @@
 // Script to list recent articles from wfsection 1 & 2
 function b_marquee_wfsection($limit, $dateFormat, $itemsSize)
 {
-//    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
+    //    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     $block = [];
 
     $myts = \MyTextSanitizer::getInstance();
@@ -50,7 +50,7 @@ function b_marquee_wfsection($limit, $dateFormat, $itemsSize)
                 $title = $myts->htmlSpecialChars($myrow['title']);
                 if (!XOOPS_USE_MULTIBYTES) {
                     if ($itemsSize > 0) {
-                        $title = $myts->htmlSpecialChars(substr($myrow['title'], 0, $itemsSize));
+                        $title = $myts->htmlSpecialChars(mb_substr($myrow['title'], 0, $itemsSize));
                     } else {
                         $title = $myts->htmlSpecialChars($myrow['title']);
                     }
@@ -60,7 +60,7 @@ function b_marquee_wfsection($limit, $dateFormat, $itemsSize)
                     'category' => '',
                     'author'   => \XoopsUser::getUnameFromId($myrow['uid']),
                     'title'    => $title,
-                    'link'     => "<a href='" . XOOPS_URL . '/modules/wfsection/article.php?articleid=' . $myrow['articleid'] . "'>" . $title . '</a>'
+                    'link'     => "<a href='" . XOOPS_URL . '/modules/wfsection/article.php?articleid=' . $myrow['articleid'] . "'>" . $title . '</a>',
                 ];
             }
         }

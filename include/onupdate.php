@@ -20,8 +20,7 @@
 use XoopsModules\Marquee;
 
 if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof \XoopsUser)
-    || !$GLOBALS['xoopsUser']->IsAdmin()
-) {
+    || !$GLOBALS['xoopsUser']->IsAdmin()) {
     exit('Restricted access' . PHP_EOL);
 }
 
@@ -38,45 +37,42 @@ function tableExists($tablename)
 }
 
 /**
- *
  * Prepares system prior to attempting to install module
- * @param XoopsModule $module {@link XoopsModule}
+ * @param \XoopsModule $module {@link XoopsModule}
  *
  * @return bool true if ready to install, false if not
  */
 function xoops_module_pre_update_marquee(\XoopsModule $module)
 {
     /** @var Marquee\Utility $utility */
-    $utility      = new Marquee\Utility();
+    $utility = new Marquee\Utility();
 
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
+
     return $xoopsSuccess && $phpSuccess;
 }
 
 /**
- *
  * Performs tasks required during update of the module
  * @param \XoopsModule $module {@link XoopsModule}
- * @param null        $previousVersion
+ * @param null         $previousVersion
  *
  * @return bool true if update successful, false if not
  */
-
 function xoops_module_update_marquee(\XoopsModule $module, $previousVersion = null)
 {
-    $moduleDirName = basename(dirname(__DIR__));
-    $capsDirName   = strtoupper($moduleDirName);
+    $moduleDirName      = basename(dirname(__DIR__));
+    $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
     /** @var Marquee\Helper $helper */
     /** @var Marquee\Utility $utility */
     /** @var Marquee\Common\Configurator $configurator */
-    $helper  = Marquee\Helper::getInstance();
-    $utility = new Marquee\Utility();
+    $helper       = Marquee\Helper::getInstance();
+    $utility      = new Marquee\Utility();
     $configurator = new Marquee\Common\Configurator();
 
     if ($previousVersion < 260) {
-
         //rename column EXAMPLE
         $tables     = new Xmf\Database\Tables();
         $table      = 'marqueex_categories';
@@ -86,7 +82,7 @@ function xoops_module_update_marquee(\XoopsModule $module, $previousVersion = nu
         if ($tables->useTable($table)) {
             $tables->alterColumn($table, $column, $attributes, $newName);
             if (!$tables->executeQueue()) {
-                echo '<br>' . _AM_MARQUEE_UPGRADEFAILED0 . ' ' . $migrate->getLastError();
+                echo '<br>' . _AM_MARQUEE_UPGRADEFAILED0 . ' ' . $tables->getLastError();
             }
         }
 
@@ -141,7 +137,7 @@ function xoops_module_update_marquee(\XoopsModule $module, $previousVersion = nu
 
         //  ---  COPY blank.png FILES ---------------
         if (count($configurator->copyBlankFiles) > 0) {
-            $file =  dirname(__DIR__) . '/assets/images/blank.png';
+            $file = dirname(__DIR__) . '/assets/images/blank.png';
             foreach (array_keys($configurator->copyBlankFiles) as $i) {
                 $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
                 $utility::copyFile($file, $dest);
@@ -154,7 +150,9 @@ function xoops_module_update_marquee(\XoopsModule $module, $previousVersion = nu
 
         /** @var \XoopsGroupPermHandler $grouppermHandler */
         $grouppermHandler = xoops_getHandler('groupperm');
+
         return $grouppermHandler->deleteByModule($module->getVar('mid'), 'item_read');
     }
+
     return true;
 }

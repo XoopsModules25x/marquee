@@ -1,30 +1,35 @@
 <?php
 
-use XoopsModules\Marquee;
+include dirname(__DIR__) . '/preloads/autoloader.php';
 
-require_once  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-require_once  dirname(__DIR__) . '/include/common.php';
-$helper = Marquee\Helper::getInstance();
+$moduleDirName = basename(dirname(__DIR__));
+$moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
+/** @var \XoopsModules\Marquee\Helper $helper */
+$helper = \XoopsModules\Marquee\Helper::getInstance();
+$helper->loadLanguage('common');
+$helper->loadLanguage('feedback');
 
 $pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
-$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
-
+if (is_object($helper->getModule())) {
+    //    $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
+    $pathModIcon32 = $helper->url($helper->getModule()->getInfo('modicons32'));
+}
 
 $adminmenu[] = [
     'title' => _MI_MARQUEE_HOME,
     'link'  => 'admin/index.php',
-    'icon'  => $pathIcon32 . '/home.png'
+    'icon'  => $pathIcon32 . '/home.png',
 ];
 
 $adminmenu[] = [
     'title' => _MI_MARQUEE_MENU_01,
     'link'  => 'admin/main.php',
-    'icon'  => $pathIcon32 . '/marquee.png'
+    'icon'  => $pathIcon32 . '/marquee.png',
 ];
 
 $adminmenu[] = [
     'title' => _MI_MARQUEE_ABOUT,
     'link'  => 'admin/about.php',
-    'icon'  => $pathIcon32 . '/about.png'
+    'icon'  => $pathIcon32 . '/about.png',
 ];

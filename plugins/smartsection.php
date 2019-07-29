@@ -53,7 +53,7 @@ function b_marquee_smartsection($limit, $dateFormat, $itemsSize)
                 'category' => $itemsObj[$i]->getCategoryName(),
                 'author'   => \XoopsUserUtility::getUnameFromId($itemsObj[$i]->uid()),
                 'title'    => $title,
-                'link'     => "<a href='" . XOOPS_URL . '/modules/smartsection/item.php?itemid=' . $itemsObj[$i]->itemid() . "'>" . $title . '</a>'
+                'link'     => "<a href='" . XOOPS_URL . '/modules/smartsection/item.php?itemid=' . $itemsObj[$i]->itemid() . "'>" . $title . '</a>',
             ];
         }
     }

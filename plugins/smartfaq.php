@@ -32,8 +32,8 @@ function b_marquee_smartfaq($limit, $dateFormat, $itemsSize)
     require_once XOOPS_ROOT_PATH . '/modules/smartfaq/include/functions.php';
     $block = [];
 
-    $smartModule       =& sf_getModuleInfo();
-    $smartModuleConfig =& sf_getModuleConfig();
+    $smartModule       = &sf_getModuleInfo();
+    $smartModuleConfig = &sf_getModuleConfig();
 
     $categoryid        = -1;
     $sort              = 'datesub';
@@ -76,7 +76,7 @@ function b_marquee_smartfaq($limit, $dateFormat, $itemsSize)
                 'category' => $allcategories[$faqsObj[$i]->categoryid()]->getVar('name'),
                 'author'   => sf_getLinkedUnameFromId($answerObj->uid(), $smartModuleConfig['userealname'], $users),
                 'title'    => $title,
-                'link'     => "<a href='" . XOOPS_URL . '/modules/smartfaq/faq.php?faqid=' . $faqsObj[$i]->faqid() . "'>" . $title . '</a>'
+                'link'     => "<a href='" . XOOPS_URL . '/modules/smartfaq/faq.php?faqid=' . $faqsObj[$i]->faqid() . "'>" . $title . '</a>',
             ];
         }
     }

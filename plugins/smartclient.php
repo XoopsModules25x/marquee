@@ -51,7 +51,7 @@ function b_marquee_smartclient($limit, $dateFormat, $itemsSize)
                 'category' => '',
                 'author'   => '',
                 'title'    => $title,
-                'link'     => "<a href='" . XOOPS_URL . '/modules/smartclient/client.php?id=' . $clientsObj[$i]->id() . "'>" . $title . '</a>'
+                'link'     => "<a href='" . XOOPS_URL . '/modules/smartclient/client.php?id=' . $clientsObj[$i]->id() . "'>" . $title . '</a>',
             ];
         }
     }

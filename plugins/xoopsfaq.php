@@ -27,7 +27,7 @@
 // Script to list the recent links from the mylinks module version 1.10
 function b_marquee_xoopsfaq($limit, $dateFormat, $itemsSize)
 {
-//    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
+    //    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     $block  = [];
     $myts   = \MyTextSanitizer::getInstance();
     $db     = \XoopsDatabaseFactory::getDatabaseConnection();
@@ -42,7 +42,7 @@ function b_marquee_xoopsfaq($limit, $dateFormat, $itemsSize)
             'category' => $myts->htmlSpecialChars($myrow['category_title']),
             'author'   => 0,
             'title'    => $title,
-            'link'     => "<a href='" . XOOPS_URL . '/modules/xoopsfaq/index.php?cat_id=' . $myrow['category_id'] . '#q' . $myrow['contents_id'] . "'>" . $title . '</a>'
+            'link'     => "<a href='" . XOOPS_URL . '/modules/xoopsfaq/index.php?cat_id=' . $myrow['category_id'] . '#q' . $myrow['contents_id'] . "'>" . $title . '</a>',
         ];
     }
 

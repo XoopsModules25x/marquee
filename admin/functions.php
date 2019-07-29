@@ -87,12 +87,13 @@ function marquee_adminmenu($currentoption = 0, $breadcrumb = '')
  * @param string $folder  Folder where you want to grab files from (terminated with a slash)
  * @param string $pattern Pattern used to filter files
  *
- * @return array Files that match the pattern in the selected folder
  * @throws \Exception
+ * @return array Files that match the pattern in the selected folder
  */
 function myglob($folder = '', $pattern = 'php')
 {
     $result = [];
+
     try {
         if (!($dir = opendir($folder))) {
             throw new \RuntimeException('Error, impossible to open the folder ' . $folder);
@@ -101,7 +102,7 @@ function myglob($folder = '', $pattern = 'php')
             if (!is_dir($file)) {
                 $ext       = basename($file);
                 $ext       = explode('.', $ext);
-                $extension = strtolower($ext[count($ext) - 1]);
+                $extension = mb_strtolower($ext[count($ext) - 1]);
                 if ($extension === $pattern) {
                     $result[] = $file;
                 }
@@ -110,8 +111,9 @@ function myglob($folder = '', $pattern = 'php')
         closedir($dir);
 
         return $result;
-    } catch (\Exception $e) {
-//        echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
+    }
+    catch (\Exception $e) {
+        //        echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
         throw $e;
     }
 }

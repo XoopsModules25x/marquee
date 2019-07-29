@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Marquee;
+<?php
+
+namespace XoopsModules\Marquee;
 
 /**
  * ****************************************************************************
@@ -95,7 +97,7 @@ class Marqueex extends \XoopsObject
                 $dateFormat = Marquee\Utility::getModuleOption('dateformat');
                 $itemsSize  = Marquee\Utility::getModuleOption('itemssize');
                 $retval     = $function_name($limit, $dateFormat, $itemsSize);
-                if (is_array($retval) && count($retval) > 0) {
+                if ($retval && is_array($retval)) {
                     foreach ($retval as $onevalue) {
                         if (isset($onevalue['category']) && '' !== xoops_trim($onevalue['category'])) {
                             $onevalue['category'] = ' - ' . $onevalue['category'];
@@ -111,7 +113,7 @@ class Marqueex extends \XoopsObject
             $content = $this->getVar('marquee_content');
         }
         if (!Marquee\Utility::isBot()) { // We are using the microsoft html tag
-            if ('dhtml' !== strtolower(Utility::getModuleOption('methodtouse'))) {
+            if ('dhtml' !== mb_strtolower(Utility::getModuleOption('methodtouse'))) {
                 return "<marquee align='"
                        . $tblalign[$this->getVar('marquee_align')]
                        . "' behavior='"
@@ -131,31 +133,30 @@ class Marqueex extends \XoopsObject
                        . '>'
                        . $content
                        . '</marquee>';
-            } else { // We are using the javascript method
-                $jscontent = '';
-                $jscontent .= "<script type=\"text/javascript\">\n";
-                $jscontent .= "html$uniqid = '';\n";
-                $jscontent .= "html$uniqid += '" . Marquee\Utility::javascriptEscape($content) . "' ;\n";
-                $jscontent .= "marquee$uniqid = new XbMarquee('marquee$uniqid', "
-                              . $this->getVar('marquee_height')
-                              . ', '
-                              . $this->getVar('marquee_width')
-                              . ', '
-                              . $this->getVar('marquee_scrollamount')
-                              . ', '
-                              . $this->getVar('marquee_scrolldelay')
-                              . ", '"
-                              . $tbldirection[$this->getVar('marquee_direction')]
-                              . "', '"
-                              . $tblbehaviour[$this->getVar('marquee_behaviour')]
-                              . "', html$uniqid);\n";
-                $jscontent .= "init_$uniqid();\n";
-                $jscontent .= "</script>\n";
+            }   // We are using the javascript method
+            $jscontent = '';
+            $jscontent .= "<script type=\"text/javascript\">\n";
+            $jscontent .= "html$uniqid = '';\n";
+            $jscontent .= "html$uniqid += '" . Marquee\Utility::javascriptEscape($content) . "' ;\n";
+            $jscontent .= "marquee$uniqid = new XbMarquee('marquee$uniqid', "
+                          . $this->getVar('marquee_height')
+                          . ', '
+                          . $this->getVar('marquee_width')
+                          . ', '
+                          . $this->getVar('marquee_scrollamount')
+                          . ', '
+                          . $this->getVar('marquee_scrolldelay')
+                          . ", '"
+                          . $tbldirection[$this->getVar('marquee_direction')]
+                          . "', '"
+                          . $tblbehaviour[$this->getVar('marquee_behaviour')]
+                          . "', html$uniqid);\n";
+            $jscontent .= "init_$uniqid();\n";
+            $jscontent .= "</script>\n";
 
-                return $jscontent;
-            }
-        } else {
-            return $content;
+            return $jscontent;
         }
+
+        return $content;
     }
 }

@@ -27,7 +27,7 @@
 // Script to list the recent polls from the xoopspoll module version 1.0
 function b_marquee_xoopspoll($limit, $dateFormat, $itemsSize)
 {
-//    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
+    //    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     $block  = [];
     $myts   = \MyTextSanitizer::getInstance();
     $db     = \XoopsDatabaseFactory::getDatabaseConnection();
@@ -42,7 +42,7 @@ function b_marquee_xoopspoll($limit, $dateFormat, $itemsSize)
             'category' => '',
             'author'   => $myrow['user_id'],
             'title'    => $title,
-            'link'     => "<a href='" . XOOPS_URL . '/modules/xoopspoll/index.php?poll_id=' . $myrow['poll_id'] . "'>" . $title . '</a>'
+            'link'     => "<a href='" . XOOPS_URL . '/modules/xoopspoll/index.php?poll_id=' . $myrow['poll_id'] . "'>" . $title . '</a>',
         ];
     }
 

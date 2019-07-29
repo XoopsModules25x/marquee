@@ -20,13 +20,13 @@
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-include __DIR__ . '/preloads/autoloader.php';
+require_once __DIR__ . '/preloads/autoloader.php';
 
 $moduleDirName = basename(__DIR__);
 
 $modversion['version']             = '2.60';
-$modversion['module_status']       = 'Beta 1';
-$modversion['release_date']        = '2018/01/19';
+$modversion['module_status']       = 'Beta 2';
+$modversion['release_date']        = '2019/07/28';
 $modversion['name']                = _MI_MARQUEE_NAME;
 $modversion['description']         = _MI_MARQUEE_DESC;
 $modversion['credits']             = 'Carnuke, defkon1, the Newbb team, Mage, Mamba';
@@ -45,7 +45,7 @@ $modversion['module_website_name'] = 'XOOPS';
 $modversion['author_website_url']  = 'https://xoops.org/';
 $modversion['author_website_name'] = 'Hervé Thouzard';
 $modversion['min_php']             = '5.5';
-$modversion['min_xoops']           = '2.5.9';
+$modversion['min_xoops']           = '2.5.10';
 $modversion['min_admin']           = '1.2';
 $modversion['min_db']              = ['mysql' => '5.5'];
 
@@ -81,7 +81,7 @@ $modversion['blocks'][] = [
     'show_func'   => 'b_marquee_show',
     'options'     => '1',
     'edit_func'   => 'b_marquee_edit',
-    'template'    => 'marquee_block01.tpl'
+    'template'    => 'marquee_block01.tpl',
 ];
 
 $modversion['blocks'][] = [
@@ -91,7 +91,7 @@ $modversion['blocks'][] = [
     'show_func'   => 'b_marquee_show',
     'options'     => '2',
     'edit_func'   => 'b_marquee_edit',
-    'template'    => 'marquee_block02.tpl'
+    'template'    => 'marquee_block02.tpl',
 ];
 
 $modversion['blocks'][] = [
@@ -101,7 +101,7 @@ $modversion['blocks'][] = [
     'show_func'   => 'b_marquee_show',
     'options'     => '3',
     'edit_func'   => 'b_marquee_edit',
-    'template'    => 'marquee_block03.tpl'
+    'template'    => 'marquee_block03.tpl',
 ];
 
 $modversion['blocks'][] = [
@@ -111,7 +111,7 @@ $modversion['blocks'][] = [
     'show_func'   => 'b_marquee_show',
     'options'     => '4',
     'edit_func'   => 'b_marquee_edit',
-    'template'    => 'marquee_block04.tpl'
+    'template'    => 'marquee_block04.tpl',
 ];
 
 // Search
@@ -131,7 +131,7 @@ $modversion['config'][] = [
     'formtype'    => 'select',
     'valuetype'   => 'text',
     'default'     => 'dhtmltextarea',
-    'options'     => array_flip($editorHandler->getList())
+    'options'     => array_flip($editorHandler->getList()),
 ];
 
 /**
@@ -144,7 +144,7 @@ $modversion['config'][] = [
     'formtype'    => 'select',
     'valuetype'   => 'text',
     'default'     => 'Marquee',
-    'options'     => ['_MI_MARQUEE_MARQUEE' => 'Marquee', '_MI_MARQUEE_DHTML' => 'DHTML']
+    'options'     => ['_MI_MARQUEE_MARQUEE' => 'Marquee', '_MI_MARQUEE_DHTML' => 'DHTML'],
 ];
 
 /**
@@ -156,7 +156,7 @@ $modversion['config'][] = [
     'description' => '_MI_MARQUEE_DATEFORMAT_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
-    'default'     => '_SHORTDATESTRING'
+    'default'     => '_SHORTDATESTRING',
 ];
 
 /**
@@ -168,7 +168,7 @@ $modversion['config'][] = [
     'description' => '_MI_MARQUE_ITEMSCOUNT_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => 0
+    'default'     => 0,
 ];
 
 /**
@@ -180,5 +180,5 @@ $modversion['config'][] = [
     'description' => '_MI_MARQUE_TITLELENGTH_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => 0
+    'default'     => 0,
 ];

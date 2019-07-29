@@ -37,7 +37,7 @@ use XoopsModules\News;
  */
 function b_marquee_news($limit, $dateFormat, $itemsSize)
 {
-//    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
+    //    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     require_once XOOPS_ROOT_PATH . '/modules/news/class/class.newsstory.php';
     $block      = $stories = [];
     $story      = new NewsStory();
@@ -56,7 +56,7 @@ function b_marquee_news($limit, $dateFormat, $itemsSize)
                 'category' => $onestory->topic_title(),
                 'author'   => $onestory->uid(),
                 'title'    => $title,
-                'link'     => "<a href='" . XOOPS_URL . '/modules/news/article.php?storyid=' . $onestory->storyid() . "'>" . $title . '</a>'
+                'link'     => "<a href='" . XOOPS_URL . '/modules/news/article.php?storyid=' . $onestory->storyid() . "'>" . $title . '</a>',
             ];
         }
     }

@@ -42,7 +42,7 @@ function b_marquee_smartmedia($limit, $dateFormat, $itemsSize)
 
     $smartmediaClipHandler = smartmedia_gethandler('clip');
 
-    $clipsArray =& $smartmediaClipHandler->getClipsFromAdmin(0, $maxClips, 'clips.created_date', 'DESC', 'all');
+    $clipsArray = &$smartmediaClipHandler->getClipsFromAdmin(0, $maxClips, 'clips.created_date', 'DESC', 'all');
 
     if ($clipsArray) {
         foreach ($clipsArray as $clipArray) {
@@ -52,7 +52,7 @@ function b_marquee_smartmedia($limit, $dateFormat, $itemsSize)
                 'category' => '',
                 'author'   => '',
                 'title'    => $clipArray['title'],
-                'link'     => '<a href="' . SMARTMEDIA_URL . 'clip.php?categoryid=' . $clipArray['categoryid'] . '&folderid=' . $clipArray['folderid'] . '&clipid=' . $clipArray['clipid'] . '">' . $clipArray['title'] . '</a>'
+                'link'     => '<a href="' . SMARTMEDIA_URL . 'clip.php?categoryid=' . $clipArray['categoryid'] . '&folderid=' . $clipArray['folderid'] . '&clipid=' . $clipArray['clipid'] . '">' . $clipArray['title'] . '</a>',
             ];
             unset($clip);
         }

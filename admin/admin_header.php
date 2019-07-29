@@ -18,17 +18,18 @@
 
 use XoopsModules\Marquee;
 
-require_once  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 //require_once  dirname(dirname(dirname(__DIR__))) . '/class/xoopsformloader.php';
 
 // require_once  dirname(__DIR__) . '/class/Utility.php';
-require_once  dirname(__DIR__) . '/include/common.php';
+require_once dirname(__DIR__) . '/include/common.php';
 
 $moduleDirName = basename(dirname(__DIR__));
 
 //if functions.php file exist
 //require_once  dirname(__DIR__) . '/include/functions.php';
-$helper = Marquee\Helper::getInstance();
+/** @var Marquee\Helper $helper */
+$helper      = Marquee\Helper::getInstance();
 $adminObject = \Xmf\Module\Admin::getInstance();
 
 //$pathIcon16    = \Xmf\Module\Admin::iconUrl('', 16);

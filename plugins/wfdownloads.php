@@ -45,9 +45,9 @@ function b_marquee_wfdownloads($limit, $dateFormat, $itemsSize)
     $configHandler  = xoops_getHandler('config');
     $wfModuleConfig = $configHandler->getConfigsByCat(0, $wfModule->getVar('mid'));
 
-    $groups       = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $groups           = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
     $grouppermHandler = xoops_getHandler('groupperm');
-    $allowed_cats = $grouppermHandler->getItemIds('WFDownCatPerm', $groups, $wfModule->getVar('mid'));
+    $allowed_cats     = $grouppermHandler->getItemIds('WFDownCatPerm', $groups, $wfModule->getVar('mid'));
 
     $criteria = new \Criteria('cid', '(' . implode(',', $allowed_cats) . ')', 'IN');
     $criteria = new \CriteriaCompo(new \Criteria('offline', 0));
@@ -78,7 +78,7 @@ function b_marquee_wfdownloads($limit, $dateFormat, $itemsSize)
             'category' => $categtitle,
             'author'   => $download['publisher'],
             'title'    => $title,
-            'link'     => "<a href='" . XOOPS_URL . '/modules/wfdownloads/singlefile.php?cid=' . $download['cid'] . '&lid=' . $download['lid'] . "'>" . $title . '</a>'
+            'link'     => "<a href='" . XOOPS_URL . '/modules/wfdownloads/singlefile.php?cid=' . $download['cid'] . '&lid=' . $download['lid'] . "'>" . $title . '</a>',
         ];
     }
 

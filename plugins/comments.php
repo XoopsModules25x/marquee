@@ -29,13 +29,13 @@
 // Script to list system's comments - Tested with Xoops 2.0.9.3
 function b_marquee_comments($limit, $dateFormat, $itemsSize)
 {
-//    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
+    //    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     require_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
     $block  = [];
     $status = XOOPS_COMMENT_APPROVEUSER;
     $module = 0;
     /** @var \XoopsModuleHandler $moduleHandler */
-    $moduleHandler  = xoops_getHandler('module');
+    $moduleHandler = xoops_getHandler('module');
     /** @var \XoopsCommentHandler $commentHandler */
     $commentHandler = xoops_getHandler('comment');
     $criteria       = new \CriteriaCompo();
@@ -88,7 +88,7 @@ function b_marquee_comments($limit, $dateFormat, $itemsSize)
                               . $comments[$i]->getVar('com_id')
                               . "'>"
                               . $title
-                              . '</a>'
+                              . '</a>',
             ];
         }
     }

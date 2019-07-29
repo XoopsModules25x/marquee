@@ -35,7 +35,7 @@ use XoopsModules\Newbb;
  */
 function b_marquee_newbb($limit, $dateFormat, $itemsSize)
 {
-//    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
+    //    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     $block = [];
 
     /** @var \XoopsModuleHandler $moduleHandler */
@@ -102,7 +102,7 @@ function b_marquee_newbb($limit, $dateFormat, $itemsSize)
                 'category' => $arr['forum_name'],
                 'author'   => $arr['uid'],
                 'title'    => $title,
-                'link'     => "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $arr['topic_id'] . '&amp;post_id=' . $arr['post_id'] . '#forumpost' . $arr['post_id'] . "'>" . $title . '</a>'
+                'link'     => "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $arr['topic_id'] . '&amp;post_id=' . $arr['post_id'] . '#forumpost' . $arr['post_id'] . "'>" . $title . '</a>',
             ];
         }
     } else { // Newbb 1
@@ -136,7 +136,7 @@ function b_marquee_newbb($limit, $dateFormat, $itemsSize)
                 'category' => $arr['forum_name'],
                 'author'   => $tmpuser,
                 'title'    => $title,
-                'link'     => "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $arr['topic_id'] . '&amp;forum=' . $arr['forum_id'] . '&amp;post_id=' . $arr['topic_last_post_id'] . '#forumpost' . $arr['topic_last_post_id'] . "'>" . $title . '</a>'
+                'link'     => "<a href='" . XOOPS_URL . '/modules/newbb/viewtopic.php?topic_id=' . $arr['topic_id'] . '&amp;forum=' . $arr['forum_id'] . '&amp;post_id=' . $arr['topic_last_post_id'] . '#forumpost' . $arr['topic_last_post_id'] . "'>" . $title . '</a>',
             ];
         }
     }

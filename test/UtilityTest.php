@@ -6,8 +6,6 @@
  * Time: 06:21
  */
 
-use XoopsModules\Marquee\Utility\test;
-
 /**
  * Class UtilityTest
  */

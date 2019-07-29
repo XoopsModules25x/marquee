@@ -27,7 +27,7 @@
 // Script to list the recent faqs from the xfaq module version 1.01
 function b_marquee_xfaq($limit, $dateFormat, $itemsSize)
 {
-//    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
+    //    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     $block  = [];
     $myts   = \MyTextSanitizer::getInstance();
     $db     = \XoopsDatabaseFactory::getDatabaseConnection();
@@ -42,7 +42,7 @@ function b_marquee_xfaq($limit, $dateFormat, $itemsSize)
             'category' => $myts->htmlSpecialChars($myrow['topic_title']),
             'author'   => \XoopsUser::getUnameFromId((int)$myrow['topic_submitter']),
             'title'    => $title,
-            'link'     => "<a href='" . XOOPS_URL . '/modules/xfaq/faq.php?faq_id=' . $myrow['faq_id'] . "'>{$title}</a>"
+            'link'     => "<a href='" . XOOPS_URL . '/modules/xfaq/faq.php?faq_id=' . $myrow['faq_id'] . "'>{$title}</a>",
         ];
     }
 

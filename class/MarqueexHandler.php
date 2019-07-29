@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Marquee;
+<?php
+
+namespace XoopsModules\Marquee;
 
 /**
  * ****************************************************************************
@@ -27,8 +29,6 @@
 //    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/PersistableObjectHandler.php';
 //}
 
-
-
 //class MarqueeHandler extends MarqueePersistableObjectHandler
 
 /**
@@ -37,9 +37,9 @@
 class MarqueexHandler extends \XoopsPersistableObjectHandler //MarqueePersistableObjectHandler
 {
     /**
-     * @param $db
+     * @param \XoopsDatabase|null $db
      */
-    public function __construct(\XoopsDatabase $db)
+    public function __construct(\XoopsDatabase $db = null)
     {
         parent::__construct($db, 'marquee', Marqueex::class, 'marquee_marqueeid');
     }

@@ -44,7 +44,7 @@ function b_marquee_xfsection($limit, $dateFormat, $itemsSize)
             $title = $myts->htmlSpecialChars($myrow['title']);
             if (!XOOPS_USE_MULTIBYTES) {
                 if ($itemsSize > 0) {
-                    $title = $myts->htmlSpecialChars(substr($myrow['title'], 0, $itemsSize - 1));
+                    $title = $myts->htmlSpecialChars(mb_substr($myrow['title'], 0, $itemsSize - 1));
                 } else {
                     $title = $myts->htmlSpecialChars($myrow['title']);
                 }
@@ -54,7 +54,7 @@ function b_marquee_xfsection($limit, $dateFormat, $itemsSize)
                 'category' => '',
                 'author'   => \XoopsUser::getUnameFromId($myrow['uid']),
                 'title'    => $title,
-                'link'     => "<a href='" . XOOPS_URL . '/modules/xfsection/article.php?articleid=' . $myrow['articleid'] . "'>" . $title . '</a>'
+                'link'     => "<a href='" . XOOPS_URL . '/modules/xfsection/article.php?articleid=' . $myrow['articleid'] . "'>" . $title . '</a>',
             ];
         }
     }

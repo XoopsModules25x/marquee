@@ -11,7 +11,7 @@
 
 **Marquee** for [XOOPS CMS](https://xoops.org) is a module to create scrolling texts (marquees). You can create an unlimited number of marquees and use them in 4 blocks. 
 
-[![Tutorial Available](https://xoops.org/images/tutorial-available-blue.svg)](https://www.gitbook.com/book/xoops/xoops-marquee/) Tutorial: see [GitBook](https://www.gitbook.com/book/xoops/xoops-marquee/). 
+[![Tutorial Available](https://xoops.org/images/tutorial-available-blue.svg)](https://xoops.gitbook.io/xoops-marquee/) Tutorial: see [GitBook](https://xoops.gitbook.io/xoops-marquee/).
 To contribute to the Tutorial, [fork it on GitHub](https://github.com/XoopsDocs/marquee-tutorial)
 
 [![Translations on Transifex](https://xoops.org/images/translations-transifex-blue.svg)](https://www.transifex.com/xoops) 

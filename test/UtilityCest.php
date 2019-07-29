@@ -1,14 +1,13 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: mamba
  * Date: 2017-12-04
  * Time: 06:17
  */
-
 class UtilityCest
 {
-
     /**
      * @param \FunctionalTester $I
      */

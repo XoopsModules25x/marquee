@@ -19,12 +19,13 @@
 
 use XoopsModules\Marquee;
 
-include  dirname(__DIR__) . '/preloads/autoloader.php';
+require_once dirname(__DIR__) . '/preloads/autoloader.php';
 
-$moduleDirName = basename(dirname(__DIR__));
-$moduleDirNameUpper   = strtoupper($moduleDirName); //$capsDirName
+$moduleDirName      = basename(dirname(__DIR__));
+$moduleDirNameUpper = mb_strtoupper($moduleDirName); //$capsDirName
 
-$db     = \XoopsDatabaseFactory::getDatabaseConnection();
+$db = \XoopsDatabaseFactory::getDatabaseConnection();
+/** @var Marquee\Helper $helper */
 $helper = Marquee\Helper::getInstance();
 
 /** @var Marquee\Utility $utility */
@@ -58,8 +59,8 @@ $helper->loadLanguage('common');
 //require_once MARQUEE_ROOT_PATH . '/class/xoalbum.php';
 //require_once MARQUEE_ROOT_PATH . '/class/request.php';
 
-$pathIcon16    = \Xmf\Module\Admin::iconUrl('', 16);
-$pathIcon32    = \Xmf\Module\Admin::iconUrl('', 32);
+$pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon32 = \Xmf\Module\Admin::iconUrl('', 32);
 //$pathModIcon16 = $helper->getModule()->getInfo('modicons16');
 //$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 
@@ -94,7 +95,6 @@ if (is_object($helper->getModule())) {
     $GLOBALS['xoopsTpl']->assign('pathModIcon16', XOOPS_URL . '/modules/' . $moduleDirName . '/' . $pathModIcon16);
     $GLOBALS['xoopsTpl']->assign('pathModIcon32', $pathModIcon32);
 }
-
 
 //module handlers
 

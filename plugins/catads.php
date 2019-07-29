@@ -38,7 +38,7 @@ use XoopsModules\Catads;
 function b_marquee_catads($limit, $dateFormat, $itemsSize)
 {
     global $xoopsModule, $xoopsModuleConfig, $xoopsDB;
-//    require_once XOOPS_ROOT_PATH . '/modules/catads/class/cat.php';
+    //    require_once XOOPS_ROOT_PATH . '/modules/catads/class/cat.php';
     $block = [];
     if (empty($xoopsModule) || 'catads' !== $xoopsModule->getVar('dirname')) {
         /** @var \XoopsModuleHandler $moduleHandler */
@@ -84,7 +84,7 @@ function b_marquee_catads($limit, $dateFormat, $itemsSize)
                 'category' => '',
                 'author'   => \XoopsUser::getUnameFromId($oneads->getVar('uid')),
                 'title'    => $title,
-                'link'     => "<a href='" . XOOPS_URL . '/modules/catads/adsitem.php?ads_id=' . $oneads->getVar('ads_id') . "'>" . $title . '</a>'
+                'link'     => "<a href='" . XOOPS_URL . '/modules/catads/adsitem.php?ads_id=' . $oneads->getVar('ads_id') . "'>" . $title . '</a>',
             ];
             unset($itemArray);
         }

@@ -73,7 +73,7 @@ function b_marquee_smartpartner($limit, $dateFormat, $itemsSize)
                         'category' => '',
                         'author'   => '',
                         'title'    => $title,
-                        'link'     => "<a href='" . XOOPS_URL . '/modules/smartpartner/partner.php?id=' . $partnersObj[$i]->id() . "'>" . $title . '</a>'
+                        'link'     => "<a href='" . XOOPS_URL . '/modules/smartpartner/partner.php?id=' . $partnersObj[$i]->id() . "'>" . $title . '</a>',
                     ];
                 }
             }

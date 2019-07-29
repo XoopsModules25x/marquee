@@ -42,7 +42,7 @@ use XoopsModules\Article;
 function b_marquee_article($limit, $dateFormat, $itemsSize)
 {
     global $xoopsDB;
-//    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
+    //    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     require_once XOOPS_ROOT_PATH . '/modules/article/include/functions.php';
     $block = [];
     $myts  = \MyTextSanitizer::getInstance();

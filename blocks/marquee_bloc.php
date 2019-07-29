@@ -34,7 +34,7 @@ function b_marquee_show($options)
 {
     global $xoopsTpl;
     $marquee = null;
-//    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
+    //    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     $marqueeHandler = XoopsModules\Marquee\Helper::getInstance()->getHandler('Marqueex');
     $block          = [];
     $marqueeId      = (int)$options[0];
