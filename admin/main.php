@@ -118,7 +118,6 @@ function AddEditMarqueeForm(
         $source->addOption($onefile, $onefile);
     }
     $sform->addElement($source);
-    /** @var \XoopsModules\Marquee\Utility $utility */
     $utility = new Marquee\Utility();
     $editor = $utility::getWysiwygForm(_AM_MARQUEE_CONTENT, 'content', $contentvalue, 15, 60, 'content_text_hidden');
     if ($editor) {

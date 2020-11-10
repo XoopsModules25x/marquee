@@ -33,9 +33,7 @@ function xoops_module_uninstall_marquee(\XoopsModule $module)
     //    return true;
     $moduleDirName      = basename(dirname(__DIR__));
     $moduleDirNameUpper = mb_strtoupper($moduleDirName);
-    /** @var Marquee\Helper $helper */
     $helper = Marquee\Helper::getInstance();
-    /** @var Marquee\Utility $utility */
     $utility = new Marquee\Utility();
     $success = true;
     $helper->loadLanguage('admin');

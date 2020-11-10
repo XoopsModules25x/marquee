@@ -27,7 +27,6 @@ use XoopsModules\Marquee;
 function xoops_module_pre_install_marquee(\XoopsModule $module)
 {
     require_once dirname(__DIR__) . '/preloads/autoloader.php';
-    /** @var Marquee\Utility $utility */
     $utility      = new Marquee\Utility();
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);

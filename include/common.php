@@ -24,9 +24,7 @@ require_once dirname(__DIR__) . '/preloads/autoloader.php';
 $moduleDirName      = basename(dirname(__DIR__));
 $moduleDirNameUpper = mb_strtoupper($moduleDirName); //$capsDirName
 $db = \XoopsDatabaseFactory::getDatabaseConnection();
-/** @var Marquee\Helper $helper */
 $helper = Marquee\Helper::getInstance();
-/** @var Marquee\Utility $utility */
 $utility = new Marquee\Utility();
 $helper->loadLanguage('common');
 if (!defined($moduleDirNameUpper . '_CONSTANTS_DEFINED')) {

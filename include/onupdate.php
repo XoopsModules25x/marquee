@@ -42,7 +42,6 @@ function tableExists($tablename)
  */
 function xoops_module_pre_update_marquee(\XoopsModule $module)
 {
-    /** @var Marquee\Utility $utility */
     $utility = new Marquee\Utility();
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
