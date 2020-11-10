@@ -16,7 +16,7 @@
  * @since               2.5.0
  * @author              Hervé Thouzard (http://www.herve-thouzard.com)
  **/
-require_once dirname(dirname(__DIR__)) . '/mainfile.php';
+require_once dirname(__DIR__, 2) . '/mainfile.php';
 require_once __DIR__ . '/include/common.php';
 //defined('FRAMEWORKS_ART_FUNCTIONS_INI') || require_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.ini.php';
 //load_functions('admin');

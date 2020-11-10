@@ -49,7 +49,7 @@ define('_MI_MARQUE_TITLELENGTH_DESC', 'Define the maximum length for the items t
 define('_MI_MARQUEE_TEXT_EDITOR', 'Text editor to use');
 //2.50
 //Help
-define('_MI_MARQUEE_DIRNAME', basename(dirname(dirname(__DIR__))));
+define('_MI_MARQUEE_DIRNAME', basename(dirname(__DIR__, 2)));
 define('_MI_MARQUEE_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_MARQUEE_BACK_2_ADMIN', 'Back to Administration of ');
 define('_MI_MARQUEE_OVERVIEW', 'Overview');
