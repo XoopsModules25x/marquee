@@ -1,47 +1,44 @@
 <?php
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+use Xmf\Module\Admin;
+use XoopsModules\Marquee\Helper;
 
-//$path = dirname(dirname(dirname(__DIR__)));
-//include_once $path . '/mainfile.php';
-//
-//$dirname         = basename(dirname(__DIR__));
-//$module_handler  = xoops_getHandler('module');
-//$module          = $module_handler->getByDirname($dirname);
-//$pathIcon32      = $module->getInfo('icons32');
-//$pathModuleAdmin = $module->getInfo('dirmoduleadmin');
-//$pathLanguage    = $path . $pathModuleAdmin;
-//
-//if (!file_exists($fileinc = $pathLanguage . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/' . 'main.php')) {
-//    $fileinc = $pathLanguage . '/language/english/main.php';
-//}
-//
-//include_once $fileinc;
-
-$module_handler = xoops_getHandler('module');
-$module         = $module_handler->getByDirname(basename(dirname(__DIR__)));
-$pathIcon32     = '../../' . $module->getInfo('icons32');
-xoops_loadLanguage('modinfo', $module->dirname());
-
-$pathModuleAdmin = XOOPS_ROOT_PATH . '/' . $module->getInfo('dirmoduleadmin') . '/moduleadmin';
-if (!file_exists($fileinc = $pathModuleAdmin . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/' . 'main.php')) {
-    $fileinc = $pathModuleAdmin . '/language/english/main.php';
+require dirname(__DIR__) . '/preloads/autoloader.php';
+$moduleDirName      = basename(dirname(__DIR__));
+$moduleDirNameUpper = mb_strtoupper($moduleDirName);
+$helper = Helper::getInstance();
+$helper->loadLanguage('common');
+$helper->loadLanguage('feedback');
+$pathIcon32 = Admin::menuIconPath('');
+if (is_object($helper->getModule())) {
+    //    $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
+    $pathModIcon32 = $helper->url($helper->getModule()->getInfo('modicons32'));
 }
-include_once $fileinc;
-
-//$adminmenu = array();
-
-$adminmenu[] = array(
-    'title' => _AM_MODULEADMIN_HOME,
+$adminmenu[] = [
+    'title' => _MI_MARQUEE_HOME,
     'link'  => 'admin/index.php',
-    'icon'  => $pathIcon32 . '/home.png');
-
-$adminmenu[] = array(
+    'icon'  => $pathIcon32 . '/home.png',
+];
+$adminmenu[] = [
     'title' => _MI_MARQUEE_MENU_01,
     'link'  => 'admin/main.php',
-    'icon'  => $pathIcon32 . '/marquee.png');
-
-$adminmenu[] = array(
-    'title' => _AM_MODULEADMIN_ABOUT,
+    'icon'  => $pathIcon32 . '/marquee.png',
+];
+// Blocks Admin
+$adminmenu[] = [
+    'title' => constant('CO_' . $moduleDirNameUpper . '_' . 'BLOCKS'),
+    'link'  => 'admin/blocksadmin.php',
+    'icon'  => $pathIcon32 . '/block.png',
+];
+if (is_object($helper->getModule()) && $helper->getConfig('displayDeveloperTools')) {
+    $adminmenu[] = [
+        'title' => constant('CO_' . $moduleDirNameUpper . '_' . 'ADMENU_MIGRATE'),
+        'link'  => 'admin/migrate.php',
+        'icon'  => $pathIcon32 . '/database_go.png',
+    ];
+}
+$adminmenu[] = [
+    'title' => _MI_MARQUEE_ABOUT,
     'link'  => 'admin/about.php',
-    'icon'  => $pathIcon32 . '/about.png');
+    'icon'  => $pathIcon32 . '/about.png',
+];

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xml:lang="en" lang="en">
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost/xtest251/" />
@@ -12,44 +12,44 @@
 <tr><td rowspan="1" colspan="3">Add Block and view Marquee</td></tr>
 </thead><tbody>
 <tr>
-	<td>open</td>
-	<td>/xtest251/modules/marquee/admin/main.php</td>
-	<td></td>
+    <td>open</td>
+    <td>/xtest251/modules/marquee/admin/main.php</td>
+    <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='buttontop_mod']/table/tbody/tr/td[1]/a[3]</td>
-	<td></td>
+    <td>clickAndWait</td>
+    <td>//div[@id='buttontop_mod']/table/tbody/tr/td[1]/a[3]</td>
+    <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>img36</td>
-	<td></td>
+    <td>click</td>
+    <td>img36</td>
+    <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='blk_36']/div[2]/a[1]/img</td>
-	<td></td>
+    <td>clickAndWait</td>
+    <td>//div[@id='blk_36']/div[2]/a[1]/img</td>
+    <td></td>
 </tr>
 <tr>
-	<td>removeSelection</td>
-	<td>modules</td>
-	<td>label=Top Page</td>
+    <td>removeSelection</td>
+    <td>modules</td>
+    <td>label=Top Page</td>
 </tr>
 <tr>
-	<td>addSelection</td>
-	<td>modules</td>
-	<td>label=All Pages</td>
+    <td>addSelection</td>
+    <td>modules</td>
+    <td>label=All Pages</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>submitblock</td>
-	<td></td>
+    <td>clickAndWait</td>
+    <td>submitblock</td>
+    <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//img[@alt='XOOPS Site']</td>
-	<td></td>
+    <td>clickAndWait</td>
+    <td>//img[@alt='XOOPS Site']</td>
+    <td></td>
 </tr>
 
 </tbody></table>

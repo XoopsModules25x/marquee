@@ -16,44 +16,42 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  *
  * @param $limit
- * @param $dateformat
- * @param $itemssize
+ * @param $dateFormat
+ * @param $itemsSize
  *
  * @return array
  */
 
 // Script to list recent clients from the smartclient module (tested with smartclient 1.02)
-function b_marquee_smartclient($limit, $dateformat, $itemssize)
+function b_marquee_smartclient($limit, $dateFormat, $itemsSize)
 {
-    $block = array();
+    $block = [];
     if (!defined('SMARTCLIENT_DIRNAME')) {
         define('SMARTCLIENT_DIRNAME', 'smartclient');
     }
-    include_once(XOOPS_ROOT_PATH . '/modules/' . SMARTCLIENT_DIRNAME . '/include/common.php');
-
+    require_once XOOPS_ROOT_PATH . '/modules/' . SMARTCLIENT_DIRNAME . '/include/common.php';
     // Creating the client handler object
-    $client_handler =& smartclient_gethandler('client');
-
-    $clientsObj =& $client_handler->getClients($limit, 0, _SCLIENT_STATUS_ACTIVE, 'title', 'ASC');
+    $clientHandler = smartclient_gethandler('client');
+    $clientsObj = $clientHandler->getClients($limit, 0, _SCLIENT_STATUS_ACTIVE, 'title', 'ASC');
     if ($clientsObj) {
-        for ($i = 0; $i < count($clientsObj); ++$i) {
-            if ($itemssize > 0) {
-                $title = xoops_substr($clientsObj[$i]->title(), 0, $itemssize);
+        for ($i = 0, $iMax = count($clientsObj); $i < $iMax; ++$i) {
+            if ($itemsSize > 0) {
+                $title = xoops_substr($clientsObj[$i]->title(), 0, $itemsSize);
             } else {
                 $title = $clientsObj[$i]->title();
             }
-            $block[] = array(
+            $block[] = [
                 'date'     => '',
                 'category' => '',
                 'author'   => '',
                 'title'    => $title,
-                'link'     => "<a href='" . XOOPS_URL . '/modules/smartclient/client.php?id=' . $clientsObj[$i]->id() . "'>" . $title . '</a>');
+                'link'     => "<a href='" . XOOPS_URL . '/modules/smartclient/client.php?id=' . $clientsObj[$i]->id() . "'>" . $title . '</a>',
+            ];
         }
     }
-
     return $block;
 }

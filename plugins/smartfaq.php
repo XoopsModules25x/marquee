@@ -1,4 +1,7 @@
 <?php
+
+use XoopsModules\Smartfaq\Helper;
+
 /**
  * ****************************************************************************
  * marquee - MODULE FOR XOOPS
@@ -16,67 +19,64 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  *
  * @param $limit
- * @param $dateformat
- * @param $itemssize
+ * @param $dateFormat
+ * @param $itemsSize
  *
  * @return array
  */
 
 // Script to list recent FAQ from the smartfaq module (tested with smartfaq 1.04)
-function b_marquee_smartfaq($limit, $dateformat, $itemssize)
+function b_marquee_smartfaq($limit, $dateFormat, $itemsSize)
 {
-    include_once(XOOPS_ROOT_PATH . '/modules/smartfaq/include/functions.php');
-    $block = array();
-
-    $smartModule       =& sf_getModuleInfo();
-    $smartModuleConfig =& sf_getModuleConfig();
-
+    require_once XOOPS_ROOT_PATH . '/modules/smartfaq/include/functions.php';
+    $block = [];
+    $smartModule       = &sf_getModuleInfo();
+    $smartModuleConfig = &sf_getModuleConfig();
     $categoryid        = -1;
     $sort              = 'datesub';
     $maxQuestionLength = 99999;
-    if ($itemssize > 0) {
-        $maxQuestionLength = $itemssize;
+    if ($itemsSize > 0) {
+        $maxQuestionLength = $itemsSize;
     }
-
     // Creating the faq handler object
-    $faq_handler =& sf_gethandler('faq');
-
+    /** @var \XoopsModules\Smartfaq\FaqHandler $faqHandler */
+    $faqHandler = Helper::getInstance()->getHandler('Faq');
     // Creating the category handler object
-    $category_handler =& sf_gethandler('category');
-
+    /** @var \XoopsModules\Smartfaq\CategoryHandler $categoryHandler */
+    $categoryHandler = Helper::getInstance()->getHandler('Category');
     // Creating the last FAQs
-    $faqsObj       = $faq_handler->getAllPublished($limit, 0, $categoryid, $sort);
-    $allcategories = $category_handler->getObjects(null, true);
+    $faqsObj       = $faqHandler->getAllPublished($limit, 0, $categoryid, $sort);
+    $allcategories = $categoryHandler->getObjects(null, true);
     if ($faqsObj) {
-        $userids = array();
+        $userids = $faqids = [];
         foreach ($faqsObj as $key => $thisfaq) {
             $faqids[]                 = $thisfaq->getVar('faqid');
             $userids[$thisfaq->uid()] = 1;
         }
-        $answer_handler =& sf_gethandler('answer');
-        $allanswers     = $answer_handler->getLastPublishedByFaq($faqids);
-
+        /** @var \XoopsModules\Smartfaq\AnswerHandler $answerHandler */
+        $answerHandler = Helper::getInstance()->getHandler('Answer');
+        $allanswers    = $answerHandler->getLastPublishedByFaq($faqids);
         foreach ($allanswers as $key => $thisanswer) {
             $userids[$thisanswer->uid()] = 1;
         }
-
-        $member_handler = xoops_getHandler('member');
-        $users          = $member_handler->getUsers(new Criteria('uid', '(' . implode(',', array_keys($userids)) . ')', 'IN'), true);
-        for ($i = 0; $i < count($faqsObj); ++$i) {
-            $answerObj =& $allanswers[$faqsObj[$i]->faqid()];
+        /** @var \XoopsMemberHandler $memberHandler */
+        $memberHandler = xoops_getHandler('member');
+        $users         = $memberHandler->getUsers(new \Criteria('uid', '(' . implode(',', array_keys($userids)) . ')', 'IN'), true);
+        for ($i = 0, $iMax = count($faqsObj); $i < $iMax; ++$i) {
+            $answerObj = $allanswers[$faqsObj[$i]->faqid()];
             $title     = $faqsObj[$i]->question($maxQuestionLength);
-            $block[]   = array(
+            $block[]   = [
                 'date'     => $faqsObj[$i]->datesub(),
                 'category' => $allcategories[$faqsObj[$i]->categoryid()]->getVar('name'),
                 'author'   => sf_getLinkedUnameFromId($answerObj->uid(), $smartModuleConfig['userealname'], $users),
                 'title'    => $title,
-                'link'     => "<a href='" . XOOPS_URL . '/modules/smartfaq/faq.php?faqid=' . $faqsObj[$i]->faqid() . "'>" . $title . '</a>');
+                'link'     => "<a href='" . XOOPS_URL . '/modules/smartfaq/faq.php?faqid=' . $faqsObj[$i]->faqid() . "'>" . $title . '</a>',
+            ];
         }
     }
-
     return $block;
 }

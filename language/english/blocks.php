@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ****************************************************************************
  * marquee - MODULE FOR XOOPS
@@ -16,7 +17,7 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  */
 define('_MB_MARQUEE_SELECT', 'Select the marquee to use');

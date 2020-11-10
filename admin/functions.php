@@ -16,18 +16,16 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  *
  * @param int    $currentoption
  * @param string $breadcrumb
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
-
 function marquee_adminmenu($currentoption = 0, $breadcrumb = '')
 {
-    ///*    include_once XOOPS_ROOT_PATH.'/modules/marquee/include/functions.php';
+    ///*    require_once XOOPS_ROOT_PATH.'/modules/marquee/class/Utility.php';
     //
     //  /* Nice buttons styles */
     //  echo "
@@ -56,9 +54,9 @@ function marquee_adminmenu($currentoption = 0, $breadcrumb = '')
     //  }
     //
     //  if (file_exists(XOOPS_ROOT_PATH . '/modules/marquee/language/' . $xoopsConfig['language'] . '/modinfo.php')) {
-    //      include_once XOOPS_ROOT_PATH. '/modules/marquee/language/' . $xoopsConfig['language'] . '/modinfo.php';
+    //      require_once XOOPS_ROOT_PATH. '/modules/marquee/language/' . $xoopsConfig['language'] . '/modinfo.php';
     //  } else {
-    //      include_once XOOPS_ROOT_PATH . '/modules/marquee/language/english/modinfo.php';
+    //      require_once XOOPS_ROOT_PATH . '/modules/marquee/language/english/modinfo.php';
     //  }
     //
     //  echo "<div id='buttontop'>";
@@ -72,7 +70,7 @@ function marquee_adminmenu($currentoption = 0, $breadcrumb = '')
     //  echo "<ul>";
     //  echo "<li id='" . $tblColors[0] . "'><a href=\"index.php\"\"><span>"._MI_MARQUEE_MENU_01 ."</span></a></li>\n";
     //  echo "</ul></div>";
-    //  echo "<br /><br /><pre>&nbsp;</pre><pre>&nbsp;</pre><br />";*/
+    //  echo "<br><br><pre>&nbsp;</pre><pre>&nbsp;</pre><br>";*/
 }
 
 /**
@@ -80,33 +78,37 @@ function marquee_adminmenu($currentoption = 0, $breadcrumb = '')
  *
  * Some hosts have disabled the Php glob() function, that's why this function exists
  *
- * @package          Marquee
- * @author           Hervé Thouzard (http://www.herve-thouzard.com)
- * @copyright    (c) Hervé Thouzard
- *
  * @param string $folder  Folder where you want to grab files from (terminated with a slash)
  * @param string $pattern Pattern used to filter files
  *
  * @return array Files that match the pattern in the selected folder
+ * @throws \Exception
+ * @author           Hervé Thouzard (http://www.herve-thouzard.com)
+ * @copyright    (c) Hervé Thouzard
+ *
+ * @package          Marquee
  */
 function myglob($folder = '', $pattern = 'php')
 {
-    $result = array();
-    if ($dir = @opendir($folder)) {
-        while (($file = readdir($dir)) !== false) {
+    $result = [];
+    try {
+        if (!($dir = opendir($folder))) {
+            throw new \RuntimeException('Error, impossible to open the folder ' . $folder);
+        }
+        while (false !== ($file = readdir($dir))) {
             if (!is_dir($file)) {
                 $ext       = basename($file);
                 $ext       = explode('.', $ext);
-                $extension = strtolower($ext[count($ext) - 1]);
-                if ($extension == $pattern) {
+                $extension = mb_strtolower($ext[count($ext) - 1]);
+                if ($extension === $pattern) {
                     $result[] = $file;
                 }
             }
         }
         closedir($dir);
-    } else {
-        echo 'Error, impossible to open the folder ' . $folder;
+        return $result;
+    } catch (\Exception $e) {
+        //        echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
+        throw $e;
     }
-
-    return $result;
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ****************************************************************************
  * marquee - MODULE FOR XOOPS
@@ -16,10 +17,9 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  */
-
 define('_EXT_MARQUEE_ALTWMP', 'Add a marquee from Marquee module');
 define('_EXT_MARQUEE_TEXTID', "Marquee's Id you want to display");
 define('_EXT_MARQUEE_TEXTTITLE', 'Enter marquee title');

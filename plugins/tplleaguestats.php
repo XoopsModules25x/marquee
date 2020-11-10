@@ -16,12 +16,12 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  *
  * @param $limit
- * @param $dateformat
- * @param $itemssize
+ * @param $dateFormat
+ * @param $itemsSize
  *
  * @return array
  */
@@ -30,34 +30,29 @@
 //  TplLeagueStats plugin for Marquee 2.4                                    //
 //  written by Defkon1 [defkon1 at gmail dot com]                            //
 //  ------------------------------------------------------------------------ //
-
-function b_marquee_tplleaguestats($limit, $dateformat, $itemssize)
+function b_marquee_tplleaguestats($limit, $dateFormat, $itemsSize)
 {
-    include_once XOOPS_ROOT_PATH . '/modules/marquee/include/functions.php';
-
+    //    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     //######################## SETTINGS ######################
-    $display_season_name      = false; // display season name?
-    $hour                     = 1; // GMT+1  -> var = 1
-    $use_itemsize             = false; // use marquee $itemsize value?
-    $overwrite_limit_settings = true; // overwrite marquee's limit settings?
-    $new_limit                = 6; // new limit (valid only if
+    $displaySeason  = false; // display season name?
+    $hour           = 1; // GMT+1  -> var = 1
+    $useItemSize    = false; // use marquee $itemsize value?
+    $overwriteLimit = true; // overwrite marquee's limit settings?
+    $newLimit       = 6; // new limit (valid only if
     //     overwrite_limit_settings = true)
-    $overwrite_dateformat_settings = true; // overwrite marquee's dateformat?
-    $new_dateformat                = 'd/m/Y'; // new dateformat (valid only if
+    $overwriteDateformat = true; // overwrite marquee's dateformat?
+    $newDateformat       = 'd/m/Y'; // new dateformat (valid only if
     //     overwrite_dateformat_settings=true)
     //######################## SETTINGS ######################
-
     global $xoopsDB;
-
-    if ($overwrite_limit_settings) {
-        $limit = $new_limit;
+    if ($overwriteLimit) {
+        $limit = $newLimit;
     }
-    if ($overwrite_dateformat_settings) {
-        $dateformat = $new_dateformat;
+    if ($overwriteDateformat) {
+        $dateFormat = $newDateformat;
     }
-
-    $block  = array();
-    $myts   = MyTextSanitizer::getInstance();
+    $block  = [];
+    $myts   = \MyTextSanitizer::getInstance();
     $sql    = 'SELECT H.OpponentName as home, A.OpponentName as away, M.LeagueMatchHomeGoals as home_p, M.LeagueMatchAwayGoals as away_p,
                   M.LeagueMatchDate as date, S.SeasonName as season
            FROM ' . $xoopsDB->prefix('tplls_leaguematches') . ' M
@@ -67,28 +62,23 @@ function b_marquee_tplleaguestats($limit, $dateformat, $itemssize)
            ORDER BY M.LeagueMatchDate DESC
            LIMIT 0,$limit";
     $result = $xoopsDB->query($sql);
-    while ($myrow = $xoopsDB->fetchArray($result)) {
+    while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $title = $myts->htmlSpecialChars($myrow['home']) . ' - ' . $myts->htmlSpecialChars($myrow['away']) . ' ' . $myts->htmlSpecialChars($myrow['home_p']) . '-' . $myts->htmlSpecialChars($myrow['away_p']);
-
-        if ($use_itemsize && $itemssize > 0) {            
-                $title = xoops_substr($title, 0, $itemssize + 3);          
+        if ($useItemSize && $itemsSize > 0) {
+            $title = xoops_substr($title, 0, $itemsSize + 3);
         }
-
-        $arr_date = explode('-', $myrow['date']);
-
+        $arrDate = explode('-', $myrow['date']);
         $season = '';
-
-        if ($display_season_name) {
+        if ($displaySeason) {
             $season = $myrow['season'];
         }
-
-        $block[] = array(
-            'date'     => formatTimestamp(mktime($hour, 0, 0, $arr_date[1], $arr_date[2], $arr_date[0]), $dateformat),
+        $block[] = [
+            'date'     => formatTimestamp(mktime($hour, 0, 0, $arrDate[1], $arrDate[2], $arrDate[0]), $dateFormat),
             'category' => $season,
             'author'   => '',
             'title'    => $title,
-            'link'     => "<a href=\"" . XOOPS_URL . "/modules/tplleaguestats\">" . $title . '</a>');
+            'link'     => '<a href="' . XOOPS_URL . '/modules/tplleaguestats">' . $title . '</a>',
+        ];
     }
-
     return $block;
 }

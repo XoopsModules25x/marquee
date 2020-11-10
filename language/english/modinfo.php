@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ****************************************************************************
  * marquee - MODULE FOR XOOPS
@@ -16,7 +17,7 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  */
 define('_MI_MARQUEE_NAME', 'Marquee');
@@ -33,14 +34,29 @@ define('_MI_MARQUEE_MENU_01', 'Manage marquees');
 define('_MI_MARQUEE_USE_KIOVI', 'Use kiovi?');
 define('_MI_MARQUEE_USE_KIOVI_DESC', 'If it is detected then Kiovi will be used');
 define('_MI_MARQUEE_METHOD', 'Method to use');
-define('_MI_MARQUEE_METHOD_DESC', "If you select the 'Marquee' method then the module will use the html marquee's tag, this method is not compatible with all navigators but offers many options.<br>If you select the 'dhtml' method, then the marquee should run with more navigators but it will require more code in your page and you will have less options");
+define(
+    '_MI_MARQUEE_METHOD_DESC',
+    "If you select the 'Marquee' method then the module will use the html marquee's tag, this method is not compatible with all navigators but offers many options.<br>If you select the 'dhtml' method, then the marquee should run with more navigators but it will require_once more code in your page and you will have less options"
+);
 define('_MI_MARQUEE_MARQUEE', 'Marquee');
 define('_MI_MARQUEE_DHTML', 'Javascript');
 define('_MI_MARQUEE_DATEFORMAT', "Date's format");
-define('_MI_MARQUEE_DATEFORMAT_DESC', "Please refer to the Php documentation (http://fr.php.net/manual/en/function.date.php) for more information on how to select the format. Note, if you don't type anything then the default date's format will be used");
+define('_MI_MARQUEE_DATEFORMAT_DESC', "Please refer to the Php documentation (http://php.net/manual/en/function.date.php) for more information on how to select the format. Note, if you don't type anything then the default date's format will be used");
 define('_MI_MARQUE_ITEMSCOUNT', 'Items count');
 define('_MI_MARQUE_ITEMSCOUNT_DESC', 'When you select to use the content of another module (and not a fixed text) to create Marquees, this is the number of items to list');
 define('_MI_MARQUE_TITLELENGTH', 'Titles length');
 define('_MI_MARQUE_TITLELENGTH_DESC', 'Define the maximum length for the items titles (0=no limit)');
-
 define('_MI_MARQUEE_TEXT_EDITOR', 'Text editor to use');
+//2.50
+//Help
+define('_MI_MARQUEE_DIRNAME', basename(dirname(__DIR__, 2)));
+define('_MI_MARQUEE_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
+define('_MI_MARQUEE_BACK_2_ADMIN', 'Back to Administration of ');
+define('_MI_MARQUEE_OVERVIEW', 'Overview');
+//define('_MI_MARQUEE_HELP_DIR', __DIR__);
+//help multi-page
+define('_MI_MARQUEE_DISCLAIMER', 'Disclaimer');
+define('_MI_MARQUEE_LICENSE', 'License');
+define('_MI_MARQUEE_SUPPORT', 'Support');
+define('_MI_MARQUEE_HOME', 'Home');
+define('_MI_MARQUEE_ABOUT', 'About');

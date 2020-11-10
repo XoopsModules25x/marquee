@@ -1,8 +1,3 @@
-/*
- * $Id: xbMarquee.js,v 1.21 2003/09/14 21:22:26 bc6ix Exp $
- *
- */
-
 /* ***** BEGIN LICENSE BLOCK *****
  * The contents of this file are subject to the Mozilla Public License Version
  * 1.1 (the "License"); you may not use this file except in compliance with
@@ -54,28 +49,24 @@ function XbMarquee(id, height, width, scrollAmount, scrollDelay, direction, beha
     this.html = html;
     this.isHorizontal = ('up,down'.indexOf(this.direction) == -1);
 
-    if (typeof(height) == 'number') {
+    if (typeof (height) == 'number') {
         this.height = height;
         this.heightUnit = 'px';
-    }
-    else if (typeof(height) == 'string') {
+    } else if (typeof (height) == 'string') {
         this.height = parseInt('0' + height, 10);
         this.heightUnit = height.toLowerCase().replace(/^[0-9]+/, '');
-    }
-    else {
+    } else {
         this.height = 100;
         this.heightUnit = 'px';
     }
 
-    if (typeof(width) == 'number') {
+    if (typeof (width) == 'number') {
         this.width = width;
         this.widthUnit = 'px';
-    }
-    else if (typeof(width) == 'string') {
+    } else if (typeof (width) == 'string') {
         this.width = parseInt('0' + width, 10);
         this.widthUnit = width.toLowerCase().replace(/^[0-9]+/, '');
-    }
-    else {
+    } else {
         this.width = 100;
         this.widthUnit = 'px';
     }
@@ -97,8 +88,7 @@ function XbMarquee(id, height, width, scrollAmount, scrollDelay, direction, beha
             'clip="' + width + ', ' + height + '" ' +
             '>' +
             '<\/ilayer>';
-    }
-    else if (document.body && typeof(document.body.innerHTML) != 'string') {
+    } else if (document.body && typeof (document.body.innerHTML) != 'string') {
         markup = '<div id="' + this.id + 'container" name="' + this.id + 'container" ' +
             'style="position: relative; overflow: scroll; ' +
             'height: ' + this.height + this.heightUnit + '; ' +
@@ -113,8 +103,7 @@ function XbMarquee(id, height, width, scrollAmount, scrollDelay, direction, beha
             (this.isHorizontal ? '<\/nobr>' : '') +
             '<\/div>' +
             '<\/div>';
-    }
-    else {
+    } else {
         markup = '<div id="' + this.id + 'container" name="' +
             this.id + 'container" ' +
             'style="position: relative; overflow: hidden; ' +
@@ -140,24 +129,22 @@ XbMarquee._getInnerSize = function (elm, propName) {
     if (document.layers) {
         // navigator 4
         val = elm.document[propName];
-    }
-    else if (elm.style && typeof(elm.style[propName]) == 'number') {
+    } else if (elm.style && typeof (elm.style[propName]) == 'number') {
         // opera
         // bug in Opera 6 width/offsetWidth. Use clientWidth
-        if (propName == 'width' && typeof(elm.clientWidth) == 'number')
+        if (propName == 'width' && typeof (elm.clientWidth) == 'number')
             val = elm.clientWidth;
         else
             val = elm.style[propName];
-    }
-    else {
+    } else {
         //mozilla and IE
         switch (propName) {
             case 'height':
-                if (typeof(elm.offsetHeight) == 'number')
+                if (typeof (elm.offsetHeight) == 'number')
                     val = elm.offsetHeight;
                 break;
             case 'width':
-                if (typeof(elm.offsetWidth) == 'number')
+                if (typeof (elm.offsetWidth) == 'number')
                     val = elm.offsetWidth;
                 break;
         }
@@ -171,8 +158,7 @@ XbMarquee.getElm = function (id) {
     var elm = null;
     if (document.getElementById) {
         elm = document.getElementById(id);
-    }
-    else {
+    } else {
         elm = document.all[id];
     }
     return elm;
@@ -215,7 +201,7 @@ XbMarquee.prototype.start = function () {
         if (!document.layers) {
             this.containerDiv = XbMarquee.getElm(this.id + 'container');
 
-            if (typeof(this.containerDiv.innerHTML) != 'string') {
+            if (typeof (this.containerDiv.innerHTML) != 'string') {
                 return;
             }
 
@@ -228,8 +214,8 @@ XbMarquee.prototype.start = function () {
                 parentNode = this.containerDiv.parentElement;
 
             if (parentNode &&
-                typeof(parentNode.offsetHeight) == 'number' &&
-                typeof(parentNode.offsetWidth) == 'number') {
+                typeof (parentNode.offsetHeight) == 'number' &&
+                typeof (parentNode.offsetWidth) == 'number') {
                 if (this.heightUnit == '%') {
                     this.containerDiv.style.height =
                         parentNode.offsetHeight * (this.height / 100) + 'px';
@@ -258,8 +244,7 @@ XbMarquee.prototype.start = function () {
             this.div = XbMarquee.getElm(this.id);
             this.styleObj = this.div.style;
 
-        }
-        else /* if (document.layers) */
+        } else /* if (document.layers) */
         {
             this.containerDiv = document.layers[this.id + 'container'];
             markup =
@@ -351,8 +336,7 @@ XbMarquee.prototype.start = function () {
             var temp = this.stopAt;
             this.stopAt = this.startAt;
             this.startAt = temp;
-        }
-        else {
+        } else {
             // fire start when position is a start
             if (this.onstart) {
                 this.onstart();
@@ -385,7 +369,7 @@ XbMarquee.prototype.stop = function () {
 };
 
 XbMarquee.prototype.setInnerHTML = function (html) {
-    if (typeof(this.div.innerHTML) != 'string') {
+    if (typeof (this.div.innerHTML) != 'string') {
         return;
     }
 
@@ -412,8 +396,7 @@ if (document.layers) {
     XbMarquee.prototype._setTop = function (top) {
         this.styleObj.top = top;
     };
-}
-else {
+} else {
     XbMarquee.prototype._setLeft = function (left) {
         this.styleObj.left = left + 'px';
     };

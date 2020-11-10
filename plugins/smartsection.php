@@ -16,46 +16,45 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  *
  * @param $limit
- * @param $dateformat
- * @param $itemssize
+ * @param $dateFormat
+ * @param $itemsSize
  *
  * @return array
  */
 
 // Script to list recent articles from the Smartsection module (tested with Smartsection 2.1)
-function b_marquee_smartsection($limit, $dateformat, $itemssize)
+function b_marquee_smartsection($limit, $dateFormat, $itemsSize)
 {
-    include_once XOOPS_ROOT_PATH . '/modules/smartsection/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/smartsection/include/common.php';
     xoops_load('xoopsuserutility');
-    $myts        = &MyTextSanitizer::getInstance();
-    $smartModule =& smartsection_getModuleInfo();
-    $block       = array();
+    $myts        = \MyTextSanitizer::getInstance();
+    $smartModule = smartsection_getModuleInfo();
+    $block       = [];
     $categoryid  = -1;
     $sort        = 'datesub';
     $order       = smartsection_getOrderBy($sort);
-
-    $smartsection_item_handler =& smartsection_gethandler('item');
-    $itemsObj                  = $smartsection_item_handler->getAllPublished($limit, 0, $categoryid, $sort, $order);
-    $totalItems                = count($itemsObj);
+    $smartsectionItemHandler = smartsection_gethandler('item');
+    $itemsObj                = $smartsectionItemHandler->getAllPublished($limit, 0, $categoryid, $sort, $order);
+    $totalItems              = count($itemsObj);
     if ($itemsObj) {
         for ($i = 0; $i < $totalItems; ++$i) {
-            if ($itemssize > 0) {
-                $title = xoops_substr($itemsObj[$i]->title(), 0, $itemssize + 3);
+            if ($itemsSize > 0) {
+                $title = xoops_substr($itemsObj[$i]->title(), 0, $itemsSize + 3);
             } else {
                 $title = $itemsObj[$i]->title();
             }
-            $block[] = array(
+            $block[] = [
                 'date'     => $itemsObj[$i]->datesub(),
                 'category' => $itemsObj[$i]->getCategoryName(),
-                'author'   => XoopsUserUtility::getUnameFromId($itemsObj[$i]->uid()),
+                'author'   => \XoopsUserUtility::getUnameFromId($itemsObj[$i]->uid()),
                 'title'    => $title,
-                'link'     => "<a href='" . XOOPS_URL . '/modules/smartsection/item.php?itemid=' . $itemsObj[$i]->itemid() . "'>" . $title . '</a>');
+                'link'     => "<a href='" . XOOPS_URL . '/modules/smartsection/item.php?itemid=' . $itemsObj[$i]->itemid() . "'>" . $title . '</a>',
+            ];
         }
     }
-
     return $block;
 }

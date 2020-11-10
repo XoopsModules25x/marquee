@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ****************************************************************************
  * marquee - MODULE FOR XOOPS
@@ -16,7 +17,7 @@
  * @package           marquee
  * @author            Hervé Thouzard (http://www.herve-thouzard.com)
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  */
 define('_AM_MARQUEE_CONFIG', 'Marquees Configuration');
@@ -51,16 +52,23 @@ define('_AM_MARQUEE_ADDED_OK', 'The marquee has been successfully added');
 define('_AM_MARQUEE_DBUPDATED', 'The database has been sucesfully updated');
 define('_AM_MARQUEE_RUSUREDEL', 'Are you sure you want to delete this item?');
 define('_AM_MARQUEE_UPDATE', 'Update');
-define('_AM_MARQUEE_BGCOLOR', "Background color <br />(don't forget to put a #<br /> if you specify a color code)");
+define('_AM_MARQUEE_BGCOLOR', "Background color <br>(don't forget to put a #<br> if you specify a color code)");
 define('_AM_MARQUEE_WIDTH', 'Width (in pixels or percent)');
 define('_AM_MARQUEE_HEIGHT', 'Height (in pixels)');
 define('_AM_MARQUEE_SCRAMOUNT', 'Scroll amount');
 define('_AM_MARQUEE_HSPACE', 'Horizontal space (in pixels)');
 define('_AM_MARQUEE_VSPACE', 'Vertical space (in pixels)');
-define('_AM_MARQUEE_SCRDELAY', 'Delay between<br />two moves in milliseconds');
+define('_AM_MARQUEE_SCRDELAY', 'Delay between<br>two moves in milliseconds');
 define('_AM_MARQUEE_ERROR_MODIFY_DB', 'Error while updating the database');
 define('_AM_MARQUEE_SOURCE', "Content's source");
 define('_AM_MARQUEE_SOURCE_FIXED', 'A fixed text');
-
 //2.4.8
 define('_AM_MARQUEE_BGCOLOR_SHORT', 'Background color');
+//2.50
+define('_AM_MARQUEE_UPGRADEFAILED0', "Update failed - couldn't rename field '%s'");
+define('_AM_MARQUEE_UPGRADEFAILED1', "Update failed - couldn't add new fields");
+define('_AM_MARQUEE_UPGRADEFAILED2', "Update failed - couldn't rename table '%s'");
+define('_AM_MARQUEE_ERROR_COLUMN', 'Could not create column in database : %s');
+define('_AM_MARQUEE_ERROR_BAD_XOOPS', 'This module requires XOOPS %s+ (%s installed)');
+define('_AM_MARQUEE_ERROR_BAD_PHP', 'This module requires PHP version %s+ (%s installed)');
+define('_AM_MARQUEE_ERROR_TAG_REMOVAL', 'Could not remove tags from Tag Module');
