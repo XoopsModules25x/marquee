@@ -1,13 +1,16 @@
 <?php
 
+use Xmf\Module\Admin;
+use XoopsModules\Marquee\Helper;
+
 require dirname(__DIR__) . '/preloads/autoloader.php';
 $moduleDirName      = basename(dirname(__DIR__));
 $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 /** @var \XoopsModules\Marquee\Helper $helper */
-$helper = \XoopsModules\Marquee\Helper::getInstance();
+$helper = Helper::getInstance();
 $helper->loadLanguage('common');
 $helper->loadLanguage('feedback');
-$pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
+$pathIcon32 = Admin::menuIconPath('');
 if (is_object($helper->getModule())) {
     //    $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
     $pathModIcon32 = $helper->url($helper->getModule()->getInfo('modicons32'));

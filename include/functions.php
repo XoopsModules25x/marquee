@@ -22,6 +22,8 @@
  * @param mixed $repmodule
  */
 
+use Xmf\Request;
+
 /**
  * Returns a module's option
  *
@@ -80,7 +82,7 @@ function marquee_getmoduleoption($option, $repmodule = 'marquee')
  */
 function marquee_isbot()
 {
-    if (\Xmf\Request::hasVar('marquee_cache_bot', 'SESSION')) {
+    if (Request::hasVar('marquee_cache_bot', 'SESSION')) {
         return $_SESSION['marquee_cache_bot'];
     }
     // Add here every bot you know separated by a pipe | (not matter with the upper or lower cases)

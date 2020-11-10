@@ -1,4 +1,7 @@
 <?php
+
+use XoopsModules\Smartfaq\Helper;
+
 /**
  * ****************************************************************************
  * marquee - MODULE FOR XOOPS
@@ -41,10 +44,10 @@ function b_marquee_smartfaq($limit, $dateFormat, $itemsSize)
     }
     // Creating the faq handler object
     /** @var \XoopsModules\Smartfaq\FaqHandler $faqHandler */
-    $faqHandler = \XoopsModules\Smartfaq\Helper::getInstance()->getHandler('Faq');
+    $faqHandler = Helper::getInstance()->getHandler('Faq');
     // Creating the category handler object
     /** @var \XoopsModules\Smartfaq\CategoryHandler $categoryHandler */
-    $categoryHandler = \XoopsModules\Smartfaq\Helper::getInstance()->getHandler('Category');
+    $categoryHandler = Helper::getInstance()->getHandler('Category');
     // Creating the last FAQs
     $faqsObj       = $faqHandler->getAllPublished($limit, 0, $categoryid, $sort);
     $allcategories = $categoryHandler->getObjects(null, true);
@@ -55,7 +58,7 @@ function b_marquee_smartfaq($limit, $dateFormat, $itemsSize)
             $userids[$thisfaq->uid()] = 1;
         }
         /** @var \XoopsModules\Smartfaq\AnswerHandler $answerHandler */
-        $answerHandler = \XoopsModules\Smartfaq\Helper::getInstance()->getHandler('Answer');
+        $answerHandler = Helper::getInstance()->getHandler('Answer');
         $allanswers    = $answerHandler->getLastPublishedByFaq($faqids);
         foreach ($allanswers as $key => $thisanswer) {
             $userids[$thisanswer->uid()] = 1;

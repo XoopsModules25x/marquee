@@ -19,6 +19,7 @@
  * ****************************************************************************
  */
 
+use Xmf\Module\Admin;
 use Xmf\Request;
 use XoopsModules\Marquee;
 
@@ -27,7 +28,7 @@ require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 require_once XOOPS_ROOT_PATH . '/modules/marquee/admin/functions.php';
 //require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
 //require_once XOOPS_ROOT_PATH . '/modules/marquee/class/marquee_utils.php';
-$adminObject = \Xmf\Module\Admin::getInstance();
+$adminObject = Admin::getInstance();
 $op = Request::getString('op', Request::getCmd('op', 'default', 'POST'), 'GET');
 // Verify that a field exists inside a mysql table
 /**
