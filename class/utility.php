@@ -218,7 +218,7 @@ class Utility extends Common\SysUtility
         $retval       = false;
         $botarray     = \explode('|', $botlist);
         foreach ($botarray as $onebot) {
-            if (false !== mb_strpos($currentagent, $onebot)) {
+            if (str_contains($currentagent, $onebot)) {
                 $retval = true;
                 break;
             }
