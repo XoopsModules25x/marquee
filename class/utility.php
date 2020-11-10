@@ -3,7 +3,6 @@
 namespace XoopsModules\Marquee;
 
 use XoopsModules\Marquee\{Common,
-    Constants,
     Helper
 };
 

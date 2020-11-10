@@ -80,7 +80,6 @@ function xoopspartners_random($numberPartners, $random = true, $orden = '', $des
     }
     if (($numrows <= $numberPartners) || (!$random)) {
         return $PartnersId;
-        //        exit();
     }
     $numberTotal  = 0;
     $totalPartner = count($PartnersId) - 1;
