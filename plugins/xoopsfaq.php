@@ -45,6 +45,5 @@ function b_marquee_xoopsfaq($limit, $dateFormat, $itemsSize)
             'link'     => "<a href='" . XOOPS_URL . '/modules/xoopsfaq/index.php?cat_id=' . $myrow['category_id'] . '#q' . $myrow['contents_id'] . "'>" . $title . '</a>',
         ];
     }
-
     return $block;
 }

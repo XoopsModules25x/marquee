@@ -30,7 +30,6 @@
 //  Article plugin for Marquee 2.4                                           //
 //  written by Defkon1 [defkon1 at gmail dot com]                            //
 //  ------------------------------------------------------------------------ //
-
 use XoopsModules\Article;
 
 /**
@@ -46,26 +45,20 @@ function b_marquee_article($limit, $dateFormat, $itemsSize)
     require_once XOOPS_ROOT_PATH . '/modules/article/include/functions.php';
     $block = [];
     $myts  = \MyTextSanitizer::getInstance();
-
     static $accessCats;
-
     $artConfig = art_load_config();
     art_define_url_delimiter();
-
     $select  = 'art_id';
     $dispTag = '';
     $from    = '';
     $where   = '';
     $order   = 'art_time_publish DESC';
-
     $select .= ', cat_id, art_title, uid, art_time_publish';
-
     if (null === $accessCats) {
         $permissionHandler = Article\Helper::getInstance()->getHandler('Permission');
         $accessCats        = $permissionHandler->getCategories('access');
     }
     $allowedCats = $accessCats;
-
     $query = "SELECT $select FROM " . art_DB_prefix('article') . $from;
     $query .= ' WHERE cat_id IN (' . implode(',', $allowedCats) . ') AND art_time_publish >0 ' . $where;
     $query .= ' ORDER BY ' . $order;
@@ -83,7 +76,6 @@ function b_marquee_article($limit, $dateFormat, $itemsSize)
         return false;
     }
     $authorName = \XoopsUser::getUnameFromId(array_keys($author));
-
     $arts           = [];
     $uids           = [];
     $cids           = [];
@@ -96,23 +88,16 @@ function b_marquee_article($limit, $dateFormat, $itemsSize)
             $_art[$tag] = @$article->getVar($tag);
         }
         $_art['author'] = $authorName[$row['uid']];
-
         $_art['date'] = $article->getTime($dateFormat);
-
         $titlelength   = $itemsSize + 3;
         $_art['title'] = xoops_substr($_art['art_title'], 0, $titlelength);
-
         $_art['category'] = '';
-
         $delimiter    = '/';
         $_art['link'] = '<a href="' . XOOPS_URL . "modules/article/view.article.php$delimiter" . $_art['art_id'] . '/c' . $_art['cat_id'] . '"><strong>' . $_art['art_title'] . '</strong></a>';
-
         $arts[] = $_art;
         unset($article, $_art);
         $cids[$row['cat_id']] = 1;
     }
-
     $block = $arts;
-
     return $block;
 }

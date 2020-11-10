@@ -30,11 +30,9 @@
 //  TplLeagueStats plugin for Marquee 2.4                                    //
 //  written by Defkon1 [defkon1 at gmail dot com]                            //
 //  ------------------------------------------------------------------------ //
-
 function b_marquee_tplleaguestats($limit, $dateFormat, $itemsSize)
 {
     //    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
-
     //######################## SETTINGS ######################
     $displaySeason  = false; // display season name?
     $hour           = 1; // GMT+1  -> var = 1
@@ -46,16 +44,13 @@ function b_marquee_tplleaguestats($limit, $dateFormat, $itemsSize)
     $newDateformat       = 'd/m/Y'; // new dateformat (valid only if
     //     overwrite_dateformat_settings=true)
     //######################## SETTINGS ######################
-
     global $xoopsDB;
-
     if ($overwriteLimit) {
         $limit = $newLimit;
     }
     if ($overwriteDateformat) {
         $dateFormat = $newDateformat;
     }
-
     $block  = [];
     $myts   = \MyTextSanitizer::getInstance();
     $sql    = 'SELECT H.OpponentName as home, A.OpponentName as away, M.LeagueMatchHomeGoals as home_p, M.LeagueMatchAwayGoals as away_p,
@@ -69,19 +64,14 @@ function b_marquee_tplleaguestats($limit, $dateFormat, $itemsSize)
     $result = $xoopsDB->query($sql);
     while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $title = $myts->htmlSpecialChars($myrow['home']) . ' - ' . $myts->htmlSpecialChars($myrow['away']) . ' ' . $myts->htmlSpecialChars($myrow['home_p']) . '-' . $myts->htmlSpecialChars($myrow['away_p']);
-
         if ($useItemSize && $itemsSize > 0) {
             $title = xoops_substr($title, 0, $itemsSize + 3);
         }
-
         $arrDate = explode('-', $myrow['date']);
-
         $season = '';
-
         if ($displaySeason) {
             $season = $myrow['season'];
         }
-
         $block[] = [
             'date'     => formatTimestamp(mktime($hour, 0, 0, $arrDate[1], $arrDate[2], $arrDate[0]), $dateFormat),
             'category' => $season,
@@ -90,6 +80,5 @@ function b_marquee_tplleaguestats($limit, $dateFormat, $itemsSize)
             'link'     => '<a href="' . XOOPS_URL . '/modules/tplleaguestats">' . $title . '</a>',
         ];
     }
-
     return $block;
 }

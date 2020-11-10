@@ -58,7 +58,6 @@ function b_marquee_show($options)
             $block['marqueecode'] = $marquee->constructMarquee($uniqid);
         }
     }
-
     return $block;
 }
 
@@ -74,7 +73,6 @@ function b_marquee_edit($options)
     $form           = "<table border='0'>";
     $form           .= '<tr><td>' . _MB_MARQUEE_SELECT . "</td><td><select name='options[0]'>" . $marqueeHandler->getHtmlMarqueesList($options[0]) . '</select></td></tr>';
     $form           .= '</table>';
-
     return $form;
 }
 
@@ -88,7 +86,6 @@ function b_marquee_custom($options)
 {
     $options = explode('|', $options);
     $block   = b_marquee_show($options);
-
     $tpl = new \XoopsTpl();
     $tpl->assign('block', $block);
     $tpl->display('db:marquee_block.tpl');

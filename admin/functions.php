@@ -23,8 +23,6 @@
  * @param string $breadcrumb
  */
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
-
 function marquee_adminmenu($currentoption = 0, $breadcrumb = '')
 {
     ///*    require_once XOOPS_ROOT_PATH.'/modules/marquee/class/Utility.php';
@@ -80,20 +78,19 @@ function marquee_adminmenu($currentoption = 0, $breadcrumb = '')
  *
  * Some hosts have disabled the Php glob() function, that's why this function exists
  *
- * @package          Marquee
- * @author           Hervé Thouzard (http://www.herve-thouzard.com)
- * @copyright    (c) Hervé Thouzard
- *
  * @param string $folder  Folder where you want to grab files from (terminated with a slash)
  * @param string $pattern Pattern used to filter files
  *
- * @throws \Exception
  * @return array Files that match the pattern in the selected folder
+ * @throws \Exception
+ * @author           Hervé Thouzard (http://www.herve-thouzard.com)
+ * @copyright    (c) Hervé Thouzard
+ *
+ * @package          Marquee
  */
 function myglob($folder = '', $pattern = 'php')
 {
     $result = [];
-
     try {
         if (!($dir = opendir($folder))) {
             throw new \RuntimeException('Error, impossible to open the folder ' . $folder);
@@ -109,10 +106,8 @@ function myglob($folder = '', $pattern = 'php')
             }
         }
         closedir($dir);
-
         return $result;
-    }
-    catch (\Exception $e) {
+    } catch (\Exception $e) {
         //        echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
         throw $e;
     }

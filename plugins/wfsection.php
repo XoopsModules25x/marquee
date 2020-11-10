@@ -31,13 +31,11 @@ function b_marquee_wfsection($limit, $dateFormat, $itemsSize)
 {
     //    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     $block = [];
-
     $myts = \MyTextSanitizer::getInstance();
     /** @var \XoopsModuleHandler $moduleHandler */
     $moduleHandler    = xoops_getHandler('module');
     $wfsection        = $moduleHandler->getByDirname('wfsection');
     $wfsectionVersion = (int)$wfsection->getInfo('version');
-
     if ($wfsectionVersion >= 2) {
     } else { // wfsection 1
         require_once XOOPS_ROOT_PATH . '/modules/wfsection/include/groupaccess.php';
@@ -65,6 +63,5 @@ function b_marquee_wfsection($limit, $dateFormat, $itemsSize)
             }
         }
     } // wfsection 1 ou 2 ?
-
     return $block;
 }

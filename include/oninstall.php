@@ -13,12 +13,11 @@ use XoopsModules\Marquee;
 
 /**
  * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team
  */
-
 /**
  * Prepares system prior to attempting to install module
  * @param \XoopsModule $module {@link XoopsModule}
@@ -32,14 +31,12 @@ function xoops_module_pre_install_marquee(\XoopsModule $module)
     $utility      = new Marquee\Utility();
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
-
     if (false !== $xoopsSuccess && false !== $phpSuccess) {
         $moduleTables = &$module->getInfo('tables');
         foreach ($moduleTables as $table) {
             $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
         }
     }
-
     return $xoopsSuccess && $phpSuccess;
 }
 
@@ -52,12 +49,8 @@ function xoops_module_pre_install_marquee(\XoopsModule $module)
 function xoops_module_install_marquee(\XoopsModule $module)
 {
     require_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
-    require_once dirname(__DIR__) . '/include/config.php';
-
     $moduleDirName = basename(dirname(__DIR__));
-
-    /** @var Marquee\Helper $helper */
-    /** @var Marquee\Utility $utility */
+    /** @var Marquee\Helper $helper */ /** @var Marquee\Utility $utility */
     /** @var Marquee\Common\Configurator $configurator */
     $helper       = Marquee\Helper::getInstance();
     $utility      = new Marquee\Utility();
@@ -65,11 +58,11 @@ function xoops_module_install_marquee(\XoopsModule $module)
     // Load language files
     $helper->loadLanguage('admin');
     $helper->loadLanguage('modinfo');
-
     // default Permission Settings ----------------------
     global $xoopsModule;
-    $moduleId         = $xoopsModule->getVar('mid');
+    $moduleId = $xoopsModule->getVar('mid');
     // $moduleId2        = $helper->getModule()->mid();
+    /** @var \XoopsGroupPermHandler $grouppermHandler */
     $grouppermHandler = xoops_getHandler('groupperm');
     // access rights ------------------------------------------
     $grouppermHandler->addRight($moduleDirName . '_approve', 1, XOOPS_GROUP_ADMIN, $moduleId);
@@ -77,14 +70,12 @@ function xoops_module_install_marquee(\XoopsModule $module)
     $grouppermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_ADMIN, $moduleId);
     $grouppermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_USERS, $moduleId);
     $grouppermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_ANONYMOUS, $moduleId);
-
     //  ---  CREATE FOLDERS ---------------
     if (count($configurator->uploadFolders) > 0) {
         foreach (array_keys($configurator->uploadFolders) as $i) {
             $utility::createFolder($configurator->uploadFolders[$i]);
         }
     }
-
     //  ---  COPY blank.png FILES ---------------
     if (count($configurator->copyBlankFiles) > 0) {
         $file = dirname(__DIR__) . '/assets/images/blank.png';
@@ -96,6 +87,5 @@ function xoops_module_install_marquee(\XoopsModule $module)
     //delete .html entries from the tpl table
     $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('tplfile') . " WHERE `tpl_module` = '" . $xoopsModule->getVar('dirname', 'n') . "' AND `tpl_file` LIKE '%.html%'";
     $GLOBALS['xoopsDB']->queryF($sql);
-
     return true;
 }

@@ -39,11 +39,8 @@ function b_marquee_smartmedia($limit, $dateFormat, $itemsSize)
         $title_length = $itemsSize;
     }
     $maxClips = $limit;
-
     $smartmediaClipHandler = smartmedia_gethandler('clip');
-
     $clipsArray = &$smartmediaClipHandler->getClipsFromAdmin(0, $maxClips, 'clips.created_date', 'DESC', 'all');
-
     if ($clipsArray) {
         foreach ($clipsArray as $clipArray) {
             $clip    = [];
@@ -57,6 +54,5 @@ function b_marquee_smartmedia($limit, $dateFormat, $itemsSize)
             unset($clip);
         }
     }
-
     return $block;
 }

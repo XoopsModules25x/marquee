@@ -37,7 +37,6 @@ function b_marquee_smartsection($limit, $dateFormat, $itemsSize)
     $categoryid  = -1;
     $sort        = 'datesub';
     $order       = smartsection_getOrderBy($sort);
-
     $smartsectionItemHandler = smartsection_gethandler('item');
     $itemsObj                = $smartsectionItemHandler->getAllPublished($limit, 0, $categoryid, $sort, $order);
     $totalItems              = count($itemsObj);
@@ -57,6 +56,5 @@ function b_marquee_smartsection($limit, $dateFormat, $itemsSize)
             ];
         }
     }
-
     return $block;
 }

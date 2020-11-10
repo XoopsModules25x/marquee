@@ -44,6 +44,7 @@ function b_marquee_catads($limit, $dateFormat, $itemsSize)
         /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $module        = $moduleHandler->getByDirname('catads');
+        /** @var \XoopsConfigHandler $configHandler */
         $configHandler = xoops_getHandler('config');
         $config        = $configHandler->getConfigsByCat(0, $module->getVar('mid'));
     } else {
@@ -59,10 +60,8 @@ function b_marquee_catads($limit, $dateFormat, $itemsSize)
     $criteria->setOrder('DESC');
     $criteria->setLimit($limit);
     $nbads = $ads_hnd->getCount($criteria);
-
     $itemArray = [];
     $catBuffer = [];
-
     if ($nbads > 0) {
         $ads  = $ads_hnd->getObjects($criteria);
         $myts = \MyTextSanitizer::getInstance();
@@ -89,6 +88,5 @@ function b_marquee_catads($limit, $dateFormat, $itemsSize)
             unset($itemArray);
         }
     }
-
     return $block;
 }

@@ -45,6 +45,5 @@ function b_marquee_xfaq($limit, $dateFormat, $itemsSize)
             'link'     => "<a href='" . XOOPS_URL . '/modules/xfaq/faq.php?faq_id=' . $myrow['faq_id'] . "'>{$title}</a>",
         ];
     }
-
     return $block;
 }

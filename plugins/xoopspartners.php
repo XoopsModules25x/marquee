@@ -34,10 +34,9 @@ function b_marquee_xoopspartners($limit, $dateFormat, $itemsSize)
     $arrayIds = [];
     $arrayIds = xoopspartners_random($limit);
     global $xoopsDB;
-
     foreach ($arrayIds as $id) {
         $result = $xoopsDB->query('SELECT id, url, image, title FROM ' . $xoopsDB->prefix('partners') . " WHERE id=$id");
-        list($id, $url, $image, $title) = $xoopsDB->fetchRow($result);
+        [$id, $url, $image, $title] = $xoopsDB->fetchRow($result);
         $origtitle = $title;
         $title     = $myts->htmlSpecialChars($title);
         if ($itemsSize > 0) {
@@ -45,7 +44,6 @@ function b_marquee_xoopspartners($limit, $dateFormat, $itemsSize)
         } else {
             $title = $myts->htmlSpecialChars($origtitle);
         }
-
         $block[] = [
             'date'     => '',
             'category' => '',
@@ -54,7 +52,6 @@ function b_marquee_xoopspartners($limit, $dateFormat, $itemsSize)
             'link'     => "<a href='" . XOOPS_URL . '/modules/xoopspartners/vpartner.php?id=' . $id . "'>" . $title . '</a>',
         ];
     }
-
     return $block;
 }
 
@@ -94,6 +91,5 @@ function xoopspartners_random($numberPartners, $random = true, $orden = '', $des
             ++$numberTotal;
         }
     }
-
     return $ArrayReturn;
 }

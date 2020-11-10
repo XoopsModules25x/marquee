@@ -34,10 +34,8 @@ function b_marquee_smartclient($limit, $dateFormat, $itemsSize)
         define('SMARTCLIENT_DIRNAME', 'smartclient');
     }
     require_once XOOPS_ROOT_PATH . '/modules/' . SMARTCLIENT_DIRNAME . '/include/common.php';
-
     // Creating the client handler object
     $clientHandler = smartclient_gethandler('client');
-
     $clientsObj = $clientHandler->getClients($limit, 0, _SCLIENT_STATUS_ACTIVE, 'title', 'ASC');
     if ($clientsObj) {
         for ($i = 0, $iMax = count($clientsObj); $i < $iMax; ++$i) {
@@ -55,6 +53,5 @@ function b_marquee_smartclient($limit, $dateFormat, $itemsSize)
             ];
         }
     }
-
     return $block;
 }

@@ -40,9 +40,9 @@ function b_marquee_news($limit, $dateFormat, $itemsSize)
     //    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     require_once XOOPS_ROOT_PATH . '/modules/news/class/class.newsstory.php';
     $block      = $stories = [];
-    $story      = new NewsStory();
+    $story      = new News\NewsStory();
     $restricted = News\Utility::getModuleOption('restrictindex', 'news');
-    $stories    = NewsStory::getAllPublished($limit, 0, $restricted, 0, 1, true, 'published');
+    $stories    = News\NewsStory::getAllPublished($limit, 0, $restricted, 0, 1, true, 'published');
     if (count($stories) > 0) {
         foreach ($stories as $onestory) {
             if ($itemsSize > 0) {
@@ -50,7 +50,6 @@ function b_marquee_news($limit, $dateFormat, $itemsSize)
             } else {
                 $title = $onestory->title();
             }
-
             $block[] = [
                 'date'     => formatTimestamp($onestory->published(), $dateFormat),
                 'category' => $onestory->topic_title(),
@@ -60,6 +59,5 @@ function b_marquee_news($limit, $dateFormat, $itemsSize)
             ];
         }
     }
-
     return $block;
 }

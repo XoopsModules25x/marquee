@@ -37,25 +37,21 @@ function b_marquee_newbb($limit, $dateFormat, $itemsSize)
 {
     //    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     $block = [];
-
     /** @var \XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
     $newbb         = $moduleHandler->getByDirname('newbb');
     $newbbVersion  = (int)$newbb->getInfo('version');
-
     if ($newbbVersion >= 2) {
         $order        = 't.topic_time';
         $forumHandler = Newbb\Helper::getInstance()->getHandler('Forum');
         /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $newbb         = $moduleHandler->getByDirname('newbb');
-
         if (null === $newbbConfig) {
             /** @var \XoopsConfigHandler $configHandler */
             $configHandler = xoops_getHandler('config');
             $newbbConfig   = $configHandler->getConfigsByCat(0, $newbb->getVar('mid'));
         }
-
         if (null === $access_forums) {
             $access_forums = $forumHandler->getForums(0, 'access'); // get all accessible forums
         }
@@ -90,13 +86,11 @@ function b_marquee_newbb($limit, $dateFormat, $itemsSize)
             return false;
         }
         $myts = \MyTextSanitizer::getInstance();
-
         foreach ($rows as $arr) {
             $title = $myts->htmlSpecialChars($arr['topic_title']);
             if ($itemsSize > 0) {
                 $title = xoops_substr($title, 0, $itemsSize + 3);
             }
-
             $block[] = [
                 'date'     => formatTimestamp($arr['topic_time'], $dateFormat),
                 'category' => $arr['forum_name'],
@@ -130,7 +124,6 @@ function b_marquee_newbb($limit, $dateFormat, $itemsSize)
             if ($itemsSize > 0) {
                 $title = xoops_substr($title, 0, $itemsSize + 3);
             }
-
             $block[] = [
                 'date'     => $time,
                 'category' => $arr['forum_name'],
@@ -140,6 +133,5 @@ function b_marquee_newbb($limit, $dateFormat, $itemsSize)
             ];
         }
     }
-
     return $block;
 }

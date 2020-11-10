@@ -34,11 +34,9 @@ function b_marquee_smartpartner($limit, $dateFormat, $itemsSize)
         define('SMARTPARTNER_DIRNAME', 'smartpartner');
     }
     require_once XOOPS_ROOT_PATH . '/modules/' . SMARTPARTNER_DIRNAME . '/include/common.php';
-
     // Creating the partner handler object
     $smartpartnerPartnerHandler  = smartpartner_gethandler('partner');
     $smartpartnerCategoryHandler = smartpartner_gethandler('category');
-
     // Randomize
     $partnersObj = $smartpartnerPartnerHandler->getPartners(0, 0, _SPARTNER_STATUS_ACTIVE);
     if (count($partnersObj) > 1) {
@@ -55,7 +53,6 @@ function b_marquee_smartpartner($limit, $dateFormat, $itemsSize)
             $catId[] = $partnerObj->categoryid();
         }
     }
-
     if ($partnersObj) {
         foreach ($catId as $j => $jValue) {
             $categoryObj = $smartpartnerCategoryHandler->get($catId[$j]);
@@ -67,7 +64,6 @@ function b_marquee_smartpartner($limit, $dateFormat, $itemsSize)
                     } else {
                         $title = $partnersObj[$i]->title();
                     }
-
                     $block[] = [
                         'date'     => '',
                         'category' => '',
@@ -79,6 +75,5 @@ function b_marquee_smartpartner($limit, $dateFormat, $itemsSize)
             }
         }
     }
-
     return $block;
 }

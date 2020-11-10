@@ -11,7 +11,7 @@
 
 /**
  * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team
@@ -20,19 +20,14 @@
 use XoopsModules\Marquee;
 
 require_once dirname(__DIR__) . '/preloads/autoloader.php';
-
 $moduleDirName      = basename(dirname(__DIR__));
 $moduleDirNameUpper = mb_strtoupper($moduleDirName); //$capsDirName
-
 $db = \XoopsDatabaseFactory::getDatabaseConnection();
 /** @var Marquee\Helper $helper */
 $helper = Marquee\Helper::getInstance();
-
 /** @var Marquee\Utility $utility */
 $utility = new Marquee\Utility();
-
 $helper->loadLanguage('common');
-
 if (!defined($moduleDirNameUpper . '_CONSTANTS_DEFINED')) {
     define($moduleDirNameUpper . '_DIRNAME', basename(dirname(__DIR__)));
     define($moduleDirNameUpper . '_ROOT_PATH', XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/');
@@ -48,9 +43,7 @@ if (!defined($moduleDirNameUpper . '_CONSTANTS_DEFINED')) {
     define($moduleDirNameUpper . '_UPLOAD_PATH', XOOPS_UPLOAD_PATH . '/' . $moduleDirName); // WITHOUT Trailing slash
     define($moduleDirNameUpper . '_CONSTANTS_DEFINED', 1);
 }
-
 $helper->loadLanguage('common');
-
 //require_once MARQUEE_ROOT_PATH . '/class/Utility.php';
 //require_once MARQUEE_ROOT_PATH . '/include/constants.php';
 //require_once MARQUEE_ROOT_PATH . '/include/seo_functions.php';
@@ -58,12 +51,10 @@ $helper->loadLanguage('common');
 //require_once MARQUEE_ROOT_PATH . '/class/session.php';
 //require_once MARQUEE_ROOT_PATH . '/class/xoalbum.php';
 //require_once MARQUEE_ROOT_PATH . '/class/request.php';
-
 $pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
 $pathIcon32 = \Xmf\Module\Admin::iconUrl('', 32);
 //$pathModIcon16 = $helper->getModule()->getInfo('modicons16');
 //$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
-
 $icons = [
     'edit'    => "<img src='" . $pathIcon16 . "/edit.png'  alt=" . _EDIT . "' align='middle'>",
     'delete'  => "<img src='" . $pathIcon16 . "/delete.png' alt='" . _DELETE . "' align='middle'>",
@@ -75,29 +66,22 @@ $icons = [
     '0'       => "<img src='" . $pathIcon16 . "/0.png' alt='" . 0 . "' align='middle'>",
     '1'       => "<img src='" . $pathIcon16 . "/1.png' alt='" . 1 . "' align='middle'>",
 ];
-
 $debug = false;
-
 // MyTextSanitizer object
 $myts = \MyTextSanitizer::getInstance();
-
 if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof \XoopsTpl)) {
     require_once $GLOBALS['xoops']->path('class/template.php');
     $GLOBALS['xoopsTpl'] = new \XoopsTpl();
 }
-
 $GLOBALS['xoopsTpl']->assign('mod_url', XOOPS_URL . '/modules/' . $moduleDirName);
 // Local icons path
 if (is_object($helper->getModule())) {
     $pathModIcon16 = $helper->getModule()->getInfo('modicons16');
     $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
-
     $GLOBALS['xoopsTpl']->assign('pathModIcon16', XOOPS_URL . '/modules/' . $moduleDirName . '/' . $pathModIcon16);
     $GLOBALS['xoopsTpl']->assign('pathModIcon32', $pathModIcon32);
 }
-
 //module handlers
-
 ///** @var Marquee\PluginHandler $pluginHandler */
 //$pluginHandler  = $helper->getHandler('Plugin');
 //$marquee        = new Marquee\Marqueex();

@@ -45,6 +45,5 @@ function b_marquee_xoopspoll($limit, $dateFormat, $itemsSize)
             'link'     => "<a href='" . XOOPS_URL . '/modules/xoopspoll/index.php?poll_id=' . $myrow['poll_id'] . "'>" . $title . '</a>',
         ];
     }
-
     return $block;
 }

@@ -20,7 +20,7 @@
  * ****************************************************************************
  *
  * @param \XoopsModule|\XoopsObject $module
- * @param null                     $oldversion
+ * @param null                      $oldversion
  * @return mixed
  */
 
@@ -32,13 +32,11 @@
 //
 //    return true;
 //}
-
 function xoops_module_update_marquee(\XoopsObject $module, $oldversion = null)
 {
     $db  = \XoopsDatabaseFactory::getDatabaseConnection();
     $sql = 'ALTER TABLE `' . $db->prefix('marquee') . "` MODIFY `marquee_bgcolor` VARCHAR(7) NOT NULL DEFAULT '';";
     $db->query($sql);
-
     if ($oldversion < 250) {
         // delete old block html template files
         $templateDirectory = XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'n') . '/templates/blocks/';
@@ -67,8 +65,7 @@ function xoops_module_update_marquee(\XoopsObject $module, $oldversion = null)
         $folderHandler = XoopsFile::getHandler('file', $deleteFile);
         $folderHandler->delete($deleteFile);
     }
-
+    /** @var \XoopsGroupPermHandler $grouppermHandler */
     $grouppermHandler = xoops_getHandler('groupperm');
-
     return $grouppermHandler->deleteByModule($module->getVar('mid'), 'item_read');
 }

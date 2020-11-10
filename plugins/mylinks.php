@@ -46,6 +46,5 @@ function b_marquee_mylinks($limit, $dateFormat, $itemsSize)
             'link'     => "<a href='" . XOOPS_URL . '/modules/mylinks/singlelink.php?cid=' . $myrow['cid'] . '&amp;lid=' . $myrow['lid'] . "'>" . $title . '</a>',
         ];
     }
-
     return $block;
 }

@@ -20,15 +20,11 @@ namespace XoopsModules\Marquee;
  * @author             Hervé Thouzard (http://www.herve-thouzard.com)
  * ****************************************************************************
  */
-
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
-
 //require_once XOOPS_ROOT_PATH . '/kernel/object.php';
 //require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
 //if (!class_exists('MarqueePersistableObjectHandler')) {
 //    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/PersistableObjectHandler.php';
 //}
-
 //class MarqueeHandler extends MarqueePersistableObjectHandler
 
 /**
@@ -58,10 +54,9 @@ class MarqueexHandler extends \XoopsPersistableObjectHandler //MarqueePersistabl
             if ($oneMarquee->getVar('marquee_marqueeid') == $selectedmarquee) {
                 $selected = ' selected';
             }
-            $content = '' !== xoops_trim(strip_tags($oneMarquee->getVar('marquee_content'))) ? xoops_substr(strip_tags($oneMarquee->getVar('marquee_content')), 0, 50) : $oneMarquee->getVar('marquee_source');
+            $content = '' !== \xoops_trim(\strip_tags($oneMarquee->getVar('marquee_content'))) ? \xoops_substr(\strip_tags($oneMarquee->getVar('marquee_content')), 0, 50) : $oneMarquee->getVar('marquee_source');
             $ret     .= '<option ' . $selected . " value='" . $oneMarquee->getVar('marquee_marqueeid') . "'>" . $content . '</option>';
         }
-
         return $ret;
     }
 
@@ -79,7 +74,6 @@ class MarqueexHandler extends \XoopsPersistableObjectHandler //MarqueePersistabl
         $object->setVars($vars);
         $retval = $this->insert($object, $force);
         unset($object);
-
         return $retval;
     }
 }

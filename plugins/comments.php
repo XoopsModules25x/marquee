@@ -92,6 +92,5 @@ function b_marquee_comments($limit, $dateFormat, $itemsSize)
             ];
         }
     }
-
     return $block;
 }

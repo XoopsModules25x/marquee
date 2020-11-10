@@ -31,24 +31,20 @@ function b_marquee_smartfaq($limit, $dateFormat, $itemsSize)
 {
     require_once XOOPS_ROOT_PATH . '/modules/smartfaq/include/functions.php';
     $block = [];
-
     $smartModule       = &sf_getModuleInfo();
     $smartModuleConfig = &sf_getModuleConfig();
-
     $categoryid        = -1;
     $sort              = 'datesub';
     $maxQuestionLength = 99999;
     if ($itemsSize > 0) {
         $maxQuestionLength = $itemsSize;
     }
-
     // Creating the faq handler object
     /** @var \XoopsModules\Smartfaq\FaqHandler $faqHandler */
     $faqHandler = \XoopsModules\Smartfaq\Helper::getInstance()->getHandler('Faq');
     // Creating the category handler object
     /** @var \XoopsModules\Smartfaq\CategoryHandler $categoryHandler */
     $categoryHandler = \XoopsModules\Smartfaq\Helper::getInstance()->getHandler('Category');
-
     // Creating the last FAQs
     $faqsObj       = $faqHandler->getAllPublished($limit, 0, $categoryid, $sort);
     $allcategories = $categoryHandler->getObjects(null, true);
@@ -61,11 +57,10 @@ function b_marquee_smartfaq($limit, $dateFormat, $itemsSize)
         /** @var \XoopsModules\Smartfaq\AnswerHandler $answerHandler */
         $answerHandler = \XoopsModules\Smartfaq\Helper::getInstance()->getHandler('Answer');
         $allanswers    = $answerHandler->getLastPublishedByFaq($faqids);
-
         foreach ($allanswers as $key => $thisanswer) {
             $userids[$thisanswer->uid()] = 1;
         }
-
+        /** @var \XoopsMemberHandler $memberHandler */
         $memberHandler = xoops_getHandler('member');
         $users         = $memberHandler->getUsers(new \Criteria('uid', '(' . implode(',', array_keys($userids)) . ')', 'IN'), true);
         for ($i = 0, $iMax = count($faqsObj); $i < $iMax; ++$i) {
@@ -80,6 +75,5 @@ function b_marquee_smartfaq($limit, $dateFormat, $itemsSize)
             ];
         }
     }
-
     return $block;
 }

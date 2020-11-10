@@ -22,22 +22,20 @@
  * @param mixed $repmodule
  */
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
-
 /**
  * Returns a module's option
  *
  * Return's a module's option (for the news module)
- *
- * @package          Marquee
- * @author           Hervé Thouzard (http://www.herve-thouzard.com)
- * @copyright    (c) Hervé Thouzard
  *
  * @param string $option module option's name
  *
  * @param string $repmodule
  *
  * @return bool
+ * @package          Marquee
+ * @author           Hervé Thouzard (http://www.herve-thouzard.com)
+ * @copyright    (c) Hervé Thouzard
+ *
  */
 function marquee_getmoduleoption($option, $repmodule = 'marquee')
 {
@@ -46,7 +44,6 @@ function marquee_getmoduleoption($option, $repmodule = 'marquee')
     if (is_array($tbloptions) && array_key_exists($option, $tbloptions)) {
         return $tbloptions[$option];
     }
-
     $retval = false;
     if (null !== $xoopsModuleConfig
         && (is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $repmodule
@@ -68,7 +65,6 @@ function marquee_getmoduleoption($option, $repmodule = 'marquee')
         }
     }
     $tbloptions[$option] = $retval;
-
     return $retval;
 }
 
@@ -100,9 +96,7 @@ function marquee_isbot()
             break;
         }
     }
-
     $_SESSION['marquee_cache_bot'] = $retval;
-
     return $retval;
 }
 

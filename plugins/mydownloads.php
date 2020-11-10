@@ -32,13 +32,17 @@ function b_marquee_mydownloads($limit, $dateFormat, $itemsSize)
     $block  = [];
     $myts   = \MyTextSanitizer::getInstance();
     $db     = \XoopsDatabaseFactory::getDatabaseConnection();
-    $result = $db->query('SELECT m.lid, m.cid, m.title, m.date, m.hits, m.submitter, c.title AS catitle, u.name, u.uname FROM '
-                         . $db->prefix('mydownloads_downloads')
-                         . ' m, '
-                         . $db->prefix('mydownloads_cat')
-                         . '  c, '
-                         . $db->prefix('users')
-                         . ' u  WHERE (c.cid=m.cid) AND (m.submitter=u.uid) AND (m.status>0) ORDER BY m.date DESC', $limit, 0);
+    $result = $db->query(
+        'SELECT m.lid, m.cid, m.title, m.date, m.hits, m.submitter, c.title AS catitle, u.name, u.uname FROM '
+        . $db->prefix('mydownloads_downloads')
+        . ' m, '
+        . $db->prefix('mydownloads_cat')
+        . '  c, '
+        . $db->prefix('users')
+        . ' u  WHERE (c.cid=m.cid) AND (m.submitter=u.uid) AND (m.status>0) ORDER BY m.date DESC',
+        $limit,
+        0
+    );
     while (false !== ($myrow = $db->fetchArray($result))) {
         $title = $myts->htmlSpecialChars($myrow['title']);
         if ($itemsSize > 0) {
@@ -57,6 +61,5 @@ function b_marquee_mydownloads($limit, $dateFormat, $itemsSize)
             'link'     => "<a href='" . XOOPS_URL . '/modules/mydownloads/singlefile.php?cid=' . $myrow['cid'] . '&amp;lid=' . $myrow['lid'] . "'>" . $title . '</a>',
         ];
     }
-
     return $block;
 }

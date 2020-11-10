@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ****************************************************************************
  * marquee - MODULE FOR XOOPS
@@ -61,7 +62,6 @@ define('_AM_MARQUEE_SCRDELAY', 'Delay between<br>two moves in milliseconds');
 define('_AM_MARQUEE_ERROR_MODIFY_DB', 'Error while updating the database');
 define('_AM_MARQUEE_SOURCE', "Content's source");
 define('_AM_MARQUEE_SOURCE_FIXED', 'A fixed text');
-
 //2.4.8
 define('_AM_MARQUEE_BGCOLOR_SHORT', 'Background color');
 //2.50

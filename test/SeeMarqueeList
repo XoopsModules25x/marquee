@@ -12,14 +12,14 @@
 <tr><td rowspan="1" colspan="3">See Marquee List</td></tr>
 </thead><tbody>
 <tr>
-	<td>open</td>
-	<td>/xtest251/modules/marquee/admin/index.php</td>
-	<td></td>
+    <td>open</td>
+    <td>/xtest251/modules/marquee/admin/index.php</td>
+    <td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//li[@id='Manage marquees']/a/span</td>
-	<td></td>
+    <td>clickAndWait</td>
+    <td>//li[@id='Manage marquees']/a/span</td>
+    <td></td>
 </tr>
 
 </tbody></table>
