@@ -85,7 +85,7 @@ function xoopspartners_random($numberPartners, $random = true, $orden = '', $des
     $numberTotal  = 0;
     $totalPartner = count($PartnersId) - 1;
     while ($numberPartners > $numberTotal) {
-        $RandomPart = mt_rand(0, $totalPartner);
+        $RandomPart = random_int(0, $totalPartner);
         if (!in_array($PartnersId[$RandomPart], $ArrayReturn)) {
             $ArrayReturn[] = $PartnersId[$RandomPart];
             ++$numberTotal;
