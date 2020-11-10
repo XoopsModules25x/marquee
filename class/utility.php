@@ -15,7 +15,7 @@ use XoopsModules\Marquee\{Common,
 class Utility extends Common\SysUtility
 {
     //--------------- Custom module methods -----------------------------
-    const MODULE_NAME = 'marquee';
+    public const MODULE_NAME = 'marquee';
 
     /**
      * Access the only instance of this class
