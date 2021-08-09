@@ -59,7 +59,7 @@ function b_marquee_catads($limit, $dateFormat, $itemsSize)
     $criteria->setSort('published');
     $criteria->setOrder('DESC');
     $criteria->setLimit($limit);
-    $nbads = $ads_hnd->getCount($criteria);
+    $nbads     = $ads_hnd->getCount($criteria);
     $itemArray = [];
     $catBuffer = [];
     if ($nbads > 0) {

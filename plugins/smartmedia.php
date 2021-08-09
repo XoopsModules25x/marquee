@@ -38,9 +38,9 @@ function b_marquee_smartmedia($limit, $dateFormat, $itemsSize)
     if ($itemsSize > 0) {
         $title_length = $itemsSize;
     }
-    $maxClips = $limit;
+    $maxClips              = $limit;
     $smartmediaClipHandler = smartmedia_gethandler('clip');
-    $clipsArray = &$smartmediaClipHandler->getClipsFromAdmin(0, $maxClips, 'clips.created_date', 'DESC', 'all');
+    $clipsArray            = &$smartmediaClipHandler->getClipsFromAdmin(0, $maxClips, 'clips.created_date', 'DESC', 'all');
     if ($clipsArray) {
         foreach ($clipsArray as $clipArray) {
             $clip    = [];

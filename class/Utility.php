@@ -5,6 +5,7 @@ namespace XoopsModules\Marquee;
 use XoopsModules\Marquee\{Common,
     Helper
 };
+use Xmf\Request;
 
 /** @var Helper $helper */
 
@@ -207,7 +208,7 @@ class Utility extends Common\SysUtility
      */
     public static function isBot()
     {
-        if (\Xmf\Request::hasVar('marquee_cache_bot', 'SESSION')) {
+        if (Request::hasVar('marquee_cache_bot', 'SESSION')) {
             return $_SESSION['marquee_cache_bot'];
         }
         // Add here every bot you know separated by a pipe | (not matter with the upper or lower cases)
@@ -218,7 +219,7 @@ class Utility extends Common\SysUtility
         $retval       = false;
         $botarray     = \explode('|', $botlist);
         foreach ($botarray as $onebot) {
-            if (str_contains($currentagent, $onebot)) {
+            if (false !== \mb_strpos($currentagent, $onebot)) {
                 $retval = true;
                 break;
             }

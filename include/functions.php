@@ -93,7 +93,7 @@ function marquee_isbot()
     $retval       = false;
     $botarray     = explode('|', $botlist);
     foreach ($botarray as $onebot) {
-        if (str_contains($currentagent, $onebot)) {
+        if (false !== \mb_strpos($currentagent, $onebot)) {
             $retval = true;
             break;
         }

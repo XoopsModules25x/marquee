@@ -29,7 +29,7 @@ trait VersionChecks
      */
     public static function checkVerXoops(\XoopsModule $module = null, $requiredVer = null)
     {
-        $moduleDirName      = \basename(dirname(__DIR__, 2));
+        $moduleDirName      = \basename(\dirname(__DIR__, 2));
         $moduleDirNameUpper = mb_strtoupper($moduleDirName);
         if (null === $module) {
             $module = \XoopsModule::getByDirname($moduleDirName);
@@ -52,13 +52,13 @@ trait VersionChecks
     /**
      * Verifies PHP version meets minimum requirements for this module
      * @static
-     * @param \XoopsModule|null $module
+     * @param \XoopsModule|bool|null $module
      *
      * @return bool true if meets requirements, false if not
      */
     public static function checkVerPhp(\XoopsModule $module = null)
     {
-        $moduleDirName      = \basename(dirname(__DIR__, 2));
+        $moduleDirName      = \basename(\dirname(__DIR__, 2));
         $moduleDirNameUpper = mb_strtoupper($moduleDirName);
         if (null === $module) {
             $module = \XoopsModule::getByDirname($moduleDirName);
@@ -67,8 +67,8 @@ trait VersionChecks
         \xoops_loadLanguage('common', $moduleDirName);
         // check for minimum PHP version
         $success = true;
-        $verNum = \PHP_VERSION;
-        $reqVer = &$module->getInfo('min_php');
+        $verNum  = \PHP_VERSION;
+        $reqVer  = &$module->getInfo('min_php');
         if (false !== $reqVer && '' !== $reqVer) {
             if (\version_compare($verNum, $reqVer, '<')) {
                 $module->setErrors(\sprintf(\constant('CO_' . $moduleDirNameUpper . '_ERROR_BAD_PHP'), $reqVer, $verNum));
@@ -90,7 +90,7 @@ trait VersionChecks
      */
     public static function checkVerModule($helper, $source = 'github', $default = 'master')
     {
-        $moduleDirName      = \basename(dirname(__DIR__, 2));
+        $moduleDirName      = \basename(\dirname(__DIR__, 2));
         $moduleDirNameUpper = mb_strtoupper($moduleDirName);
         $update             = '';
         $repository         = 'XoopsModules25x/' . $moduleDirName;
@@ -106,7 +106,7 @@ trait VersionChecks
                 $curlReturn = \curl_exec($curlHandle);
                 if (false === $curlReturn) {
                     \trigger_error(\curl_error($curlHandle));
-                } elseif (\str_contains($curlReturn, 'Not Found')) {
+                } elseif (false !== \mb_strpos($curlReturn, 'Not Found')) {
                     \trigger_error('Repository Not Found: ' . $infoReleasesUrl);
                 } else {
                     $file              = json_decode($curlReturn, false);
@@ -118,7 +118,7 @@ trait VersionChecks
                     }
                     //"PHP-standardized" version
                     $latestVersion = mb_strtolower($latestVersion);
-                    if (str_contains($latestVersion, 'final')) {
+                    if (false !== \mb_strpos($latestVersion, 'final')) {
                         $latestVersion = \str_replace('_', '', mb_strtolower($latestVersion));
                         $latestVersion = \str_replace('final', '', mb_strtolower($latestVersion));
                     }

@@ -38,11 +38,11 @@ function b_marquee_xoopspartners($limit, $dateFormat, $itemsSize)
         $result = $xoopsDB->query('SELECT id, url, image, title FROM ' . $xoopsDB->prefix('partners') . " WHERE id=$id");
         [$id, $url, $image, $title] = $xoopsDB->fetchRow($result);
         $origtitle = $title;
-        $title     = $myts->htmlSpecialChars($title);
+        $title     = htmlspecialchars($title);
         if ($itemsSize > 0) {
-            $title = $myts->htmlSpecialChars(mb_substr($origtitle, 0, 19));
+            $title = htmlspecialchars(mb_substr($origtitle, 0, 19));
         } else {
-            $title = $myts->htmlSpecialChars($origtitle);
+            $title = htmlspecialchars($origtitle);
         }
         $block[] = [
             'date'     => '',

@@ -19,11 +19,11 @@
  */
 
 require_once __DIR__ . '/preloads/autoloader.php';
-$moduleDirName      = basename(__DIR__);
-$moduleDirNameUpper = mb_strtoupper($moduleDirName);
-$modversion['version']             = '2.60';
-$modversion['module_status']       = 'Final';
-$modversion['release_date']        = '2020/11/10';
+$moduleDirName                     = basename(__DIR__);
+$moduleDirNameUpper                = mb_strtoupper($moduleDirName);
+$modversion['version']             = '2.61';
+$modversion['module_status']       = 'Beta 1';
+$modversion['release_date']        = '2021/08/08';
 $modversion['name']                = _MI_MARQUEE_NAME;
 $modversion['description']         = _MI_MARQUEE_DESC;
 $modversion['credits']             = 'Carnuke, defkon1, the Newbb team, Mage, Mamba';
@@ -41,7 +41,7 @@ $modversion['module_website_url']  = 'www.xoops.org/';
 $modversion['module_website_name'] = 'XOOPS';
 $modversion['author_website_url']  = 'https://xoops.org/';
 $modversion['author_website_name'] = 'Hervé Thouzard';
-$modversion['min_php']             = '7.2';
+$modversion['min_php']             = '7.3';
 $modversion['min_xoops']           = '2.5.10';
 $modversion['min_admin']           = '1.2';
 $modversion['min_db']              = ['mysql' => '5.5'];
@@ -64,7 +64,7 @@ $modversion['helpsection'] = [
     ['name' => _MI_MARQUEE_LICENSE, 'link' => 'page=license'],
     ['name' => _MI_MARQUEE_SUPPORT, 'link' => 'page=support'],
 ];
-// Blocks
+// ------------------- Blocks ------------------- //
 $modversion['blocks'][] = [
     'file'        => 'marquee_bloc.php',
     'name'        => _MI_MARQUEE_BNAME_01,
@@ -108,7 +108,7 @@ $modversion['hasSearch'] = 0;
  * Editor to use (was usekiovi)
  */
 xoops_load('xoopseditorhandler');
-$editorHandler = XoopsEditorHandler::getInstance();
+$editorHandler          = XoopsEditorHandler::getInstance();
 $modversion['config'][] = [
     'name'        => 'form_options',
     'title'       => '_MI_MARQUEE_TEXT_EDITOR',

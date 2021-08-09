@@ -2,6 +2,13 @@
 
 namespace XoopsModules\Marquee;
 
+use XoopsDatabase;
+use XoopsPersistableObjectHandler;
+
+
+
+
+
 /**
  * ****************************************************************************
  * marquee - MODULE FOR XOOPS
@@ -30,12 +37,12 @@ namespace XoopsModules\Marquee;
 /**
  * Class MarqueeHandler
  */
-class MarqueexHandler extends \XoopsPersistableObjectHandler //MarqueePersistableObjectHandler
+class MarqueexHandler extends XoopsPersistableObjectHandler //MarqueePersistableObjectHandler
 {
     /**
      * @param \XoopsDatabase|null $db
      */
-    public function __construct(\XoopsDatabase $db = null)
+    public function __construct(XoopsDatabase $db = null)
     {
         parent::__construct($db, 'marquee', Marqueex::class, 'marquee_marqueeid');
     }

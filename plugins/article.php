@@ -53,16 +53,16 @@ function b_marquee_article($limit, $dateFormat, $itemsSize)
     $from    = '';
     $where   = '';
     $order   = 'art_time_publish DESC';
-    $select .= ', cat_id, art_title, uid, art_time_publish';
+    $select  .= ', cat_id, art_title, uid, art_time_publish';
     if (null === $accessCats) {
         $permissionHandler = Article\Helper::getInstance()->getHandler('Permission');
         $accessCats        = $permissionHandler->getCategories('access');
     }
     $allowedCats = $accessCats;
-    $query = "SELECT $select FROM " . art_DB_prefix('article') . $from;
-    $query .= ' WHERE cat_id IN (' . implode(',', $allowedCats) . ') AND art_time_publish >0 ' . $where;
-    $query .= ' ORDER BY ' . $order;
-    $query .= ' LIMIT 0, ' . $limit;
+    $query       = "SELECT $select FROM " . art_DB_prefix('article') . $from;
+    $query       .= ' WHERE cat_id IN (' . implode(',', $allowedCats) . ') AND art_time_publish >0 ' . $where;
+    $query       .= ' ORDER BY ' . $order;
+    $query       .= ' LIMIT 0, ' . $limit;
     if (!$result = $xoopsDB->query($query)) {
         return false;
     }
@@ -75,7 +75,7 @@ function b_marquee_article($limit, $dateFormat, $itemsSize)
     if (count($rows) < 1) {
         return false;
     }
-    $authorName = \XoopsUser::getUnameFromId(array_keys($author));
+    $authorName     = \XoopsUser::getUnameFromId(array_keys($author));
     $arts           = [];
     $uids           = [];
     $cids           = [];
@@ -87,14 +87,14 @@ function b_marquee_article($limit, $dateFormat, $itemsSize)
         foreach ($row as $tag => $val) {
             $_art[$tag] = @$article->getVar($tag);
         }
-        $_art['author'] = $authorName[$row['uid']];
-        $_art['date'] = $article->getTime($dateFormat);
-        $titlelength   = $itemsSize + 3;
-        $_art['title'] = xoops_substr($_art['art_title'], 0, $titlelength);
+        $_art['author']   = $authorName[$row['uid']];
+        $_art['date']     = $article->getTime($dateFormat);
+        $titlelength      = $itemsSize + 3;
+        $_art['title']    = xoops_substr($_art['art_title'], 0, $titlelength);
         $_art['category'] = '';
-        $delimiter    = '/';
-        $_art['link'] = '<a href="' . XOOPS_URL . "modules/article/view.article.php$delimiter" . $_art['art_id'] . '/c' . $_art['cat_id'] . '"><strong>' . $_art['art_title'] . '</strong></a>';
-        $arts[] = $_art;
+        $delimiter        = '/';
+        $_art['link']     = '<a href="' . XOOPS_URL . "modules/article/view.article.php$delimiter" . $_art['art_id'] . '/c' . $_art['cat_id'] . '"><strong>' . $_art['art_title'] . '</strong></a>';
+        $arts[]           = $_art;
         unset($article, $_art);
         $cids[$row['cat_id']] = 1;
     }

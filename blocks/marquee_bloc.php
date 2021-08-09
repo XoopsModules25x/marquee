@@ -86,7 +86,7 @@ function b_marquee_custom($options)
 {
     $options = explode('|', $options);
     $block   = b_marquee_show($options);
-    $tpl = new \XoopsTpl();
+    $tpl     = new \XoopsTpl();
     $tpl->assign('block', $block);
     $tpl->display('db:marquee_block.tpl');
 }

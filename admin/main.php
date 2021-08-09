@@ -24,12 +24,12 @@ use Xmf\Request;
 use XoopsModules\Marquee;
 
 require_once __DIR__ . '/admin_header.php';
-require_once dirname(__DIR__, 3) . '/include/cp_header.php';
+require \dirname(__DIR__, 3) . '/include/cp_header.php';
 require_once XOOPS_ROOT_PATH . '/modules/marquee/admin/functions.php';
 //require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
 //require_once XOOPS_ROOT_PATH . '/modules/marquee/class/marquee_utils.php';
 $adminObject = Admin::getInstance();
-$op = Request::getString('op', Request::getCmd('op', 'default', 'POST'), 'GET');
+$op          = Request::getString('op', Request::getCmd('op', 'default', 'POST'), 'GET');
 // Verify that a field exists inside a mysql table
 /**
  * @param $fieldname
@@ -109,7 +109,7 @@ function AddEditMarqueeForm(
 ) {
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     global $xoopsModule;
-    $sform = new \XoopsThemeForm($FormTitle, 'marqueeform', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/main.php');
+    $sform  = new \XoopsThemeForm($FormTitle, 'marqueeform', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/main.php');
     $source = new \XoopsFormSelect(_AM_MARQUEE_SOURCE, 'source', $sourcevalue);
     $source->addOption('fixed', _AM_MARQUEE_SOURCE_FIXED);
     $fileslst = myglob(XOOPS_ROOT_PATH . '/modules/marquee/plugins/', 'php');
@@ -119,7 +119,7 @@ function AddEditMarqueeForm(
     }
     $sform->addElement($source);
     $utility = new Marquee\Utility();
-    $editor = $utility::getWysiwygForm(_AM_MARQUEE_CONTENT, 'content', $contentvalue, 15, 60, 'content_text_hidden');
+    $editor  = $utility::getWysiwygForm(_AM_MARQUEE_CONTENT, 'content', $contentvalue, 15, 60, 'content_text_hidden');
     if ($editor) {
         $sform->addElement($editor, false);
     }
@@ -342,10 +342,10 @@ switch ($op) {
                 //              $action_delete="<a href='".$baseurl."?op=delete&marqueeid=".$marquee->getVar('marquee_marqueeid')."'>"._AM_MARQUEE_DELETE."</a>";
                 $action_edit   = '<a href=' . $baseurl . '?op=edit&marqueeid=' . $marquee->getVar('marquee_marqueeid') . '><img src=' . $pathIcon16 . '/edit.png title=' . _AM_MARQUEE_EDIT . '></a>';
                 $action_delete = '<a href=' . $baseurl . '?op=delete&marqueeid=' . $marquee->getVar('marquee_marqueeid') . '><img src=' . $pathIcon16 . '/delete.png title=' . _AM_MARQUEE_DELETE . '></a>';
-                $bgcolorvalue = $marquee->getVar('marquee_bgcolor');
-                $direction    = $tbldirection[$marquee->getVar('marquee_direction')];
-                $behaviour    = $tblbehaviour[$marquee->getVar('marquee_behaviour')];
-                $stop         = _YES;
+                $bgcolorvalue  = $marquee->getVar('marquee_bgcolor');
+                $direction     = $tbldirection[$marquee->getVar('marquee_direction')];
+                $behaviour     = $tblbehaviour[$marquee->getVar('marquee_behaviour')];
+                $stop          = _YES;
                 if (0 == $marquee->getVar('marquee_stoponmouseover')) {
                     $stop = _NO;
                 }

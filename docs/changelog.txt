@@ -1,3 +1,7 @@
+<h5>2.61 Beta 1  [2020-11-10]</h5>  Dev: Xoops 2.5.11, PHP 7.4.12, PHP 8.0 RC 3
+<hr>
+- cosmetics
+
 <h5>2.60 Final  [2020-11-10]</h5>  Dev: Xoops 2.5.11, PHP 7.4.12, PHP 8.0 RC 3
 <hr>
 - added Blocksadmin (mamba)

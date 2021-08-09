@@ -33,13 +33,13 @@ function b_marquee_xfaq($limit, $dateFormat, $itemsSize)
     $db     = \XoopsDatabaseFactory::getDatabaseConnection();
     $result = $db->query('SELECT f.*, t.topic_title, t.topic_submitter FROM ' . $db->prefix('xfaq_faq') . ' f, ' . $db->prefix('xfaq_topic') . ' t WHERE f.faq_online>0 AND (f.faq_topic=t.topic_id) ORDER BY faq_date_created DESC', $limit, 0);
     while (false !== ($myrow = $db->fetchArray($result))) {
-        $title = $myts->htmlSpecialChars($myrow['faq_question']);
+        $title = htmlspecialchars($myrow['faq_question']);
         if ($itemsSize > 0) {
             $title = xoops_substr($title, 0, $itemsSize + 3);
         }
         $block[] = [
             'date'     => formatTimestamp($myrow['faq_date_created'], $dateFormat),
-            'category' => $myts->htmlSpecialChars($myrow['topic_title']),
+            'category' => htmlspecialchars($myrow['topic_title']),
             'author'   => \XoopsUser::getUnameFromId((int)$myrow['topic_submitter']),
             'title'    => $title,
             'link'     => "<a href='" . XOOPS_URL . '/modules/xfaq/faq.php?faq_id=' . $myrow['faq_id'] . "'>{$title}</a>",

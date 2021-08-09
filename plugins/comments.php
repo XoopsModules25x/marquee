@@ -30,7 +30,7 @@
 function b_marquee_comments($limit, $dateFormat, $itemsSize)
 {
     //    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
-    require_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
+    require XOOPS_ROOT_PATH . '/include/comment_constants.php';
     $block  = [];
     $status = XOOPS_COMMENT_APPROVEUSER;
     $module = 0;
