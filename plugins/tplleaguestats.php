@@ -63,12 +63,12 @@ function b_marquee_tplleaguestats($limit, $dateFormat, $itemsSize)
            LIMIT 0,$limit";
     $result = $xoopsDB->query($sql);
     while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
-        $title = $myts->htmlSpecialChars($myrow['home']) . ' - ' . $myts->htmlSpecialChars($myrow['away']) . ' ' . $myts->htmlSpecialChars($myrow['home_p']) . '-' . $myts->htmlSpecialChars($myrow['away_p']);
+        $title = htmlspecialchars($myrow['home']) . ' - ' . htmlspecialchars($myrow['away']) . ' ' . htmlspecialchars($myrow['home_p']) . '-' . htmlspecialchars($myrow['away_p']);
         if ($useItemSize && $itemsSize > 0) {
             $title = xoops_substr($title, 0, $itemsSize + 3);
         }
         $arrDate = explode('-', $myrow['date']);
-        $season = '';
+        $season  = '';
         if ($displaySeason) {
             $season = $myrow['season'];
         }

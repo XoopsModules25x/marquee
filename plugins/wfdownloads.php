@@ -45,19 +45,19 @@ function b_marquee_wfdownloads($limit, $dateFormat, $itemsSize)
     /** @var \XoopsConfigHandler $configHandler */
     $configHandler  = xoops_getHandler('config');
     $wfModuleConfig = $configHandler->getConfigsByCat(0, $wfModule->getVar('mid'));
-    $groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $groups         = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
     /** @var \XoopsGroupPermHandler $grouppermHandler */
     $grouppermHandler = xoops_getHandler('groupperm');
     $allowed_cats     = $grouppermHandler->getItemIds('WFDownCatPerm', $groups, $wfModule->getVar('mid'));
-    $criteria = new \Criteria('cid', '(' . implode(',', $allowed_cats) . ')', 'IN');
-    $criteria = new \CriteriaCompo(new \Criteria('offline', 0));
+    $criteria         = new \Criteria('cid', '(' . implode(',', $allowed_cats) . ')', 'IN');
+    $criteria         = new \CriteriaCompo(new \Criteria('offline', 0));
     $criteria->setSort('published');
     $criteria->setOrder('DESC');
     $criteria->setLimit($limit);
     $downloadHandler = Wfdownloads\Helper::getInstance()->getHandler('Download');
     $categoryHandler = Wfdownloads\Helper::getInstance()->getHandler('Category');
     $buffer_category = [];
-    $downloads = $downloadHandler->getObjects($criteria);
+    $downloads       = $downloadHandler->getObjects($criteria);
     foreach (array_keys($downloads) as $i) {
         $download = $downloads[$i]->toArray();
         if ($itemsSize > 0) {

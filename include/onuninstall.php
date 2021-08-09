@@ -31,11 +31,11 @@ function xoops_module_pre_uninstall_marquee(\XoopsModule $module)
 function xoops_module_uninstall_marquee(\XoopsModule $module)
 {
     //    return true;
-    $moduleDirName      = basename(dirname(__DIR__));
+    $moduleDirName      = \basename(\dirname(__DIR__));
     $moduleDirNameUpper = mb_strtoupper($moduleDirName);
-    $helper = Marquee\Helper::getInstance();
-    $utility = new Marquee\Utility();
-    $success = true;
+    $helper             = Marquee\Helper::getInstance();
+    $utility            = new Marquee\Utility();
+    $success            = true;
     $helper->loadLanguage('admin');
     //------------------------------------------------------------------
     // Remove uploads folder (and all subfolders) if they exist

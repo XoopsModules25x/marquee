@@ -22,14 +22,14 @@ use XoopsModules\Marquee\{Helper
 
 /** @var Admin $adminObject */
 /** @var Helper $helper */
-require_once dirname(__DIR__, 3) . '/include/cp_header.php';
-//require_once  dirname(dirname(dirname(__DIR__))) . '/class/xoopsformloader.php';
-// require_once  dirname(__DIR__) . '/class/Utility.php';
-require_once dirname(__DIR__) . '/include/common.php';
-$moduleDirName      = basename(dirname(__DIR__));
+require \dirname(__DIR__, 3) . '/include/cp_header.php';
+//require_once  \dirname(__DIR__, 3) . '/class/xoopsformloader.php';
+// require_once  \dirname(__DIR__) . '/class/Utility.php';
+require_once \dirname(__DIR__) . '/include/common.php';
+$moduleDirName      = \basename(\dirname(__DIR__));
 $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 //if functions.php file exist
-//require_once  dirname(__DIR__) . '/include/functions.php';
+//require_once  \dirname(__DIR__) . '/include/functions.php';
 $helper      = Helper::getInstance();
 $adminObject = Admin::getInstance();
 //$pathIcon16    = \Xmf\Module\Admin::iconUrl('', 16);

@@ -40,12 +40,12 @@ function b_marquee_xfsection($limit, $dateFormat, $itemsSize)
     while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         if (xfblock_checkAccess($myrow['groupid'])) {
             $wfs   = [];
-            $title = $myts->htmlSpecialChars($myrow['title']);
+            $title = htmlspecialchars($myrow['title']);
             if (!XOOPS_USE_MULTIBYTES) {
                 if ($itemsSize > 0) {
-                    $title = $myts->htmlSpecialChars(mb_substr($myrow['title'], 0, $itemsSize - 1));
+                    $title = htmlspecialchars(mb_substr($myrow['title'], 0, $itemsSize - 1));
                 } else {
-                    $title = $myts->htmlSpecialChars($myrow['title']);
+                    $title = htmlspecialchars($myrow['title']);
                 }
             }
             $block[] = [

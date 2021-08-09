@@ -6,10 +6,12 @@
  * Time: 06:21
  */
 
+use Codeception\Test\Unit;
+
 /**
  * Class UtilityTest
  */
-class UtilityTest extends \Codeception\Test\Unit
+class UtilityTest extends Unit
 {
     public function testGetInstance()
     {

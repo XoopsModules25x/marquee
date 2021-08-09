@@ -33,13 +33,13 @@ function b_marquee_xoopsfaq($limit, $dateFormat, $itemsSize)
     $db     = \XoopsDatabaseFactory::getDatabaseConnection();
     $result = $db->query('SELECT c.*, t.category_title FROM ' . $db->prefix('xoopsfaq_contents') . ' c, ' . $db->prefix('xoopsfaq_categories') . ' t WHERE c.contents_visible>0 AND (c. category_id=t.category_id) ORDER BY contents_time DESC', $limit, 0);
     while (false !== ($myrow = $db->fetchArray($result))) {
-        $title = $myts->htmlSpecialChars($myrow['contents_title']);
+        $title = htmlspecialchars($myrow['contents_title']);
         if ($itemsSize > 0) {
             $title = xoops_substr($title, 0, $itemsSize + 3);
         }
         $block[] = [
             'date'     => formatTimestamp($myrow['contents_time'], $dateFormat),
-            'category' => $myts->htmlSpecialChars($myrow['category_title']),
+            'category' => htmlspecialchars($myrow['category_title']),
             'author'   => 0,
             'title'    => $title,
             'link'     => "<a href='" . XOOPS_URL . '/modules/xoopsfaq/index.php?cat_id=' . $myrow['category_id'] . '#q' . $myrow['contents_id'] . "'>" . $title . '</a>',

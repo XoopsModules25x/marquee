@@ -31,7 +31,7 @@ function b_marquee_wfsection($limit, $dateFormat, $itemsSize)
 {
     //    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
     $block = [];
-    $myts = \MyTextSanitizer::getInstance();
+    $myts  = \MyTextSanitizer::getInstance();
     /** @var \XoopsModuleHandler $moduleHandler */
     $moduleHandler    = xoops_getHandler('module');
     $wfsection        = $moduleHandler->getByDirname('wfsection');
@@ -45,12 +45,12 @@ function b_marquee_wfsection($limit, $dateFormat, $itemsSize)
         while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
             if (checkAccess($myrow['groupid'])) {
                 $wfs   = [];
-                $title = $myts->htmlSpecialChars($myrow['title']);
+                $title = htmlspecialchars($myrow['title']);
                 if (!XOOPS_USE_MULTIBYTES) {
                     if ($itemsSize > 0) {
-                        $title = $myts->htmlSpecialChars(mb_substr($myrow['title'], 0, $itemsSize));
+                        $title = htmlspecialchars(mb_substr($myrow['title'], 0, $itemsSize));
                     } else {
-                        $title = $myts->htmlSpecialChars($myrow['title']);
+                        $title = htmlspecialchars($myrow['title']);
                     }
                 }
                 $block[] = [

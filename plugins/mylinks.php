@@ -28,19 +28,19 @@
 function b_marquee_mylinks($limit, $dateFormat, $itemsSize)
 {
     //    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
-    require_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
+    require XOOPS_ROOT_PATH . '/include/comment_constants.php';
     $block  = [];
     $myts   = \MyTextSanitizer::getInstance();
     $db     = \XoopsDatabaseFactory::getDatabaseConnection();
     $result = $db->query('SELECT m.lid, m.cid, m.title, m.date, m.hits, m.submitter, c.title AS catitle FROM ' . $db->prefix('mylinks_links') . ' m, ' . $db->prefix('mylinks_cat') . ' c WHERE (c.cid=m.cid) AND (m.status>0) ORDER BY date DESC', $limit, 0);
     while (false !== ($myrow = $db->fetchArray($result))) {
-        $title = $myts->htmlSpecialChars($myrow['title']);
+        $title = htmlspecialchars($myrow['title']);
         if ($itemsSize > 0) {
             $title = xoops_substr($title, 0, $itemsSize + 3);
         }
         $block[] = [
             'date'     => formatTimestamp($myrow['date'], $dateFormat),
-            'category' => $myts->htmlSpecialChars($myrow['catitle']),
+            'category' => htmlspecialchars($myrow['catitle']),
             'author'   => $myrow['submitter'],
             'title'    => $title,
             'link'     => "<a href='" . XOOPS_URL . '/modules/mylinks/singlelink.php?cid=' . $myrow['cid'] . '&amp;lid=' . $myrow['lid'] . "'>" . $title . '</a>',

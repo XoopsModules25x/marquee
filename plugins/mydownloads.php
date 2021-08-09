@@ -28,7 +28,7 @@
 function b_marquee_mydownloads($limit, $dateFormat, $itemsSize)
 {
     //    require_once XOOPS_ROOT_PATH . '/modules/marquee/class/Utility.php';
-    require_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
+    require XOOPS_ROOT_PATH . '/include/comment_constants.php';
     $block  = [];
     $myts   = \MyTextSanitizer::getInstance();
     $db     = \XoopsDatabaseFactory::getDatabaseConnection();
@@ -44,15 +44,15 @@ function b_marquee_mydownloads($limit, $dateFormat, $itemsSize)
         0
     );
     while (false !== ($myrow = $db->fetchArray($result))) {
-        $title = $myts->htmlSpecialChars($myrow['title']);
+        $title = htmlspecialchars($myrow['title']);
         if ($itemsSize > 0) {
             $title = xoops_substr($title, 0, $itemsSize + 3);
         }
-        $author = $myts->htmlSpecialChars($myrow['uname']);
+        $author = htmlspecialchars($myrow['uname']);
         if ('' !== xoops_trim($myrow['catitle'])) {
-            $author = $myts->htmlSpecialChars($myrow['name']);
+            $author = htmlspecialchars($myrow['name']);
         }
-        $category = $myts->htmlSpecialChars($myrow['catitle']);
+        $category = htmlspecialchars($myrow['catitle']);
         $block[]  = [
             'date'     => formatTimestamp($myrow['date'], $dateFormat),
             'category' => $category,

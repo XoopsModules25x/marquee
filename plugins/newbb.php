@@ -87,7 +87,7 @@ function b_marquee_newbb($limit, $dateFormat, $itemsSize)
         }
         $myts = \MyTextSanitizer::getInstance();
         foreach ($rows as $arr) {
-            $title = $myts->htmlSpecialChars($arr['topic_title']);
+            $title = htmlspecialchars($arr['topic_title']);
             if ($itemsSize > 0) {
                 $title = xoops_substr($title, 0, $itemsSize + 3);
             }
@@ -120,7 +120,7 @@ function b_marquee_newbb($limit, $dateFormat, $itemsSize)
                 $tmpuser = \XoopsUser::getUnameFromId($tmpdb['uid']);
                 $time    = formatTimestamp($arr['topic_time'], $dateFormat);
             }
-            $title = $myts->htmlSpecialChars($arr['topic_title']);
+            $title = htmlspecialchars($arr['topic_title']);
             if ($itemsSize > 0) {
                 $title = xoops_substr($title, 0, $itemsSize + 3);
             }

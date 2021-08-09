@@ -33,7 +33,7 @@ use XoopsModules\Smartfaq\Helper;
 function b_marquee_smartfaq($limit, $dateFormat, $itemsSize)
 {
     require_once XOOPS_ROOT_PATH . '/modules/smartfaq/include/functions.php';
-    $block = [];
+    $block             = [];
     $smartModule       = &sf_getModuleInfo();
     $smartModuleConfig = &sf_getModuleConfig();
     $categoryid        = -1;

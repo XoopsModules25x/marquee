@@ -1,4 +1,4 @@
-![alt XOOPS CMS](https://xoops.org/images/logoXoops4GithubRepository.png)
+![alt XOOPS CMS](https://xoops.org/images/logoXoopsPhp8.png)
 
 ## Marquee module for [XOOPS CMS 2.5.9+](https://xoops.org)
 

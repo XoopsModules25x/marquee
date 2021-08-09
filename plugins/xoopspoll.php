@@ -33,7 +33,7 @@ function b_marquee_xoopspoll($limit, $dateFormat, $itemsSize)
     $db     = \XoopsDatabaseFactory::getDatabaseConnection();
     $result = $db->query('SELECT * FROM ' . $db->prefix('xoopspoll_desc') . ' WHERE start_time<=' . time() . ' AND end_time>' . time() . ' ORDER BY start_time DESC', $limit, 0);
     while (false !== ($myrow = $db->fetchArray($result))) {
-        $title = $myts->htmlSpecialChars($myrow['question']);
+        $title = htmlspecialchars($myrow['question']);
         if ($itemsSize > 0) {
             $title = xoops_substr($title, 0, $itemsSize + 3);
         }
